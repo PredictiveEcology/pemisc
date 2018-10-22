@@ -7,13 +7,13 @@
 #'                \code{"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"}.
 #'
 #' @importFrom tools file_path_sans_ext
-createPrjFile <- function(shpFile, prjFile) {
+createPrjFile <- function(shpFile,
+                          urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/") {
   basenameWithoutExt <- file_path_sans_ext(shpFile)
   basenameWithoutExt <- basenameWithoutExt[-length(basenameWithoutExt)]
   prjFile <- paste0(basenameWithoutExt, ".prj")
   if (!file.exists(prjFile)) {
-    download.file("http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/",
-                  destfile = prjFile)
+    download.file(urlForProj, destfile = prjFile)
   }
 }
 
@@ -25,14 +25,16 @@ createPrjFile <- function(shpFile, prjFile) {
 #' @param type If fn is not known, an character string can be specified to
 #'             identify which \code{fn} to use.
 #'             This MUST be a known type for this function.
-polygonClean <- function(poly, fn = NULL, type = NULL) {
+#' @param ... Passed to \code{fn}
+#' @export
+polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
   if (is.null(fn)) {
     if (is.null(type)) {
       stop("Either fn or type must be specified")
     } else {
-      if (isTRUE(grepl("LandWeb", type)))
+      if (length(na.omit(pmatch(c("LandWeb", "tolko", "testing"), type))))
         fn <- .cleanLandWebStudyArea
     }
   }
-  poly <- fn(poly)
+  poly <- fn(poly, ...)
 }
