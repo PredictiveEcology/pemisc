@@ -12,8 +12,8 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL, nonFlammClasses = NUL
   if (is.null(nonFlammClasses))
     nonFlammClasses <- c(36L, 37L, 38L, 39L)
 
-  oldClass <- 0:39
-  newClass <- ifelse(oldClass %in% nonFlammClasses, 1, 0)   #1 codes for non flammable
+  oldClass <- 0:39 ## TODO: this is LCC specific; needs to be general
+  newClass <- ifelse(oldClass %in% nonFlammClasses, 1, 0)   #1 codes for non flammable ## TODO: fix this
   #see mask argument for SpaDES::spread()
   flammableTable <- cbind(oldClass, newClass)
   #according to Yong, Canada Landcover 2005 is loaded as LandCoverClassifiedMap
