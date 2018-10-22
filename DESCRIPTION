@@ -21,6 +21,7 @@ Imports:
     backports,
     reproducible
 Suggests:
+    roxygen2,
     testthat
 Remotes:
     PredictiveEcology/reproducible@development,
