@@ -20,7 +20,8 @@ Depends:
 Imports:
     backports,
     raster,
-    reproducible
+    reproducible,
+    tools
 Suggests:
     roxygen2,
     testthat

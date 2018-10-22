@@ -10,11 +10,11 @@ polygonClean(poly, fn = NULL, type = NULL)
 \item{fn}{A function identifying the type of cleaning to do.}
 
 \item{type}{If fn is not known, an character string can be specified to
-identify which \code{fn} to use. This MUST
-be a known type for this function.}
+identify which \code{fn} to use.
+This MUST be a known type for this function.}
 
-\item{shp}{A polygon object, or a character string identifying the shapefile path
-to load, and clean.}
+\item{shp}{A polygon object, or a character string identifying the shapefile
+path to load, and clean.}
 }
 \description{
 Do an arbitrary set of operations on a polygon

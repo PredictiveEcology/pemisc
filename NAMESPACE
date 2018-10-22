@@ -3,3 +3,4 @@
 importFrom(raster,ratify)
 importFrom(raster,reclassify)
 importFrom(raster,writeRaster)
+importFrom(tools,file_path_sans_ext)

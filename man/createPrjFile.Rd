@@ -2,15 +2,16 @@
 % Please edit documentation in R/gis.R
 \name{createPrjFile}
 \alias{createPrjFile}
-\title{Create a .prj file}
+\title{Create a \code{.prj} file}
 \usage{
 createPrjFile(shpFile, prjFile)
 }
 \arguments{
-\item{shpFile}{The filename of a shapefile to add .prj}
+\item{shpFile}{The filename of a shapefile to add \code{.prj}}
 
-\item{prjFile}{The filename of a}
+\item{prjFile}{The url from which to fetch the projection, e.g.,
+\code{"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"}.}
 }
 \description{
-In cases where a shapefile is missing its associated .prj file.
+In cases where a shapefile is missing its associated \code{.prj} file.
 }
