@@ -13,3 +13,16 @@ createPrjFile <- function(shpFile, prjFile) {
                   destfile = prjFile)
   }
 }
+
+
+#' Do an arbitrary set of operations
+#' @param shp A polygon object, or a character string identifying the shapefile path
+#'            to load, and clean.
+#' @param fn A function identifying the type of cleaning to do.
+#' @param type If fn is not known, an character string can be specified to
+#'             identify which \code{fn} to use. This MUST
+#'             be a known type for this function.
+polygonClean <- function(poly, fn) {
+  browser()
+
+}
