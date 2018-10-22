@@ -15,14 +15,22 @@ createPrjFile <- function(shpFile, prjFile) {
 }
 
 
-#' Do an arbitrary set of operations
+#' Do an arbitrary set of operations on a polygon
+#'
 #' @param shp A polygon object, or a character string identifying the shapefile path
 #'            to load, and clean.
 #' @param fn A function identifying the type of cleaning to do.
 #' @param type If fn is not known, an character string can be specified to
 #'             identify which \code{fn} to use. This MUST
 #'             be a known type for this function.
-polygonClean <- function(poly, fn) {
-  browser()
-
+polygonClean <- function(poly, fn = NULL, type = NULL) {
+  if (is.null(fn)) {
+    if (is.null(type)) {
+      stop("Either fn or type must be specified")
+    } else {
+      if (isTRUE(grepl("LandWeb", type)))
+        fn <- .cleanLandWebStudyArea
+    }
+  }
+  poly <- fn(poly)
 }
