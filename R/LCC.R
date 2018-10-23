@@ -44,7 +44,7 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
 #' @param year Numeric, either 2005 or 2010 (not yet implemented)
 #'
 #' @export
-#' @importFrom reproducible asPath
+#' @importFrom reproducible asPath prepInputs
 prepInputsLCC <- function(year = 2005,
                           destinationPath = ".",
                           studyArea = NULL,
@@ -91,8 +91,8 @@ if (!isGeneric("rasterToMatch")) {
 #' @return A RasterLayer object.
 #'
 #' @export
+#' @importFrom raster raster setValues
 #' @importFrom reproducible postProcess
-#'
 rasterToMatch.Raster <- function(x, studyArea, ...) {
   rtm <- raster::raster(x)
   rtm <- setValues(rtm, 1L)
