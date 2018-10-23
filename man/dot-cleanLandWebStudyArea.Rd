@@ -11,7 +11,7 @@
 
 \item{minFRI}{Numeric or integer, indicating the minimum fire return interval
 that will be part of the cleanup of polygon. Anything below
-this will be NA}
+this will be \code{NA}.}
 }
 \description{
 Clean up the LandWeb study area from David Andison
