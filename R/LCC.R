@@ -6,28 +6,42 @@
 #' @param nonFlammClasses numeric vector defining which classes in \code{LandCoverClassifiedMap}.
 #'
 #' @importFrom raster ratify reclassify writeRaster
-defineFlammable <- function(LandCoverClassifiedMap = NULL, nonFlammClasses = NULL) {
-  if (is.null(LandCoverClassifiedMap))
-    stop("Need a classified land cover map. Try running prepInputs(...)")
+#' @export
+defineFlammable <- function(LandCoverClassifiedMap = NULL,
+                            nonFlammClasses = c(36L, 37L, 38L, 39L),
+                            mask = NULL, filename2 = NULL) {
+  if (!is.null(mask))
+    if (!is(mask, "Raster")) stop("mask must be a raster layer")
+  if (!is(LandCoverClassifiedMap, "RasterLayer")) {
+    stop("Need a classified land cover map. Currently only accepts 'LCC2005'")
+  }
   if (is.null(nonFlammClasses))
-    nonFlammClasses <- c(36L, 37L, 38L, 39L)
+    stop("Need nonFlammClasses, which are the classes that cannot burn in the LandCoverClassifiedMap")
 
-  oldClass <- 0:39 ## TODO: this is LCC specific; needs to be general
-  newClass <- ifelse(oldClass %in% nonFlammClasses, 1, 0)   #1 codes for non flammable ## TODO: fix this
+  oldClass <- minValue(LandCoverClassifiedMap):maxValue(LandCoverClassifiedMap) ## TODO: this is LCC specific; needs to be general
+  newClass <- ifelse(oldClass %in% nonFlammClasses, 0, 1)   #1 codes for non flammable ## TODO: fix this
   #see mask argument for SpaDES::spread()
   flammableTable <- cbind(oldClass, newClass)
   #according to Yong, Canada Landcover 2005 is loaded as LandCoverClassifiedMap
   rstFlammable <- ratify(reclassify(LandCoverClassifiedMap, flammableTable, count = TRUE))
-  rstFlammable <- writeRaster(rstFlammable,
-                              filename = file.path(outputPath(sim), "rstFlammable"),
+  if (!is.null(filename2))
+    rstFlammable <- writeRaster(rstFlammable,
+                              filename = filename2,
                               overwrite = TRUE)
 
   setColors(rstFlammable, n = 2) <- colorRampPalette(c("blue", "red"))(2)
-  rstFlammable[is.na(rstStudyRegion[])] <- NA
+  if (!is.null(mask))
+    rstFlammable[is.na(mask[])] <- NA
   rstFlammable
 }
 
-
+#' Simple prepInputs for LCC2005 or LCC2010
+#'
+#' A wrapper around prepInputs for the Canadian Land Cover Classification product(s)
+#' @export
+#' @name prepInputsLCC
+#' @inheritParams reproducible::cropInputs
+#' @param year Numeric, either 2005 or 2010 (not yet implemented)
 prepInputsLCC <- function(year = 2005,
                           destinationPath = ".",
                           studyArea = NULL,
@@ -55,18 +69,26 @@ prepInputsLCC <- function(year = 2005,
              filename2 = filename2, ...)
 }
 
+if (!isGeneric("rasterToMatch")) {
+  setGeneric(
+    "rasterToMatch",
+    function(x, ...) {
+      standardGeneric("rasterToMatch")
+    })
+}
+
 #' Simple wrapper around \code{postProcess}
 #'
 #' This creates a new raster layer, whose intention is to be used as
 #' the \code{rasterToMatch} argument in further \code{prepInputs} calls
-#' @param raster A Raster Layer with correct resolution and origin
+#' @param x A Raster Layer with correct resolution and origin
 #' @param studyArea A SpatialPolygon* object that will be sent to \code{postProcess}
 #'
 #' @return A RasterLayer object.
 #'
 #' @export
-rasterToMatch <- function(raster, studyArea, ...) {
-  rtm <- raster::raster(raster)
+rasterToMatch.Raster <- function(x, studyArea, ...) {
+  rtm <- raster::raster(x)
   rtm <- setValues(rtm, 1L)
   postProcess(x = rtm, studyArea = studyArea, ...)
 }

@@ -4,7 +4,8 @@
 \alias{defineFlammable}
 \title{Define flammability map}
 \usage{
-defineFlammable(LandCoverClassifiedMap = NULL, nonFlammClasses = NULL)
+defineFlammable(LandCoverClassifiedMap = NULL, nonFlammClasses = c(36L,
+  37L, 38L, 39L), mask = NULL, filename2 = NULL)
 }
 \arguments{
 \item{LandCoverClassifiedMap}{A \code{Raster} that represents land cover

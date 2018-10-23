@@ -2,8 +2,10 @@
 
 export(.cleanLandWebStudyArea)
 export(createPrjFile)
+export(defineFlammable)
 export(polygonClean)
-export(rasterToMatch)
+export(prepInputsLCC)
+export(rasterToMatch.Raster)
 importFrom(raster,ratify)
 importFrom(raster,reclassify)
 importFrom(raster,shapefile)
