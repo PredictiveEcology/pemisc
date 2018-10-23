@@ -8,6 +8,7 @@
 #'
 #' @export
 #' @importFrom tools file_path_sans_ext
+#' @importFrom utils download.file
 createPrjFile <- function(shpFile,
                           urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/") {
   basenameWithoutExt <- file_path_sans_ext(shpFile)
@@ -29,6 +30,7 @@ createPrjFile <- function(shpFile,
 #' @param ...  Passed to \code{fn}
 #'
 #' @export
+#' @importFrom stats na.omit
 polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
   if (is.null(fn)) {
     if (is.null(type)) {
@@ -41,7 +43,4 @@ polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
     }
   }
   poly <- fn(poly, ...)
-
 }
-
-

@@ -16,5 +16,5 @@ A RasterLayer object.
 }
 \description{
 This creates a new raster layer, whose intention is to be used as
-the \code{rasterToMatch} argument in further \code{prepInputs} calls
+the \code{rasterToMatch} argument in further \code{prepInputs} calls.
 }
