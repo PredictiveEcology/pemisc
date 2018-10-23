@@ -87,8 +87,27 @@ if (!isGeneric("rasterToMatch")) {
 #' @return A RasterLayer object.
 #'
 #' @export
-rasterToMatch.Raster <- function(x, studyArea, ...) {
+#' @importMethodsFrom map rasterToMatch
+#' @exportMethod rasterToMatch
+setMethod("rasterToMatch", signature = "Raster",
+          definition = function(x, studyArea, ...) {
+  browser()
   rtm <- raster::raster(x)
   rtm <- setValues(rtm, 1L)
-  postProcess(x = rtm, studyArea = studyArea, ...)
-}
+  postProcess(rtm, studyArea = studyArea, ...)
+})
+
+#' @export
+setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
+          definition = function(x, studyArea, rasterToMatch, ...) {
+            numPolys <- length(x)
+            xDF <- as.data.frame(x)
+            x$numPolys <- seq_len(numPolys)
+            xDF <- data.frame(ID = x$numPolys, xDF)
+
+            rtm <- fasterize::fasterize(sf::st_as_sf(x),
+                                            field = "numPolys",
+                                            rasterToMatch)
+            levels(rtm) <- xDF
+            rtm
+          })
