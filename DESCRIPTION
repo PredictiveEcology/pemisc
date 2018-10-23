@@ -25,14 +25,10 @@ Imports:
     quickPlot,
     raster,
     reproducible,
-<<<<<<< HEAD
-    map,
-    tools
-=======
     stats,
+    map,
     tools,
     utils
->>>>>>> 45d1a577a14830a259f271dc2af26ea2beec777b
 Suggests:
     knitr,
     roxygen2,

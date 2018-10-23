@@ -93,13 +93,17 @@ if (!isGeneric("rasterToMatch")) {
 #' @export
 #' @importFrom raster raster setValues
 #' @importFrom reproducible postProcess
-rasterToMatch.Raster <- function(x, studyArea, ...) {
-  rtm <- raster::raster(x)
-  rtm <- setValues(rtm, 1L)
-  postProcess(rtm, studyArea = studyArea, ...)
-})
+#' @importMethodsFrom map rasterToMatch
+#' @exportMethod rasterToMatch
+setMethod("rasterToMatch", signature = "Raster",
+          definition = function(x, studyArea, ...) {
+            rtm <- raster::raster(x)
+            rtm <- setValues(rtm, 1L)
+            postProcess(rtm, studyArea = studyArea, ...)
+          })
 
 #' @export
+#' @exportMethod rasterToMatch
 setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
           definition = function(x, studyArea, rasterToMatch, ...) {
             numPolys <- length(x)
