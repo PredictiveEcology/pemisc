@@ -36,6 +36,8 @@ polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
     } else {
       if (length(na.omit(pmatch(c("LandWeb", "tolko", "testing"), type))))
         fn <- .cleanLandWebStudyArea
+      else
+        stop("Unknown type")
     }
   }
   poly <- fn(poly, ...)
