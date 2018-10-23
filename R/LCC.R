@@ -21,7 +21,7 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
     stop("Need nonFlammClasses, which are the classes that cannot burn in the LandCoverClassifiedMap")
 
   oldClass <- minValue(LandCoverClassifiedMap):maxValue(LandCoverClassifiedMap)
-  newClass <- ifelse(oldClass %in% nonFlammClasses, 0, 1) ## NOTE: 1 codes for NON-flammable ## TODO: fix this
+  newClass <- ifelse(oldClass %in% nonFlammClasses, 0, 1) ## NOTE: 0 codes for NON-flammable
   #see mask argument for SpaDES::spread()
   flammableTable <- cbind(oldClass, newClass)
   #according to Yong, Canada Landcover 2005 is loaded as LandCoverClassifiedMap
