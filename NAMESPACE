@@ -5,10 +5,28 @@ export(createPrjFile)
 export(defineFlammable)
 export(polygonClean)
 export(prepInputsLCC)
+<<<<<<< HEAD
 exportMethods(rasterToMatch)
+=======
+export(rasterToMatch.Raster)
+import(methods)
+importFrom(grDevices,colorRampPalette)
+importFrom(quickPlot,"setColors<-")
+importFrom(raster,maxValue)
+importFrom(raster,minValue)
+>>>>>>> 45d1a577a14830a259f271dc2af26ea2beec777b
 importFrom(raster,ratify)
 importFrom(raster,reclassify)
+importFrom(raster,setValues)
 importFrom(raster,shapefile)
 importFrom(raster,writeRaster)
+importFrom(reproducible,asPath)
+importFrom(reproducible,postProcess)
+importFrom(reproducible,prepInputs)
+importFrom(stats,na.omit)
 importFrom(tools,file_path_sans_ext)
+<<<<<<< HEAD
 importMethodsFrom(map,rasterToMatch)
+=======
+importFrom(utils,download.file)
+>>>>>>> 45d1a577a14830a259f271dc2af26ea2beec777b
