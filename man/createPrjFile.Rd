@@ -10,7 +10,7 @@ createPrjFile(shpFile,
 \arguments{
 \item{shpFile}{The filename of a shapefile to add \code{.prj}}
 
-\item{prjFile}{The url from which to fetch the projection, e.g.,
+\item{urlForProj}{The url from which to fetch the projection, e.g.,
 \code{"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"}.}
 }
 \description{

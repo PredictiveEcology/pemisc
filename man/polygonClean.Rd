@@ -4,7 +4,7 @@
 \alias{polygonClean}
 \title{Do an arbitrary set of operations on a polygon}
 \usage{
-polygonClean(poly, fn = NULL, type = NULL)
+polygonClean(poly, fn = NULL, type = NULL, ...)
 }
 \arguments{
 \item{fn}{A function identifying the type of cleaning to do.}
@@ -12,6 +12,8 @@ polygonClean(poly, fn = NULL, type = NULL)
 \item{type}{If fn is not known, an character string can be specified to
 identify which \code{fn} to use.
 This MUST be a known type for this function.}
+
+\item{...}{Passed to \code{fn}}
 
 \item{shp}{A polygon object, or a character string identifying the shapefile
 path to load, and clean.}

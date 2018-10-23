@@ -1,11 +1,12 @@
 Package: pemisc
 Type: Package
-Title: An set of functions developed by the Predictive Ecology group
+Title: Miscellaneous functions developed by the Predictive Ecology group
+  (<http://predictiveecology.org>).
 Description: These are miscellaneous
 URL: 
     http://map.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2018-10-21
+Date: 2018-10-2@
 Version: 0.0.1
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
@@ -23,7 +24,9 @@ Imports:
     reproducible,
     tools
 Suggests:
+    knitr,
     roxygen2,
+    rmarkdown,
     testthat
 Remotes:
     PredictiveEcology/reproducible@development,
@@ -31,6 +34,6 @@ Encoding: UTF-8
 Language: en-CA
 License: GPL-3
 VignetteBuilder: knitr, rmarkdown
-BugReports: https://github.com/PredictiveEcology/map/issues
+BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
 RoxygenNote: 6.1.0

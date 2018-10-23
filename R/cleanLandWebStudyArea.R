@@ -1,10 +1,12 @@
 #' Clean up the LandWeb study area from David Andison
-#' @importFrom raster shapefile
+#'
 #' @param poly A polygon or character string identifying the path to polygon
 #' @param minFRI Numeric or integer, indicating the minimum fire return interval
 #'               that will be part of the cleanup of polygon. Anything below
-#'               this will be NA
+#'               this will be \code{NA}.
 #' @export
+#' @importFrom raster shapefile
+#'
 .cleanLandWebStudyArea <- function(poly, minFRI = 40) {
   if (is.character(poly)) {
     createPrjFile(poly)

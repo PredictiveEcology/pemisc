@@ -3,9 +3,10 @@
 #' In cases where a shapefile is missing its associated \code{.prj} file.
 #'
 #' @param shpFile The filename of a shapefile to add \code{.prj}
-#' @param prjFile The url from which to fetch the projection, e.g.,
-#'                \code{"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"}.
+#' @param urlForProj The url from which to fetch the projection, e.g.,
+#'          \code{"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"}.
 #'
+#' @export
 #' @importFrom tools file_path_sans_ext
 createPrjFile <- function(shpFile,
                           urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/") {
@@ -25,7 +26,8 @@ createPrjFile <- function(shpFile,
 #' @param type If fn is not known, an character string can be specified to
 #'             identify which \code{fn} to use.
 #'             This MUST be a known type for this function.
-#' @param ... Passed to \code{fn}
+#' @param ...  Passed to \code{fn}
+#'
 #' @export
 polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
   if (is.null(fn)) {
