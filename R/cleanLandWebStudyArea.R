@@ -17,17 +17,12 @@
     poly$LTHRC <- poly$LTHFC
     poly$LTHFC <- NULL
 
-    ## TODO: test longer (doubled) fire return intervals
-    if (grepl("doubleFRI", get("runName", .GlobalEnv))) {
-      poly$LTHRC <- 2*poly$LTHRC
-    }
-    ## end TODO
-
     # The fires of Fire Return Interval 30 years are not correctly simulated
     # by LandMine, so they are removed.
-    poly$LTHRC[poly$LTHRC <= minFRI] <- NA
+    poly$fireReturnInterval <- poly$LTHRC
+    poly$LTHRC <- NULL
   }
-  poly$fireReturnInterval <- poly$LTHRC
+  poly$fireReturnInterval[poly$fireReturnInterval <= minFRI] <- NA
   poly@data <- poly@data[, !(names(poly) %in% "ECODISTRIC")]
 
   poly

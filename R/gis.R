@@ -37,4 +37,7 @@ polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
     }
   }
   poly <- fn(poly, ...)
+
 }
+
+

@@ -2,6 +2,7 @@
 
 export(.cleanLandWebStudyArea)
 export(polygonClean)
+export(rasterToMatch)
 importFrom(raster,ratify)
 importFrom(raster,reclassify)
 importFrom(raster,shapefile)
