@@ -44,3 +44,32 @@ polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
   }
   poly <- fn(poly, ...)
 }
+
+
+
+#' Make a vegetation type map from a stack of species abundances
+#'
+#' @export
+#' @param speciesStack A Raster Stack of species abundances. This must be one Raster Layer
+#'        per species
+#' @param vegLeadingProportion The threshold as a proportion of the total abundance
+#'        that a species must have to be considered a "pure" stand of that type. If no species
+#'        reaches this proportion, then the pixel will be 'mixed'
+#' @param mixed Logical. If \code{TRUE}, then a mixed pixel value will be identified and given
+#'        (see \code{vegLeadingProportion} argument)
+#' @return
+#' A factor raster
+makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
+  sumVegPct <- sum(speciesStack, na.rm = TRUE)
+
+  # create "mixed" layer, which is given a value slightly higher than any other layer
+  #   if it is deemed a mixed pixel
+  speciesStack$Mixed <- all(speciesStack/sumVegPct < vegLeadingProportion) *
+    max(maxValue(speciesStack))*1.01
+  vegTypeMap <- raster::which.max(speciesStack)
+  layerNames <- names(speciesStack)
+  names(layerNames) <- layerNames
+  levels(vegTypeMap) <- data.frame(ID = seq(layerNames), Species = names(layerNames))
+  vegTypeMap
+}
+
