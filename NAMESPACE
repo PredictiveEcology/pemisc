@@ -3,6 +3,7 @@
 export(.cleanLandWebStudyArea)
 export(createPrjFile)
 export(defineFlammable)
+export(equivalentName)
 export(makeVegTypeMap)
 export(polygonClean)
 export(prepInputsLCC)
