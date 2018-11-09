@@ -76,6 +76,7 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #'
 #' @inheritParams raster::factorValues
 #' @importFrom raster levels
+#' @export
 factorValues2 <- function(x, v, layer, att, append.names) {
   levs <- raster::levels(x)[[1]];
   a <- match(na.omit(v), levs$ID);
