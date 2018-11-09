@@ -71,3 +71,14 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
   levels(vegTypeMap) <- data.frame(ID = seq(layerNames), Species = names(layerNames))
   vegTypeMap
 }
+
+#' Faster version of \code{\link[raster]{factorValues}}
+#'
+#' @inheritParams raster::factorValues
+#' @importFrom raster levels
+factorValues2 <- function(x, v, layer, att, append.names) {
+  levs <- raster::levels(x)[[1]];
+  a <- match(na.omit(v), levs$ID);
+  levs[[att]][a]
+
+}
