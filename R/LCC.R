@@ -80,6 +80,13 @@ if (!isGeneric("rasterToMatch")) {
     })
 }
 
+#' @export
+setGeneric(
+  "rasterToMatch",
+  function(x, ...) {
+    standardGeneric("rasterToMatch")
+  })
+
 #' Simple wrapper around \code{postProcess}
 #'
 #' This creates a new raster layer, whose intention is to be used as
@@ -93,8 +100,6 @@ if (!isGeneric("rasterToMatch")) {
 #' @export
 #' @importFrom raster raster setValues
 #' @importFrom reproducible postProcess
-#' @importMethodsFrom map rasterToMatch
-#' @exportMethod rasterToMatch
 setMethod("rasterToMatch", signature = "Raster",
           definition = function(x, studyArea, ...) {
             rtm <- raster::raster(x)

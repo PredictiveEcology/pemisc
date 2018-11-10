@@ -26,7 +26,6 @@ Imports:
     raster,
     reproducible,
     stats,
-    map,
     tools,
     utils
 Suggests:
