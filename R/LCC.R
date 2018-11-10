@@ -72,15 +72,9 @@ prepInputsLCC <- function(year = 2005,
              filename2 = filename2, ...)
 }
 
-if (!isGeneric("rasterToMatch")) {
-  setGeneric(
-    "rasterToMatch",
-    function(x, ...) {
-      standardGeneric("rasterToMatch")
-    })
-}
 
 #' @export
+#' @exportMethod rasterToMatch
 setGeneric(
   "rasterToMatch",
   function(x, ...) {
@@ -98,6 +92,7 @@ setGeneric(
 #' @return A RasterLayer object.
 #'
 #' @export
+#' @exportMethod rasterToMatch
 #' @importFrom raster raster setValues
 #' @importFrom reproducible postProcess
 setMethod("rasterToMatch", signature = "Raster",
