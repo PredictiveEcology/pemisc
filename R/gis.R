@@ -74,12 +74,19 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 
 #' Faster version of \code{\link[raster]{factorValues}}
 #'
+#' Note there is an option to remove the NAs, which will make it MUCH faster,
+#' if \code{TRUE}
+#'
 #' @inheritParams raster::factorValues
 #' @importFrom raster levels
+#' @param na.rm Logical. If \code{TRUE}, then the NAs will be removed, returning a possibly
+#'              shorter vector
 #' @export
-factorValues2 <- function(x, v, layer, att, append.names) {
+factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
   levs <- raster::levels(x)[[1]];
-  a <- match(na.omit(v), levs$ID);
+  if (isTRUE(na.rm))
+    v <- na.omit(v)
+  a <- match(v, levs$ID);
   levs[[att]][a]
 
 }
