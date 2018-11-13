@@ -64,7 +64,7 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
   # create "mixed" layer, which is given a value slightly higher than any other layer
   #   if it is deemed a mixed pixel
   speciesStack$Mixed <- all(speciesStack / sumVegPct < vegLeadingProportion) *
-    max(maxValue(speciesStack))*1.01
+    max(maxValue(speciesStack)) * 1.01
   vegTypeMap <- raster::which.max(speciesStack)
   layerNames <- names(speciesStack)
   names(layerNames) <- layerNames
@@ -75,11 +75,11 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #' Faster version of \code{\link[raster]{factorValues}}
 #'
 #' @inheritParams raster::factorValues
+#'
 #' @importFrom raster levels
 #' @export
 factorValues2 <- function(x, v, layer, att, append.names) {
   levs <- raster::levels(x)[[1]];
   a <- match(na.omit(v), levs$ID);
   levs[[att]][a]
-
 }

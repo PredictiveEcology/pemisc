@@ -34,8 +34,7 @@ Suggests:
     rmarkdown,
     testthat
 Remotes:
-    PredictiveEcology/reproducible@development,
-    PredictiveEcology/map,
+    PredictiveEcology/reproducible@development
 Encoding: UTF-8
 Language: en-CA
 License: GPL-3

@@ -94,10 +94,8 @@ setGeneric(
 #'
 #' @export
 #' @exportMethod rasterToMatch
-#' @importMethodsFrom map rasterToMatch
 #' @importFrom raster raster setValues
 #' @importFrom reproducible postProcess
-#'
 setMethod("rasterToMatch", signature = "Raster",
           definition = function(x, studyArea, ...) {
             rtm <- raster::raster(x)
