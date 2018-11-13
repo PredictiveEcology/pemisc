@@ -64,7 +64,7 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
   # create "mixed" layer, which is given a value slightly higher than any other layer
   #   if it is deemed a mixed pixel
   speciesStack$Mixed <- all(speciesStack / sumVegPct < vegLeadingProportion) *
-    max(maxValue(speciesStack))*1.01
+    max(maxValue(speciesStack)) * 1.01
   vegTypeMap <- raster::which.max(speciesStack)
   layerNames <- names(speciesStack)
   names(layerNames) <- layerNames
@@ -78,6 +78,7 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #' if \code{TRUE}
 #'
 #' @inheritParams raster::factorValues
+#'
 #' @importFrom raster levels
 #' @param na.rm Logical. If \code{TRUE}, then the NAs will be removed, returning a possibly
 #'              shorter vector
@@ -88,5 +89,4 @@ factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
     v <- na.omit(v)
   a <- match(v, levs$ID);
   levs[[att]][a]
-
 }
