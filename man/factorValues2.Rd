@@ -4,7 +4,7 @@
 \alias{factorValues2}
 \title{Faster version of \code{\link[raster]{factorValues}}}
 \usage{
-factorValues2(x, v, layer, att, append.names)
+factorValues2(x, v, layer, att, append.names, na.rm = FALSE)
 }
 \arguments{
 \item{x}{Raster* object}
@@ -16,7 +16,11 @@ factorValues2(x, v, layer, att, append.names)
 \item{att}{numeric or character. Which variable(s) in the RAT table should be used. If \code{NULL}, all variables are extracted. If using a numeric, skip the first two default columns}
 
 \item{append.names}{logical. Should names of data.frame returned by a combination of the name of the layer and the RAT variables? (can be useful for multilayer objects}
+
+\item{na.rm}{Logical. If \code{TRUE}, then the NAs will be removed, returning a possibly
+shorter vector}
 }
 \description{
-Faster version of \code{\link[raster]{factorValues}}
+Note there is an option to remove the NAs, which will make it MUCH faster,
+if \code{TRUE}
 }
