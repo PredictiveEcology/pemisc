@@ -6,8 +6,8 @@
 #' @param nonFlammClasses numeric vector defining which classes in \code{LandCoverClassifiedMap}.
 #'
 #' @importFrom grDevices colorRampPalette
-#' @importFrom raster maxValue minValue ratify reclassify writeRaster
 #' @importFrom quickPlot setColors<-
+#' @importFrom raster maxValue minValue ratify reclassify writeRaster
 #' @export
 defineFlammable <- function(LandCoverClassifiedMap = NULL,
                             nonFlammClasses = c(36L, 37L, 38L, 39L),
@@ -72,7 +72,6 @@ prepInputsLCC <- function(year = 2005,
              datatype = "INT2U",
              filename2 = filename2, ...)
 }
-
 
 #' @export
 #' @exportMethod rasterToMatch

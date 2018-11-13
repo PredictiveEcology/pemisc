@@ -11,6 +11,8 @@
 \item{x}{A Raster Layer with correct resolution and origin}
 
 \item{studyArea}{A SpatialPolygon* object that will be sent to \code{postProcess}}
+
+\item{rasterToMatch}{The raster to match in a \code{fasterize} call}
 }
 \value{
 A RasterLayer object.

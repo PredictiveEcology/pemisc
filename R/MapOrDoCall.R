@@ -4,7 +4,9 @@
 #'
 #' @param memRequiredMB The amount of memory needed in MB
 #' @param maxNumClusters The maximum number of nodes to use
+#'
 #' @export
+#' @rdname optimalClusterNum
 optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = 1) {
   if (Sys.info()["sysname"] == "Linux") {
     detectedNumCores <- parallel::detectCores()
@@ -46,7 +48,9 @@ optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = 1) {
 #'        3 problems to solve, not \code{parallel::detectCores})
 #' @param ... Passed to \code{makeForkClusterRandom}.
 #'            Only relevant for \code{iseed}.
+#'
 #' @export
+#' @rdname makeOptimalCluster
 makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FALSE),
                                MBper = 5e2,
                                maxNumClusters = parallel::detectCores(), ...) {
@@ -82,6 +86,7 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #'
 #' @importFrom reproducible checkPath
 #' @export
+#' @rdname makeForkClusterRandom
 makeForkClusterRandom <- function(..., iseed = NULL) {
   require(parallel)
   dots <- list(...)
@@ -98,7 +103,6 @@ makeForkClusterRandom <- function(..., iseed = NULL) {
   cl
 }
 
-
 #' Find sources for arguments in arbitrary function(s)
 #'
 #' Search among local objects (which will often be arguments passed
@@ -114,7 +118,9 @@ makeForkClusterRandom <- function(..., iseed = NULL) {
 #' @return List of named objects. The names are the formals in fn, and
 #' the objects are the values for those formals. This can easily
 #' be passed to do.call(fn, args1)
+#'
 #' @export
+#' @rdname getLocalArgsFor
 getLocalArgsFor <- function(fn, localFormalArgs, envir, dots) {
   if (missing(envir))
     envir <- parent.frame()
@@ -161,10 +167,13 @@ getLocalArgsFor <- function(fn, localFormalArgs, envir, dots) {
 #' @param envir The environment to find the objects named in \code{localFormalArgs}
 #' @param dots Generally list(...), which would be an alternative place to find
 #'             \code{localFormalArgs}
+#'
 #' @return A list of length 2, named \code{argsSingle} and \code{argsMulti}, which
 #'         can be passed to e.g.,
 #'         \code{MapOrDoCall(fn, multiple = args1$argsMulti, single = args1$argsSingle)}
+#'
 #' @export
+#' @rdname identifyVectorArgs
 identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
   allArgs <- getLocalArgsFor(fn, localFormalArgs, envir = envir, dots = dots)
 
@@ -193,8 +202,8 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
 #' into vectors of values for a call to \code{Map}, and arguments that have
 #' only one value (passed to \code{MoreArgs} in \code{Map}). If all are single
 #' length arguments, then it will pass to \code{lapply}. If a \code{cl} is provided
-#' and is non-NULL, then it will pass all arguments to \code{clusterMap} or
-#' \code{clusterApply}
+#' and is non-\code{NULL}, then it will pass all arguments to \code{clusterMap} or
+#' \code{clusterApply}.
 #'
 #' @param multiple This a list the arguments that Map will cycle over.
 #' @param single Passed to \code{MoreArgs} in the \code{mapply} function.
@@ -203,30 +212,32 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
 #' @param cl A cluster object or \code{NULL}.
 #'
 #' @export
+#' @rdname MapOrDoCall
 #' @seealso \code{identifyVectorArgs}
 MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) {
   if (length(multiple)) {
     obj <- do.call(Cache, args = append(multiple, list(Map2, fn,
                                                        MoreArgs = single,
-                                                       cl = cl, useCache = useCache)))
+                                                       cl = cl,
+                                                       useCache = useCache)))
   } else {
     if (!missing(useCache))
       single[["useCache"]] <- useCache
-    obj <- do.call(Cache, args = append(list(fn),
-                                        single))
+    obj <- do.call(Cache, args = append(list(fn), single))
   }
   obj
-
 }
 
 #' \code{Map} and \code{parallel::clusterMap} together
 #'
 #' This will send to Map or clusterMap, depending on whether cl is provided.
 #'
-#' @importFrom parallel clusterMap
 #' @param ... passed to \code{Map} or \code{clusterMap}
 #' @param cl A cluster object, passed to \code{clusterMap}
+#'
 #' @export
+#' @importFrom parallel clusterMap
+#' @rdname Map2
 Map2 <- function(..., cl = NULL) {
   formsMap <- reproducible:::.formalsNotInCurrentDots(mapply, ...)
   formsClusterMap <- reproducible:::.formalsNotInCurrentDots(clusterMap, ...)
