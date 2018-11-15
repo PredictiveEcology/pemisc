@@ -6,8 +6,8 @@
 #' @param nonFlammClasses numeric vector defining which classes in \code{LandCoverClassifiedMap}.
 #'
 #' @importFrom grDevices colorRampPalette
-#' @importFrom raster maxValue minValue ratify reclassify writeRaster
 #' @importFrom quickPlot setColors<-
+#' @importFrom raster maxValue minValue ratify reclassify writeRaster
 #' @export
 defineFlammable <- function(LandCoverClassifiedMap = NULL,
                             nonFlammClasses = c(36L, 37L, 38L, 39L),
@@ -23,7 +23,7 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
     stop("Need nonFlammClasses, which are the classes that cannot burn in the LandCoverClassifiedMap")
 
   oldClass <- minValue(LandCoverClassifiedMap):maxValue(LandCoverClassifiedMap)
-  newClass <- ifelse(oldClass %in% nonFlammClasses, 0, 1) ## NOTE: 0 codes for NON-flammable
+  newClass <- ifelse(oldClass %in% nonFlammClasses, 0L, 1L) ## NOTE: 0 codes for NON-flammable
   #see mask argument for SpaDES::spread()
   flammableTable <- cbind(oldClass, newClass)
   #according to Yong, Canada Landcover 2005 is loaded as LandCoverClassifiedMap
@@ -32,8 +32,9 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
     rstFlammable <- writeRaster(rstFlammable, filename = filename2, overwrite = TRUE)
 
   setColors(rstFlammable, n = 2) <- colorRampPalette(c("blue", "red"))(2)
-  if (!is.null(mask))
-    rstFlammable[is.na(mask[])] <- NA
+  if (!is.null(mask)) rstFlammable[is.na(mask[])] <- NA_integer_
+
+  rstFlammable[] <- as.integer(rstFlammable[])
   rstFlammable
 }
 
@@ -74,13 +75,13 @@ prepInputsLCC <- function(year = 2005,
              filename2 = filename2, ...)
 }
 
-if (!isGeneric("rasterToMatch")) {
-  setGeneric(
-    "rasterToMatch",
-    function(x, ...) {
-      standardGeneric("rasterToMatch")
-    })
-}
+#' @export
+#' @exportMethod rasterToMatch
+setGeneric(
+  "rasterToMatch",
+  function(x, ...) {
+    standardGeneric("rasterToMatch")
+})
 
 #' Simple wrapper around \code{postProcess}
 #'
@@ -89,23 +90,24 @@ if (!isGeneric("rasterToMatch")) {
 #'
 #' @param x A Raster Layer with correct resolution and origin
 #' @param studyArea A SpatialPolygon* object that will be sent to \code{postProcess}
+#' @param rasterToMatch The raster to match in a \code{fasterize} call
 #'
 #' @return A RasterLayer object.
 #'
 #' @export
+#' @exportMethod rasterToMatch
 #' @importFrom raster raster setValues
 #' @importFrom reproducible postProcess
-#' @importMethodsFrom map rasterToMatch
-#' @exportMethod rasterToMatch
 setMethod("rasterToMatch", signature = "Raster",
           definition = function(x, studyArea, ...) {
             rtm <- raster::raster(x)
             rtm <- setValues(rtm, 1L)
             postProcess(rtm, studyArea = studyArea, ...)
-          })
+})
 
 #' @export
 #' @exportMethod rasterToMatch
+#' @importFrom fasterize fasterize
 setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
           definition = function(x, studyArea, rasterToMatch, ...) {
             numPolys <- length(x)
@@ -118,4 +120,4 @@ setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
             levels(rtm) <- xDF
             rtm[is.na(rasterToMatch[])] <- NA
             rtm
-          })
+})

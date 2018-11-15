@@ -8,11 +8,11 @@ makeVegTypeMap(speciesStack, vegLeadingProportion, mixed = TRUE)
 }
 \arguments{
 \item{speciesStack}{A Raster Stack of species abundances. This must be one Raster Layer
-per species}
+per species.}
 
 \item{vegLeadingProportion}{The threshold as a proportion of the total abundance
-that a species must have to be considered a "pure" stand of that type. If no species
-reaches this proportion, then the pixel will be 'mixed'}
+that a species must have to be considered a "pure" stand of that type.
+If no species reaches this proportion, then the pixel will be 'Mixed'.}
 
 \item{mixed}{Logical. If \code{TRUE}, then a mixed pixel value will be identified and given
 (see \code{vegLeadingProportion} argument)}
