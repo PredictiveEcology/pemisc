@@ -61,7 +61,7 @@ prepInputsLCC <- function(year = 2005,
     }
   }
 
-  prepInputs(targetFile = LCCfilename,
+  Cache(prepInputs, targetFile = LCCfilename,
              archive = asPath("LandCoverOfCanada2005_V1_4.zip"),
              url = url,
              destinationPath = destinationPath,
