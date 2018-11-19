@@ -20,11 +20,15 @@ Depends:
     R (>= 3.3.0)
 Imports:
     backports,
+    data.table,
+    fasterize,
     grDevices,
     methods,
+    parallel,
     quickPlot,
     raster,
     reproducible,
+    SpaDES.tools,
     stats,
     tools,
     utils

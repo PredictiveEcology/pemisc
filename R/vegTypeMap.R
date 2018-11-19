@@ -1,3 +1,7 @@
+if (getRversion() >= "3.1.0") {
+  utils::globalVariables(c(".", ":="))
+}
+
 #' Generate vegetation type map
 #'
 #' @param species        A \code{data.table} of stuff
@@ -7,8 +11,8 @@
 #'
 #' @author Eliot McIntire
 #' @export
-#' @importFrom data.table setkey
-#' @importFrom raster projection setValues
+#' @importFrom data.table data.table setkey
+#' @importFrom raster getValues projection projection<- setValues
 #' @importFrom SpaDES.tools rasterizeReduced
 vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingProportion) {
   species[species == "Pinu_ban" | species == "Pinu_con" | species == "Pinu_sp", speciesGroup := "PINU"]

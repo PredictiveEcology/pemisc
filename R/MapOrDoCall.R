@@ -84,6 +84,7 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #' @param ... passed to \code{makeForkCluster}, e.g.,
 #' @param iseed passed to \code{clusterSetRNGStream}
 #'
+#' @importFrom parallel clusterSetRNGStream makeForkCluster
 #' @importFrom reproducible checkPath
 #' @export
 #' @rdname makeForkClusterRandom
@@ -212,6 +213,7 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
 #' @param cl A cluster object or \code{NULL}.
 #'
 #' @export
+#' @importFrom reproducible Cache
 #' @rdname MapOrDoCall
 #' @seealso \code{identifyVectorArgs}
 MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) {
