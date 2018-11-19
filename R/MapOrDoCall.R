@@ -121,8 +121,10 @@ makeForkClusterRandom <- function(..., iseed = NULL) {
 #' be passed to do.call(fn, args1)
 #'
 #' @export
+#' @importFrom utils getFromNamespace
 #' @rdname getLocalArgsFor
 getLocalArgsFor <- function(fn, localFormalArgs, envir, dots) {
+  fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
   if (missing(envir))
     envir <- parent.frame()
   if (missing(localFormalArgs))
@@ -132,10 +134,10 @@ getLocalArgsFor <- function(fn, localFormalArgs, envir, dots) {
     names(localFormalArgs) <- localFormalArgs
 
   if (length(fn) > 1) {
-    forms <- unlist(lapply(fn, reproducible:::.formalsNotInCurrentDots, dots = dots))
+    forms <- unlist(lapply(fn, fnicd, dots = dots))
     forms <- forms[duplicated(forms)]
   } else {
-    forms <- reproducible:::.formalsNotInCurrentDots(fn, dots = dots)
+    forms <- fnicd(fn, dots = dots)
   }
   args <- dots[!(names(dots) %in% forms)]
   localFormals <- if (length(fn) > 1) {
@@ -239,10 +241,12 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) {
 #'
 #' @export
 #' @importFrom parallel clusterMap
+#' @importFrom utils getFromNamespace
 #' @rdname Map2
 Map2 <- function(..., cl = NULL) {
-  formsMap <- reproducible:::.formalsNotInCurrentDots(mapply, ...)
-  formsClusterMap <- reproducible:::.formalsNotInCurrentDots(clusterMap, ...)
+  fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
+  formsMap <- fnicd(mapply, ...)
+  formsClusterMap <- fnicd(clusterMap, ...)
   if (is.null(cl)) {
     argList <- list(...)
     wrongFun1 <- "fun" %in% names(argList)
