@@ -115,8 +115,8 @@ setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
             x$numPolys <- seq_len(numPolys)
             xDF <- data.frame(ID = x$numPolys, xDF)
             rtm <- fasterize::fasterize(sf::st_as_sf(x),
-                                            field = "numPolys",
-                                            rasterToMatch)
+                                        field = "numPolys",
+                                        rasterToMatch)
             levels(rtm) <- xDF
             rtm[is.na(rasterToMatch[])] <- NA
             rtm
