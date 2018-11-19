@@ -4,7 +4,7 @@ Title: Miscellaneous Utilities Developed by the Predictive Ecology Group
 Description: Miscellaneous utilities developed by the Predictive Ecology Group
   (<http://predictiveecology.org>).
 URL: 
-    http://map.predictiveecology.org,
+    http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
 Date: 2018-11-13
 Version: 0.0.1
@@ -41,4 +41,4 @@ License: GPL-3
 VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1

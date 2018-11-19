@@ -17,6 +17,8 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
   if (!is(LandCoverClassifiedMap, "RasterLayer")) {
     stop("Need a classified land cover map. Currently only accepts 'LCC2005'")
   }
+  if (!is.integer(LandCoverClassifiedMap[]))
+    stop("LandCoverCLassifiedMap must be an integer")
   if (is.null(nonFlammClasses))
     stop("Need nonFlammClasses, which are the classes that cannot burn in the LandCoverClassifiedMap")
 
@@ -25,7 +27,7 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
   #see mask argument for SpaDES::spread()
   flammableTable <- cbind(oldClass, newClass)
   #according to Yong, Canada Landcover 2005 is loaded as LandCoverClassifiedMap
-  rstFlammable <- ratify(reclassify(LandCoverClassifiedMap, flammableTable, count = TRUE))
+  rstFlammable <- ratify(reclassify(LandCoverClassifiedMap, flammableTable))
   if (!is.null(filename2))
     rstFlammable <- writeRaster(rstFlammable, filename = filename2, overwrite = TRUE)
 
@@ -62,7 +64,7 @@ prepInputsLCC <- function(year = 2005,
     }
   }
 
-  prepInputs(targetFile = LCCfilename,
+  Cache(prepInputs, targetFile = LCCfilename,
              archive = asPath("LandCoverOfCanada2005_V1_4.zip"),
              url = url,
              destinationPath = destinationPath,
@@ -112,9 +114,10 @@ setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
             xDF <- as.data.frame(x)
             x$numPolys <- seq_len(numPolys)
             xDF <- data.frame(ID = x$numPolys, xDF)
-
-            rtm <- fasterize::fasterize(sf::st_as_sf(x), field = "numPolys",
-                                        rasterToMatch)
+            rtm <- fasterize::fasterize(sf::st_as_sf(x),
+                                            field = "numPolys",
+                                            rasterToMatch)
             levels(rtm) <- xDF
+            rtm[is.na(rasterToMatch[])] <- NA
             rtm
 })
