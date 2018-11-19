@@ -21,7 +21,7 @@ createPrjFile <- function(shpFile,
 
 #' Do an arbitrary set of operations on a polygon
 #'
-#' @param shp  A polygon object, or a character string identifying the shapefile
+#' @param poly A polygon object, or a character string identifying the shapefile
 #'             path to load, and clean.
 #' @param fn   A function identifying the type of cleaning to do.
 #' @param type If fn is not known, an character string can be specified to

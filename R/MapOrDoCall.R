@@ -89,7 +89,6 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #' @export
 #' @rdname makeForkClusterRandom
 makeForkClusterRandom <- function(..., iseed = NULL) {
-  require(parallel)
   dots <- list(...)
   if (!("outfile" %in% names(dots))) {
     dots$outfile <- file.path("outputs", ".log.txt")
@@ -114,7 +113,10 @@ makeForkClusterRandom <- function(..., iseed = NULL) {
 #' the object in the local environment called "obj", and this will
 #' be found because it matches the \code{x} argument in \code{fn}.
 #'
+#' @param fn Function name(?)
 #' @param localFormalArgs A (named) character vector or arguments to
+#' @param envir The environment in which to (???)
+#' @param dots TODO: need description
 #'
 #' @return List of named objects. The names are the formals in fn, and
 #' the objects are the values for those formals. This can easily

@@ -12,6 +12,10 @@ defineFlammable(LandCoverClassifiedMap = NULL, nonFlammClasses = c(36L,
 (e.g., Land Cover Classified map from 2005 or 2010 from the Canadian Forest Service).}
 
 \item{nonFlammClasses}{numeric vector defining which classes in \code{LandCoverClassifiedMap}.}
+
+\item{mask}{A raster to use as a mask (see \code{\link[raster]{mask}}).}
+
+\item{filename2}{See \code{link[reproducible]{postProcess}}. Default \code{NULL}.}
 }
 \description{
 Define flammability map

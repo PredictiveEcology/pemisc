@@ -7,7 +7,13 @@
 getLocalArgsFor(fn, localFormalArgs, envir, dots)
 }
 \arguments{
+\item{fn}{Function name(?)}
+
 \item{localFormalArgs}{A (named) character vector or arguments to}
+
+\item{envir}{The environment in which to (???)}
+
+\item{dots}{TODO: need description}
 }
 \value{
 List of named objects. The names are the formals in fn, and

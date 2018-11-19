@@ -5,6 +5,10 @@
 #'
 #' @param nonFlammClasses numeric vector defining which classes in \code{LandCoverClassifiedMap}.
 #'
+#' @param mask A raster to use as a mask (see \code{\link[raster]{mask}}).
+#'
+#' @param filename2 See \code{link[reproducible]{postProcess}}. Default \code{NULL}.
+#'
 #' @importFrom grDevices colorRampPalette
 #' @importFrom quickPlot setColors<-
 #' @importFrom raster maxValue minValue ratify reclassify writeRaster
@@ -43,6 +47,8 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
 #' A wrapper around prepInputs for the Canadian Land Cover Classification product(s)
 #'
 #' @inheritParams reproducible::cropInputs
+#' @inheritParams reproducible::postProcess
+#' @inheritParams reproducible::prepInputs
 #'
 #' @param year Numeric, either 2005 or 2010 (not yet implemented)
 #'
@@ -65,39 +71,42 @@ prepInputsLCC <- function(year = 2005,
   }
 
   Cache(prepInputs, targetFile = LCCfilename,
-             archive = asPath("LandCoverOfCanada2005_V1_4.zip"),
-             url = url,
-             destinationPath = destinationPath,
-             studyArea = studyArea,
-             rasterToMatch = rasterToMatch,
-             method = "bilinear",
-             datatype = "INT2U",
-             filename2 = filename2, ...)
+        archive = asPath("LandCoverOfCanada2005_V1_4.zip"),
+        url = url,
+        destinationPath = destinationPath,
+        studyArea = studyArea,
+        rasterToMatch = rasterToMatch,
+        method = "bilinear",
+        datatype = "INT2U",
+        filename2 = filename2, ...)
 }
 
+#' Extract or create a raster to match
+#'
+#' This extracts or creates a new raster layer, whose intention is to be used as
+#' the \code{rasterToMatch} argument in further \code{prepInputs} calls.
+#'
+#' @param x A Raster Layer with correct resolution and origin.
+#' @param ... Additional arguments
+#'
+#' @return A \code{RasterLayer} object.
+#'
 #' @export
 #' @exportMethod rasterToMatch
+#' @rdname rasterToMatch
 setGeneric(
   "rasterToMatch",
   function(x, ...) {
     standardGeneric("rasterToMatch")
 })
 
-#' Simple wrapper around \code{postProcess}
-#'
-#' This creates a new raster layer, whose intention is to be used as
-#' the \code{rasterToMatch} argument in further \code{prepInputs} calls.
-#'
-#' @param x A Raster Layer with correct resolution and origin
-#' @param studyArea A SpatialPolygon* object that will be sent to \code{postProcess}
-#' @param rasterToMatch The raster to match in a \code{fasterize} call
-#'
-#' @return A RasterLayer object.
+#' @param studyArea A SpatialPolygon* object that will be sent to \code{postProcess}.
 #'
 #' @export
 #' @exportMethod rasterToMatch
 #' @importFrom raster raster setValues
 #' @importFrom reproducible postProcess
+#' @rdname rasterToMatch
 setMethod("rasterToMatch", signature = "Raster",
           definition = function(x, studyArea, ...) {
             rtm <- raster::raster(x)
@@ -105,9 +114,12 @@ setMethod("rasterToMatch", signature = "Raster",
             postProcess(rtm, studyArea = studyArea, ...)
 })
 
+#' @param rasterToMatch The raster to match in a \code{fasterize} call.
+#'
 #' @export
 #' @exportMethod rasterToMatch
 #' @importFrom fasterize fasterize
+#' @rdname rasterToMatch
 setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
           definition = function(x, studyArea, rasterToMatch, ...) {
             numPolys <- length(x)

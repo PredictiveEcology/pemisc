@@ -7,12 +7,12 @@
 equivalentName(value, df, column)
 }
 \arguments{
-\item{value}{Vector of values to match in the \code{df}}
+\item{value}{Vector of values to match in the \code{df}.}
+
+\item{df}{A data.frame where every row is a set of equivalent names.}
 
 \item{column}{A character string or numeric of length 1, indicating the column
 in \code{df} to return names from.}
-
-\item{data.frame}{A data.frame where every row is a set of equivalent names}
 }
 \description{
 This is simply a wrapper around \code{match} for a specific data.frame of values.
