@@ -372,6 +372,7 @@ knnLoadFun <- function(speciesListIndex, spp, suffix, url, dPath, studyArea, ras
 #'
 #' @param highQualityStack      TODO: description needed
 #' @param lowQualityStack       TODO: description needed
+#' @param speciesList           TODO: description needed
 #' @param outputFilenameSuffix  TODO: description needed
 #' @param destinationPath       TODO: description needed
 #'
@@ -380,9 +381,14 @@ knnLoadFun <- function(speciesListIndex, spp, suffix, url, dPath, studyArea, ras
 #' @importFrom quickPlot layerNames
 #' @importFrom raster compareRaster crs extent filename ncell projectExtent
 #' @importFrom raster raster res writeRaster xmax xmin ymax ymin
-overlayStacks <- function(highQualityStack, lowQualityStack,
-                          outputFilenameSuffix = "overlay",
-                          destinationPath) {
+overlayStacks <- function(highQualityStack, lowQualityStack, speciesList = NULL,
+                          outputFilenameSuffix = "overlay", destinationPath) {
+
+  if (!is.null(speciesList)) {
+    ## TODO: need better (non-manual) way to match layerNames between stacks!
+    names(highQualityStack) <- speciesList
+  }
+
   for (sp in layerNames(highQualityStack)) {
     hqLarger <- ncell(lowQualityStack) * prod(res(lowQualityStack)) <
       ncell(highQualityStack) * prod(res(highQualityStack))
@@ -447,7 +453,7 @@ overlayStacks <- function(highQualityStack, lowQualityStack,
       }
       message("  Writing new, overlaid ", sp, " raster to disk.")
       if (!compareRaster(LQRast, HQRast))
-        stop("Stacks not identical, something is wrong with overlayStacks function.")
+        stop("Stacks not identical, something is wrong with overlayStack function.")
 
       nas <- is.na(HQRast[])
       HQRast[nas] <- LQRast[][nas]
@@ -458,6 +464,7 @@ overlayStacks <- function(highQualityStack, lowQualityStack,
                             ),
                             overwrite = TRUE)
       names(HQRast) <- sp
+
       if (!exists("HQStack")) HQStack <- stack(HQRast) else HQStack[[sp]] <- HQRast
     }
   }
