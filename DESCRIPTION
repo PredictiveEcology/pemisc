@@ -22,6 +22,7 @@ Imports:
     backports,
     data.table,
     fasterize,
+    gdalUtils,
     grDevices,
     magrittr,
     methods,

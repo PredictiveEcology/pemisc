@@ -365,3 +365,101 @@ knnLoadFun <- function(speciesListIndex, spp, suffix, url, dPath, studyArea, ras
   names(species1) <- spp[, "speciesNamesRaw"]
   return(species1)
 }
+
+#' Overlay layers within raster stacks
+#'
+#' TODO: description needed
+#'
+#' @param highQualityStack      TODO: description needed
+#' @param lowQualityStack       TODO: description needed
+#' @param outputFilenameSuffix  TODO: description needed
+#' @param destinationPath       TODO: description needed
+#'
+#' @export
+#' @importFrom gdalUtils gdalwarp
+#' @importFrom quickPlot layerNames
+#' @importFrom raster compareRaster crs extent filename ncell projectExtent
+#' @importFrom raster raster res writeRaster xmax xmin ymax ymin
+overlayStacks <- function(highQualityStack, lowQualityStack,
+                          outputFilenameSuffix = "overlay",
+                          destinationPath) {
+  for (sp in layerNames(highQualityStack)) {
+    hqLarger <- ncell(lowQualityStack) * prod(res(lowQualityStack)) <
+      ncell(highQualityStack) * prod(res(highQualityStack))
+
+    if (sp %in% layerNames(lowQualityStack)) {
+      if (!(all(
+        isTRUE(all.equal(extent(lowQualityStack), extent(highQualityStack))),
+        isTRUE(all.equal(crs(lowQualityStack), crs(highQualityStack))),
+        isTRUE(all.equal(res(lowQualityStack), res(highQualityStack)))))) {
+        message("  ", sp, " extents, or resolution, or projection did not match; ",
+                "using gdalwarp to make them overlap")
+        LQRastName <- basename(tempfile(fileext = ".tif"))
+        if (!nzchar(filename(lowQualityStack[[sp]]))) {
+          LQCurName <- basename(tempfile(fileext = ".tif"))
+          lowQualityStack[[sp]][] <- as.integer(lowQualityStack[[sp]][])
+          lowQualityStack[[sp]] <- writeRaster(lowQualityStack[[sp]],
+                                               filename = LQCurName,
+                                               datatype = "INT2U")
+        }
+
+        LQRastInHQcrs <- projectExtent(lowQualityStack, crs = crs(highQualityStack))
+        # project LQ raster into HQ dimensions
+        gdalwarp(overwrite = TRUE,
+                 dstalpha = TRUE,
+                 s_srs = as.character(crs(lowQualityStack[[sp]])),
+                 t_srs = as.character(crs(highQualityStack[[sp]])),
+                 multi = TRUE, of = "GTiff",
+                 tr = res(highQualityStack),
+                 te = c(xmin(LQRastInHQcrs), ymin(LQRastInHQcrs),
+                        xmax(LQRastInHQcrs), ymax(LQRastInHQcrs)),
+                 filename(lowQualityStack[[sp]]), ot = "Byte",
+                 LQRastName)
+
+        LQRast <- raster(LQRastName)
+        LQRast[] <- LQRast[]
+        unlink(LQRastName)
+
+        try(unlink(LQCurName), silent = TRUE)
+
+        if (hqLarger) {
+          tmpHQName <- basename(tempfile(fileext = ".tif"))
+
+          gdalwarp(overwrite = TRUE,
+                   dstalpha = TRUE,
+                   s_srs = as.character(crs(highQualityStack[[sp]])),
+                   t_srs = as.character(crs(highQualityStack[[sp]])),
+                   multi = TRUE, of = "GTiff",
+                   tr = res(highQualityStack),
+                   te = c(xmin(LQRastInHQcrs), ymin(LQRastInHQcrs),
+                          xmax(LQRastInHQcrs), ymax(LQRastInHQcrs)),
+                   filename(highQualityStack[[sp]]), ot = "Byte", tmpHQName)
+          HQRast <- raster(tmpHQName)
+          HQRast[] <- HQRast[]
+          HQRast[HQRast[] == 255] <- NA_integer_
+          unlink(tmpHQName)
+        } else {
+          HQRast <- highQualityStack[[sp]]
+        }
+      } else {
+        LQRast <- lowQualityStack[[sp]]
+        HQRast <- highQualityStack[[sp]]
+      }
+      message("  Writing new, overlaid ", sp, " raster to disk.")
+      if (!compareRaster(LQRast, HQRast))
+        stop("Stacks not identical, something is wrong with overlayStacks function.")
+
+      nas <- is.na(HQRast[])
+      HQRast[nas] <- LQRast[][nas]
+      HQRast <- writeRaster(HQRast, datatype = "INT2U",
+                            filename = file.path(
+                              destinationPath,
+                              paste0(sp, "_", outputFilenameSuffix, ".tif")
+                            ),
+                            overwrite = TRUE)
+      names(HQRast) <- sp
+      if (!exists("HQStack")) HQStack <- stack(HQRast) else HQStack[[sp]] <- HQRast
+    }
+  }
+  HQStack
+}
