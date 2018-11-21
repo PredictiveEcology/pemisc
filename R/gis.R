@@ -45,33 +45,6 @@ polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
   poly <- fn(poly, ...)
 }
 
-#' Make a vegetation type map from a stack of species abundances
-#'
-#' @param speciesStack A Raster Stack of species abundances. This must be one Raster Layer
-#'        per species.
-#' @param vegLeadingProportion The threshold as a proportion of the total abundance
-#'        that a species must have to be considered a "pure" stand of that type.
-#'        If no species reaches this proportion, then the pixel will be 'Mixed'.
-#' @param mixed Logical. If \code{TRUE}, then a mixed pixel value will be identified and given
-#'        (see \code{vegLeadingProportion} argument)
-#' @return A factor raster
-#'
-#' @export
-#' @importFrom raster maxValue which.max
-makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
-  sumVegPct <- sum(speciesStack, na.rm = TRUE)
-
-  # create "mixed" layer, which is given a value slightly higher than any other layer
-  #   if it is deemed a mixed pixel
-  speciesStack$Mixed <- all(speciesStack / sumVegPct < vegLeadingProportion) *
-    max(maxValue(speciesStack)) * 1.01
-  vegTypeMap <- raster::which.max(speciesStack)
-  layerNames <- names(speciesStack)
-  names(layerNames) <- layerNames
-  levels(vegTypeMap) <- data.frame(ID = seq(layerNames), Species = names(layerNames))
-  vegTypeMap
-}
-
 #' Faster version of \code{\link[raster]{factorValues}}
 #'
 #' Note there is an option to remove the NAs, which will make it MUCH faster,
@@ -90,3 +63,56 @@ factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
   a <- match(v, levs$ID);
   levs[[att]][a]
 }
+
+#' Extract or create a raster to match
+#'
+#' This extracts or creates a new raster layer, whose intention is to be used as
+#' the \code{rasterToMatch} argument in further \code{prepInputs} calls.
+#'
+#' @param x A Raster Layer with correct resolution and origin.
+#' @param ... Additional arguments
+#'
+#' @return A \code{RasterLayer} object.
+#'
+#' @export
+#' @exportMethod rasterToMatch
+#' @rdname rasterToMatch
+setGeneric(
+  "rasterToMatch",
+  function(x, ...) {
+    standardGeneric("rasterToMatch")
+})
+
+#' @param studyArea A SpatialPolygon* object that will be sent to \code{postProcess}.
+#'
+#' @export
+#' @exportMethod rasterToMatch
+#' @importFrom raster raster setValues
+#' @importFrom reproducible postProcess
+#' @rdname rasterToMatch
+setMethod("rasterToMatch", signature = "Raster",
+          definition = function(x, studyArea, ...) {
+            rtm <- raster::raster(x)
+            rtm <- setValues(rtm, 1L)
+            postProcess(rtm, studyArea = studyArea, ...)
+})
+
+#' @param rasterToMatch The raster to match in a \code{fasterize} call.
+#'
+#' @export
+#' @exportMethod rasterToMatch
+#' @importFrom fasterize fasterize
+#' @rdname rasterToMatch
+setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
+          definition = function(x, studyArea, rasterToMatch, ...) {
+            numPolys <- length(x)
+            xDF <- as.data.frame(x)
+            x$numPolys <- seq_len(numPolys)
+            xDF <- data.frame(ID = x$numPolys, xDF)
+            rtm <- fasterize::fasterize(sf::st_as_sf(x),
+                                        field = "numPolys",
+                                        rasterToMatch)
+            levels(rtm) <- xDF
+            rtm[is.na(rasterToMatch[])] <- NA
+            rtm
+})
