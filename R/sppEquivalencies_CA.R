@@ -1,0 +1,28 @@
+#' Table of species name equivalencies for Canadian trees
+#'
+#' A table containing the different species names used across
+#' diferent sources (e.g. LANDIS-II test parameter files and trait tables,
+#' the LandR standard, Knn species biomass layers, ...). Each column refers
+#' to a diferent source or species naming approach.
+#' Presently only containing Canadian native tree species, with name equivalencies
+#' coming from:
+#' - LANDIS-II test parameter tables (column \code{LANDIStest_names}; source: https://raw.githubusercontent.com/LANDIS-II-Foundation/Extensions-Succession/master/biomass-succession-archive/trunk/tests/v6.0-2.0/species.txt)
+#' - LANDIS-II Canada-wide trait table (column \code{LANDIStraits_names}; source: https://raw.githubusercontent.com/dcyr/LANDIS-II_IA_generalUseFiles/master/speciesTraits.csv)
+#' - LandR family of SpaDES modules (column \code{LandR_names})
+#' - CFS Knn species biomass layers (column \code{KNN_names}; source: http://tree.pfc.forestry.ca/kNN-Species.tar)
+#' - Remaining columns have been filled with some other useful ways to name species (e.g. for plotting).
+#'
+#' This table is currently used as the default equivalencies table in LandR SpaDES modules,
+#' but can also serve as a template to costumise species names equivalencies by the user.
+#'
+#' @format A data frame with 40 rows and 7 variables:
+#' \describe{
+#'   \item{LANDIStest_names}{species names from LANDIS-II test parameter table}
+#'   \item{LANDIStraits_names}{species names from LANDIS-II traits parameter table}
+#'   \item{LandR_names}{species names from LandR modules}
+#'   \item{KNN_names}{species names from Knn datasets}
+#'   \item{shortENGeneric}{Short version of species'common names in English}
+#'   \item{full.ENGeneric}{Full species' common names in English}
+#'   \item{leadingNames}{Simple common english names used for leading species}
+#' }
+"sppEquivalencies_CA"

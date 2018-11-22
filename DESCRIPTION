@@ -47,4 +47,5 @@ License: GPL-3
 VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
+LazyData: true
 RoxygenNote: 6.1.1
