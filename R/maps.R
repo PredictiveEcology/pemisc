@@ -409,9 +409,9 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
   stack(stackRas)
 }
 
-#' Overlaying function to use in overlayStacks
+#' Overlaying function
 #'
-#' Function to be applied to each row of a data.table containing information
+#' Used internally in \code{overlayStacks}. Function to be applied to each row of a data.table containing information
 #' of whether the species layer exists in the HQ and LQ data.
 #' Only overlays if data exists in both layers, otherwise returns the layer with data
 #'

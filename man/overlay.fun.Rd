@@ -2,7 +2,7 @@
 % Please edit documentation in R/maps.R
 \name{overlay.fun}
 \alias{overlay.fun}
-\title{Overlaying function to use in overlayStacks}
+\title{Overlaying function}
 \usage{
 overlay.fun(SPP, HQ, LQ, hqLarger, lowQualityStack,
   outputFilenameSuffix = "overlay", destinationPath)
@@ -21,7 +21,7 @@ overlay.fun(SPP, HQ, LQ, hqLarger, lowQualityStack,
 \item{destinationPath}{directory for saved rasters}
 }
 \description{
-Function to be applied to each row of a data.table containing information
+Used internally in \code{overlayStacks}. Function to be applied to each row of a data.table containing information
 of whether the species layer exists in the HQ and LQ data.
 Only overlays if data exists in both layers, otherwise returns the layer with data
 }
