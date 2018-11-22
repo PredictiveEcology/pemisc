@@ -7,7 +7,7 @@ Miscellaneous utilities developed by the Predictive Ecology Lab Group.
 
 ## Installation
 
-### Current release (on CRAN)
+### Current release
 
 [![Build Status](https://travis-ci.org/PredictiveEcology/pemisc.svg?branch=master)](https://travis-ci.org/PredictiveEcology/pemisc)
 [![Appveyor Build status](https://ci.appveyor.com/api/projects/status/2fxqhgk6miv2fytd/branch/master?svg=true)](https://ci.appveyor.com/project/achubaty/pemisc/branch/master)
