@@ -4,36 +4,50 @@
 \alias{loadkNNSpeciesLayers}
 \title{Function to load kNN species layers from online data repository}
 \usage{
-loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, speciesList = NULL,
+loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppNameVector,
+  speciesEquivalency, knnNamesCol, sppEndNamesCol, sppMerge = NULL,
   thresh = 1, url, cachePath, ...)
 }
 \arguments{
 \item{dPath}{path to the data directory}
 
-\item{rasterToMatch}{passed to \code{prepInputs}}
+\item{rasterToMatch}{passed to \code{link[reproducible]{prepInputs}}}
 
-\item{studyArea}{passed to \code{prepInputs}}
+\item{studyArea}{passed to \code{link[reproducible]{prepInputs}}}
 
-\item{speciesList}{either a character vector of species names to download,
-or a two-column matrix with the species names to download
-and final names, with column names
-\code{c("speciesNamesRaw", "speciesNamesEnd")}.
-Should two raw species names share the same final name,
-their biomass data will be considered as the "same species".}
+\item{sppNameVector}{a character vector of species names to download, in their final form}
+
+\item{speciesEquivalency}{table with species name equivalencies between the Knn format
+and the final naming format}
+
+\item{knnNamesCol}{character string indicating the column in \code{speciesEquivalency}
+containing Knn species names}
+
+\item{sppEndNamesCol}{character string indicating the column in \code{speciesEquivalency}
+to use for final species names}
+
+\item{sppMerge}{a list of species names (as in \code{sppNameVector}) to which correspond
+more than one Knn layers that should be overlaid to produce a single species layer. List
+\code{names} should be the final desired names, whereas list entries will ideally match the Knn
+name format. However, \code{link[pemisc]{equivalentName}} is used internally to conform list names to
+LandR naming and list entries to Knn naming using \code{{link[pemisc]speciesEquivalencies}}.}
 
 \item{thresh}{the minimum number of pixels where the species must have
 \code{biomass > 0} to be considered present in the study area.
 Defaults to 1.}
 
-\item{url}{the source url for the data, passed to \code{prepInputs}}
+\item{url}{the source url for the data, passed to \code{link[reproducible]{prepInputs}}}
 
 \item{cachePath}{path to the cache directory}
 
-\item{...}{Additonal arguments}
+\item{...}{Additonal arguments passed to \code{link[reproducible]{Cache}} and \code{link[pemisc]{equivalentName}}}
+
+\item{sppMerge}{list of Knn species' layers that should be merged. List names correspond to final species
+names as in \code{sppEndNamesCol}, list entries correspond to Knn species layers to be merged. Defaults to NULL}
 }
 \value{
 a list of two elements: \code{speciesLayer}, a raster stack; and
-        \code{speciesList}, a vector(?) of species names. TODO: verify this
+        \code{speciesList}, a vector(?) of species names.
 }
 \description{
 TODO: description needed
