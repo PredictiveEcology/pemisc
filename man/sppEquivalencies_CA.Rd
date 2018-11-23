@@ -4,12 +4,14 @@
 \name{sppEquivalencies_CA}
 \alias{sppEquivalencies_CA}
 \title{Table of species name equivalencies for Canadian trees}
-\format{A data frame with 40 rows and 7 variables:
+\format{A data frame with 271 rows and 10 variables:
 \describe{
   \item{LANDIStest_names}{species names from LANDIS-II test parameter table}
   \item{LANDIStraits_names}{species names from LANDIS-II traits parameter table}
   \item{LandR_names}{species names from LandR modules}
   \item{KNN_names}{species names from Knn datasets}
+  \item{CASFRI_names}{species names from CASFRI database}
+  \item{fullLatin}{accepted species latin names as in http://theplantlist.org}
   \item{shortENGeneric}{Short version of species'common names in English}
   \item{full.ENGeneric}{Full species' common names in English}
   \item{leadingNames}{Simple common english names used for leading species}
@@ -28,6 +30,7 @@ coming from:
 - LANDIS-II Canada-wide trait table (column \code{LANDIStraits_names}; source: https://raw.githubusercontent.com/dcyr/LANDIS-II_IA_generalUseFiles/master/speciesTraits.csv)
 - LandR family of SpaDES modules (column \code{LandR_names})
 - CFS Knn species biomass layers (column \code{KNN_names}; source: http://tree.pfc.forestry.ca/kNN-Species.tar)
+- Canadian Common Attribute Schema for Forest Resource Inventories (column \code{CASFRI_names}; source http://www.borealbirds.ca/files/CAS_Document_Final_Mar_2010_ALL_APPENDICES.pdf)
 - Remaining columns have been filled with some other useful ways to name species (e.g. for plotting).
 }
 \details{
