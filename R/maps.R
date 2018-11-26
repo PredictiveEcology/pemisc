@@ -69,13 +69,13 @@ prepInputsLCC <- function(year = 2005,
   if (is.null(dots$url)) {
     if (identical(as.integer(year), 2005L)) {
       url <- "ftp://ftp.ccrs.nrcan.gc.ca/ad/NLCCLandCover/LandcoverCanada2005_250m/LandCoverOfCanada2005_V1_4.zip" #nolint
-      fiename <- asPath("LCC2005_V1_4a.tif")
+      filename <- asPath("LCC2005_V1_4a.tif")
     } else {
       stop("Don't have the url for LCC2010 yet. Plese pass it using 'url'.")
     }
   }
 
-  Cache(prepInputs, targetFile = fiename,
+  Cache(prepInputs, targetFile = filename,
         archive = asPath("LandCoverOfCanada2005_V1_4.zip"),
         url = url,
         destinationPath = destinationPath,
