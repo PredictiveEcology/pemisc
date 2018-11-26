@@ -1,9 +1,9 @@
-#' Return equivalent name from a data.frame of equivalencies
+#' Return equivalent name from a \code{data.frame} of equivalencies
 #'
-#' This is simply a wrapper around \code{match} for a specific data.frame of values.
+#' This is simply a wrapper around \code{match} for a specific \code{data.frame} of values.
 #'
-#' @param value   Vector of values to match in the \code{df}.
-#' @param df      A data.frame where every row is a set of equivalent names.
+#' @param value   Vector of values to match in \code{df}.
+#' @param df      A \code{data.frame} where every row is a set of equivalent names.
 #' @param column  A character string or numeric of length 1, indicating the column
 #'                in \code{df} to return names from.
 #'
