@@ -4,7 +4,7 @@
 \alias{overlay.fun}
 \title{Overlaying function}
 \usage{
-overlay.fun(SPP, HQ, LQ, hqLarger, lowQualityStack,
+overlay.fun(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack,
   outputFilenameSuffix = "overlay", destinationPath)
 }
 \arguments{
@@ -13,6 +13,8 @@ overlay.fun(SPP, HQ, LQ, hqLarger, lowQualityStack,
 \item{HQ}{data.table column of whether SPP is present in HQ layers}
 
 \item{LQ}{data.table column of whether SPP is present in LQ layers}
+
+\item{highQualityStack}{high quality list/stack of rasters (will be used preferencially)}
 
 \item{lowQualityStack}{low quality list/stack of rasters (will be used to fill NAs in highQualityStack)}
 

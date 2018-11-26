@@ -17,5 +17,7 @@ overlayStacks(highQualityStack, lowQualityStack,
 \item{destinationPath}{directory for saved rasters}
 }
 \description{
-TODO: description needed
+Overlays rasters of different data resolution by filling in gaps in the highest resolution raster
+ with data available in lowest resolution one. If only high or low resolution data are available, it
+ will use it without attempting to overlay.
 }
