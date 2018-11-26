@@ -281,10 +281,10 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
 #' @export
 #' @importFrom raster calc stack writeRaster
 sumRastersBySpecies <- function(speciesLayers, layersToSum, filenameToSave, newLayerName) {
-  ras_out <- raster::calc(raster::stack(speciesLayers[layersToSum]), sum)
-  names(ras_out) <- newLayerName
-  writeRaster(ras_out, filename = filenameToSave, datatype = "INT2U", overwrite = TRUE)
-  ras_out # Work around for Cache
+  out <- raster::calc(raster::stack(speciesLayers[layersToSum]), sum)
+  names(out) <- newLayerName
+  writeRaster(out, filename = filenameToSave, datatype = "INT2U", overwrite = TRUE)
+  out # Work around for Cache
 }
 
 #' Overlay layers within raster stacks
