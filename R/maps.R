@@ -134,7 +134,6 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #'               \code{biomass > 0} to be considered present in the study area.
 #'               Defaults to 1.
 #' @param url the source url for the data, passed to \code{link[reproducible]{prepInputs}}
-#' @param cachePath path to the cache directory
 #' @param ... Additonal arguments passed to \code{link[reproducible]{Cache}} and \code{link[pemisc]{equivalentName}}
 #'
 #' @return a list of two elements: \code{speciesLayer}, a raster stack; and
@@ -146,8 +145,14 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #' @importFrom utils untar
 #'
 loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector, speciesEquivalency,
-                                 knnNamesCol, sppEndNamesCol, sppMerge = NULL, thresh = 1, url, cachePath, ...) {
+                                 knnNamesCol, sppEndNamesCol, sppMerge = NULL, thresh = 1, url, ...) {
   dots <- list(...)
+
+  if ("cachePath" %in% names(dots)) {
+    cachePath <- dots$cachePath
+  } else {
+    cachePath <- options("reproducible.cachePath")
+  }
 
   ## get .tar file first - no extraction
   outPreProcess <- preProcess(targetFile = file.path(dPath, "kNN-Species.tar"), archive = file.path(dPath, "kNN-Species.tar"),
@@ -168,14 +173,16 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
   ## Make sure spp names are compatible with kNN names
   KnnNames <- as.character(equivalentName(sppNameVector, speciesEquivalency, column = knnNamesCol))
 
+  ## if there are NA's, that means some species can't be found in kNN data base
   if(any(is.na(KnnNames))) {
     warning(paste0("Can't find ", sppNameVector[is.na(KnnNames)], " in `speciesEquivalency$",
             knnNamesCol, ".\n Will use remaining matching species, but check if this is correct"))
+    ## select only available species
     KnnNames <- KnnNames[!is.na(KnnNames)]
     sppNameVector <- sppNameVector[!is.na(KnnNames)]
   }
 
-
+  ## same as above
   if(any(!KnnNames %in% allSpp)) {
     warning(paste0("Can't find ", sppNameVector[is.na(KnnNames)], " in  in kNN database.
                    \n Will use remaining matching species, but check if this is correct"))
@@ -259,7 +266,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
     speciesLayers[belowThresh] <- NULL
 
   ## return stack and updated species names vector
-  list(speciesLayers = stack(speciesLayers), sppNameVector = names(speciesLayers))
+  list(speciesLayers = stack(speciesLayers), sppNameVector = sppNameVector)
 }
 
 #' Function to sum rasters of species layers
