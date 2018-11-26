@@ -342,7 +342,7 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
 #' @export
 #' @importFrom reproducible .suffix prepInputs
 
-overlay.fun <- function(SPP, HQ, LQ, hqLarger, lowQualityStack, outputFilenameSuffix = "overlay",
+overlay.fun <- function(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack, outputFilenameSuffix = "overlay",
                         destinationPath) {
   ## if HQ & LQ have data, pool
   if (HQ & LQ) {
