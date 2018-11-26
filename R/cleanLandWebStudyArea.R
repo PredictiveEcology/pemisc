@@ -16,13 +16,13 @@
   stopifnot(any(c("LTHFC", "LTHRC") %in% names(poly)))
   if (!isTRUE("LTHRC" %in% names(poly))) {
     # Apparently, sometimes it is LTHFC, sometimes LTHRC; get rid of LTHFC
-    poly$LTHRC <- poly$LTHFC
-    poly$LTHFC <- NULL
+    poly$LTHRC <- poly$LTHFC #nolint
+    poly$LTHFC <- NULL #nolint
 
     # The fires of Fire Return Interval 30 years are not correctly simulated
     # by LandMine, so they are removed.
     poly$fireReturnInterval <- poly$LTHRC
-    poly$LTHRC <- NULL
+    poly$LTHRC <- NULL #nolint
   }
   poly$fireReturnInterval[poly$fireReturnInterval <= minFRI] <- NA
   poly@data <- poly@data[, !(names(poly) %in% "ECODISTRIC")]

@@ -32,14 +32,14 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
   shortcohortdata[, speciesProportion := speciesGroupB / totalB]
 
   speciesLeading <- NULL
-  Factor <- NULL
-  ID <- NULL
+  Factor <- NULL #nolint
+  ID <- NULL #nolint
   pixelGroup <- NULL
   speciesProportion <- NULL
   speciesGroup <- NULL
   speciesCode <- NULL
   totalB <- NULL
-  B <- NULL
+  B <- NULL #nolint
   speciesGroupB <- NULL
 
   shortcohortdata[speciesGroup == "PINU" & speciesProportion > vegLeadingProportion,
@@ -55,10 +55,10 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
   shortcohortdata <- unique(shortcohortdata[, .(pixelGroup, speciesLeading)], by = "pixelGroup")
   shortcohortdata[speciesLeading == 0, speciesLeading := 5] # 5 is mixed forests
   attritable <- data.table(ID = sort(unique(shortcohortdata$speciesLeading)))
-  attritable[ID == 1, Factor := "Pine leading"]
-  attritable[ID == 2, Factor := "Deciduous leading"]
-  attritable[ID == 3, Factor := "Black spruce leading"]
-  attritable[ID == 4, Factor := "White spruce leading"]
+  attritable[ID == 1, Factor := "Pine leading"]          #nolint
+  attritable[ID == 2, Factor := "Deciduous leading"]     #nolint
+  attritable[ID == 3, Factor := "Black spruce leading"]  #nolint
+  attritable[ID == 4, Factor := "White spruce leading"]  #nolint
   attritable[ID == 5, Factor := "Mixed"]
   vegTypeMap <- rasterizeReduced(shortcohortdata, pixelGroupMap, "speciesLeading", "pixelGroup")
   vegTypeMap <- setValues(vegTypeMap, as.integer(getValues(vegTypeMap)))

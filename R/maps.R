@@ -5,7 +5,7 @@ if (getRversion() >= "3.1.0") {
 #' Define flammability map
 #'
 #' @param LandCoverClassifiedMap A \code{Raster} that represents land cover
-#'             (e.g., Land Cover Classified map from 2005 or 2010 from the Canadian Forest Service).
+#' (e.g., Land Cover Classified map from 2005 or 2010 from the Canadian Forest Service).
 #'
 #' @param nonFlammClasses numeric vector defining which classes in \code{LandCoverClassifiedMap}.
 #'
@@ -28,8 +28,8 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
   if (!is.integer(LandCoverClassifiedMap[]))
     stop("LandCoverCLassifiedMap must be an integer")
   if (is.null(nonFlammClasses))
-    stop("Need nonFlammClasses, which are the classes that cannot burn in
-         the LandCoverClassifiedMap")
+    stop("Need nonFlammClasses, which are the classes that cannot burn in",
+         "the LandCoverClassifiedMap")
 
   oldClass <- minValue(LandCoverClassifiedMap):maxValue(LandCoverClassifiedMap)
   newClass <- ifelse(oldClass %in% nonFlammClasses, 0L, 1L) ## NOTE: 0 codes for NON-flammable
@@ -68,15 +68,14 @@ prepInputsLCC <- function(year = 2005,
   dots <- list(...)
   if (is.null(dots$url)) {
     if (identical(as.integer(year), 2005L)) {
-      url <- "ftp://ftp.ccrs.nrcan.gc.ca/ad/NLCCLandCover/LandcoverCanada2005_250m/LandCoverOfCanada2005_V1_4.zip"
-      LCCfilename <- asPath("LCC2005_V1_4a.tif")
+      url <- "ftp://ftp.ccrs.nrcan.gc.ca/ad/NLCCLandCover/LandcoverCanada2005_250m/LandCoverOfCanada2005_V1_4.zip" #nolint
+      fiename <- asPath("LCC2005_V1_4a.tif")
     } else {
-      stop("don't have the url for LCC2010 yet.
-           Please find it and pass it as url = 'TheFTPAddress'")
+      stop("Don't have the url for LCC2010 yet. Plese pass it using 'url'.")
     }
   }
 
-  Cache(prepInputs, targetFile = LCCfilename,
+  Cache(prepInputs, targetFile = fiename,
         archive = asPath("LandCoverOfCanada2005_V1_4.zip"),
         url = url,
         destinationPath = destinationPath,
@@ -106,7 +105,7 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 
   # create "mixed" layer, which is given a value slightly higher than any other layer
   #   if it is deemed a mixed pixel
-  speciesStack$Mixed <- all(speciesStack / sumVegPct < vegLeadingProportion) *
+  speciesStack$Mixed <- all(speciesStack / sumVegPct < vegLeadingProportion) * #nolint
     max(maxValue(speciesStack)) * 1.01
   vegTypeMap <- raster::which.max(speciesStack)
   layerNames <- names(speciesStack)
@@ -232,7 +231,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
     ## make sure species names and list names are in the right formats
     sppMerge <- lapply(sppMerge, FUN = function(x) {
       equivalentName(x, speciesEquivalency,  column = knnNamesCol)
-      })
+    })
     names(sppMerge) <- equivalentName(names(sppMerge), speciesEquivalency,  column = sppEndNamesCol)
 
     ## keep species present in the data
@@ -321,8 +320,8 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
   dtj <- merge(dt1, dt2, all = TRUE)
 
   ## check which layers have species info in HQ and LQ
-  dtj[, HQ := any(!is.na(highQualityStack[[SPP]][])), by = 1:nrow(dtj)]
-  dtj[, LQ := any(!is.na(lowQualityStack[[SPP]][])), by = 1:nrow(dtj)]
+  dtj[, HQ := any(!is.na(highQualityStack[[SPP]][])), by = 1:nrow(dtj)] #nolint
+  dtj[, LQ := any(!is.na(lowQualityStack[[SPP]][])), by = 1:nrow(dtj)] #nolint
 
   stackRas <- list()
   for (x in 1:nrow(dtj)) {
@@ -351,7 +350,7 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
 #'
 #' @importFrom reproducible .suffix prepInputs
 #' @keywords internal
-.overlay <- function(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack,
+.overlay <- function(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack, #nolint
                     outputFilenameSuffix = "overlay", destinationPath) {
   ## if HQ & LQ have data, pool
   if (HQ & LQ) {
@@ -429,7 +428,6 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
     names(HQRast) <- SPP
     return(HQRast)
   } else {
-
     ## if only HQ/LQ exist return one of them
     ## if none have data return one of the empty to keep all layers
     if (HQ) {

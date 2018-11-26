@@ -52,7 +52,7 @@ optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = 1) {
 #' @export
 #' @rdname makeOptimalCluster
 makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FALSE),
-                               MBper = 5e2,
+                               MBper = 5e2, #nolint
                                maxNumClusters = parallel::detectCores(), ...) {
   cl <- NULL
   if (is.null(maxNumClusters)) maxNumClusters <- parallel::detectCores()

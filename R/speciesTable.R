@@ -65,11 +65,12 @@ prepSpeciesTable <- function(speciesTable, speciesList, speciesLayers) {
   speciesTable$species1 <- as.character(substring(speciesTable$species, 1, 4))
   speciesTable$species2 <- as.character(substring(speciesTable$species, 6,
                                                   nchar(as.character(speciesTable$species))))
-  speciesTable[, ':='(species = paste(as.character(substring(species1, 1, 1)),
-                                      tolower(as.character(substring(species1, 2, nchar(species1)))),
-                                      "_", as.character(substring(species2, 1, 1)),
-                                      tolower(as.character(substring(species2, 2, nchar(species2)))),
-                                      sep = ""))]
+  speciesTable[, ':='(species = paste(
+    as.character(substring(species1, 1, 1)),
+    tolower(as.character(substring(species1, 2, nchar(species1)))),
+    "_", as.character(substring(species2, 1, 1)),
+    tolower(as.character(substring(species2, 2, nchar(species2)))),
+    sep = ""))]
 
   speciesTable$species <- toSentenceCase(speciesTable$species)
   speciesTable[species == "Pinu_con.con", species := "Pinu_con"]

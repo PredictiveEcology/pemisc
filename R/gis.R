@@ -10,7 +10,7 @@
 #' @importFrom tools file_path_sans_ext
 #' @importFrom utils download.file
 createPrjFile <- function(shpFile,
-                          urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/") {
+                          urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/") {  #nolint
   basenameWithoutExt <- file_path_sans_ext(shpFile)
   basenameWithoutExt <- basenameWithoutExt[-length(basenameWithoutExt)]
   prjFile <- paste0(basenameWithoutExt, ".prj")
