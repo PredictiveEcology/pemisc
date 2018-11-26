@@ -151,7 +151,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
   if ("cachePath" %in% names(dots)) {
     cachePath <- dots$cachePath
   } else {
-    cachePath <- options("reproducible.cachePath")
+    cachePath <- getOption("reproducible.cachePath")
   }
 
   ## get .tar file first - no extraction
@@ -165,10 +165,10 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
     sub("_v0.zip", "", .) %>%
     sub(".*Species_", "", .)
 
-  if (sppNameVector == "all") {
-    ## get all species layers from .tar
-    sppNameVector <- allSpp
-    }
+  ## get all species layers from .tar
+  if (length(sppNameVector) == 1) ## avoids a warning in next if
+    if (sppNameVector == "all")
+      sppNameVector <- allSpp
 
   ## Make sure spp names are compatible with kNN names
   KnnNames <- as.character(equivalentName(sppNameVector, speciesEquivalency, column = knnNamesCol))

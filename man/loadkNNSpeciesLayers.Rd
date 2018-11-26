@@ -6,7 +6,7 @@
 \usage{
 loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppNameVector,
   speciesEquivalency, knnNamesCol, sppEndNamesCol, sppMerge = NULL,
-  thresh = 1, url, cachePath, ...)
+  thresh = 1, url, ...)
 }
 \arguments{
 \item{dPath}{path to the data directory}
@@ -37,8 +37,6 @@ LandR naming and list entries to Knn naming using \code{{link[pemisc]speciesEqui
 Defaults to 1.}
 
 \item{url}{the source url for the data, passed to \code{link[reproducible]{prepInputs}}}
-
-\item{cachePath}{path to the cache directory}
 
 \item{...}{Additonal arguments passed to \code{link[reproducible]{Cache}} and \code{link[pemisc]{equivalentName}}}
 
