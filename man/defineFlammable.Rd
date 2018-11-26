@@ -15,7 +15,7 @@ defineFlammable(LandCoverClassifiedMap = NULL, nonFlammClasses = c(36L,
 
 \item{mask}{A raster to use as a mask (see \code{\link[raster]{mask}}).}
 
-\item{filename2}{See \code{link[reproducible]{postProcess}}. Default \code{NULL}.}
+\item{filename2}{See \code{\link[reproducible]{postProcess}}. Default \code{NULL}.}
 }
 \description{
 Define flammability map

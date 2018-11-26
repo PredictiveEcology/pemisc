@@ -1,3 +1,7 @@
+if (getRversion() >= "3.1.0") {
+  utils::globalVariables(c("HQ", "LQ", "SPP"))
+}
+
 #' Define flammability map
 #'
 #' @param LandCoverClassifiedMap A \code{Raster} that represents land cover
@@ -7,7 +11,7 @@
 #'
 #' @param mask A raster to use as a mask (see \code{\link[raster]{mask}}).
 #'
-#' @param filename2 See \code{link[reproducible]{postProcess}}. Default \code{NULL}.
+#' @param filename2 See \code{\link[reproducible]{postProcess}}. Default \code{NULL}.
 #'
 #' @importFrom grDevices colorRampPalette
 #' @importFrom quickPlot setColors<-
@@ -114,38 +118,43 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #' TODO: description needed
 #'
 #' @param dPath path to the data directory
-#' @param rasterToMatch passed to \code{link[reproducible]{prepInputs}}
-#' @param studyArea passed to \code{link[reproducible]{prepInputs}}
+#' @param rasterToMatch passed to \code{\link[reproducible]{prepInputs}}
+#' @param studyArea passed to \code{\link[reproducible]{prepInputs}}
 #' @param sppNameVector a character vector of species names to download, in their final form
-#' @param sppMerge a list of species names (as in \code{sppNameVector}) to which correspond
-#' more than one Knn layers that should be overlaid to produce a single species layer. List
-#' \code{names} should be the final desired names, whereas list entries will ideally match the Knn
-#' name format. However, \code{link[pemisc]{equivalentName}} is used internally to conform list names to
-#' LandR naming and list entries to Knn naming using \code{{link[pemisc]speciesEquivalencies}}.
-#' @param speciesEquivalency table with species name equivalencies between the Knn format
-#' and the final naming format
+#' @param speciesEquivalency table with species name equivalencies between the
+#'                           kNN format and the final naming format.
 #' @param knnNamesCol character string indicating the column in \code{speciesEquivalency}
-#' containing Knn species names
+#'                    containing kNN species names.
 #' @param sppEndNamesCol character string indicating the column in \code{speciesEquivalency}
-#' to use for final species names
-#' @param sppMerge list of Knn species' layers that should be merged. List names correspond to final species
-#' names as in \code{sppEndNamesCol}, list entries correspond to Knn species layers to be merged. Defaults to NULL
+#'                       to use for final species names.
+#' @param sppMerge list of kNN species layers that should be merged. List names
+#'                 correspond to final species names as in \code{sppEndNamesCol},
+#'                 list entries correspond to kNN species layers to be merged.
+#'                 Defaults to \code{NULL}.
+#'                 OTHER DESCRIPTION:(((a list of species names (as in \code{sppNameVector}) to which
+#'                 correspond more than one kNN layers that should be overlaid
+#'                 to produce a single species layer.
+#'                 List \code{names} should be the final desired names, whereas
+#'                 list entries will ideally match the kNN name format.
+#'                 However, \code{\link{equivalentName}} is used internally to
+#'                 conform list names to LandR naming and list entries to kNN
+#'                 naming using \code{\link{sppEquivalencies_CA}}.))) TODO: which description???
 #' @param thresh the minimum number of pixels where the species must have
 #'               \code{biomass > 0} to be considered present in the study area.
 #'               Defaults to 1.
-#' @param url the source url for the data, passed to \code{link[reproducible]{prepInputs}}
-#' @param ... Additonal arguments passed to \code{link[reproducible]{Cache}} and \code{link[pemisc]{equivalentName}}
+#' @param url the source url for the data, passed to \code{\link[reproducible]{prepInputs}}
+#' @param ... Additonal arguments passed to \code{\link[reproducible]{Cache}} and \code{\link{equivalentName}}
 #'
 #' @return a list of two elements: \code{speciesLayer}, a raster stack; and
 #'         \code{speciesList}, a vector(?) of species names.
 #'
 #' @export
 #' @importFrom raster ncell
-#' @importFrom reproducible Cache
+#' @importFrom reproducible Cache preProcess
 #' @importFrom utils untar
-#'
-loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector, speciesEquivalency,
-                                 knnNamesCol, sppEndNamesCol, sppMerge = NULL, thresh = 1, url, ...) {
+loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
+                                 speciesEquivalency, knnNamesCol, sppEndNamesCol,
+                                 sppMerge = NULL, thresh = 1, url, ...) {
   dots <- list(...)
 
   if ("cachePath" %in% names(dots)) {
@@ -155,7 +164,8 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
   }
 
   ## get .tar file first - no extraction
-  outPreProcess <- preProcess(targetFile = file.path(dPath, "kNN-Species.tar"), archive = file.path(dPath, "kNN-Species.tar"),
+  outPreProcess <- preProcess(targetFile = file.path(dPath, "kNN-Species.tar"),
+                              archive = file.path(dPath, "kNN-Species.tar"),
                               url = url, destinationPath = dPath)
 
   ## get all kNN species
@@ -171,23 +181,23 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
       sppNameVector <- allSpp
 
   ## Make sure spp names are compatible with kNN names
-  KnnNames <- as.character(equivalentName(sppNameVector, speciesEquivalency, column = knnNamesCol))
+  kNNnames <- as.character(equivalentName(sppNameVector, speciesEquivalency, column = knnNamesCol))
 
   ## if there are NA's, that means some species can't be found in kNN data base
-  if(any(is.na(KnnNames))) {
-    warning(paste0("Can't find ", sppNameVector[is.na(KnnNames)], " in `speciesEquivalency$",
+  if (any(is.na(kNNnames))) {
+    warning(paste0("Can't find ", sppNameVector[is.na(kNNnames)], " in `speciesEquivalency$",
             knnNamesCol, ".\n Will use remaining matching species, but check if this is correct"))
     ## select only available species
-    KnnNames <- KnnNames[!is.na(KnnNames)]
-    sppNameVector <- sppNameVector[!is.na(KnnNames)]
+    kNNnames <- kNNnames[!is.na(kNNnames)]
+    sppNameVector <- sppNameVector[!is.na(kNNnames)]
   }
 
   ## same as above
-  if(any(!KnnNames %in% allSpp)) {
-    warning(paste0("Can't find ", sppNameVector[is.na(KnnNames)], " in  in kNN database.
-                   \n Will use remaining matching species, but check if this is correct"))
-    KnnNames <- KnnNames[KnnNames %in% allSpp]
-    sppNameVector <- sppNameVector[KnnNames %in% allSpp]
+  if (any(!kNNnames %in% allSpp)) {
+    warning(paste0("Can't find ", sppNameVector[is.na(kNNnames)], " in kNN database.\n",
+                   "Will use remaining matching species, but check if this is correct."))
+    kNNnames <- kNNnames[kNNnames %in% allSpp]
+    sppNameVector <- sppNameVector[kNNnames %in% allSpp]
   }
 
   ## define suffix to append to file names
@@ -199,10 +209,10 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
   suffix <- paste0("_", suffix)
 
   ## select which archives/targetFiles to extract
-  targetFiles <- paste0("NFI_MODIS250m_kNN_Species_", KnnNames, "_v0.tif")
+  targetFiles <- paste0("NFI_MODIS250m_kNN_Species_", kNNnames, "_v0.tif")
   names(targetFiles) <- targetFiles
   archives <- cbind(archive1 = file.path(dPath, "kNN-Species.tar"),
-                    archive2 = paste0("NFI_MODIS250m_kNN_Species_", KnnNames, "_v0.zip"))
+                    archive2 = paste0("NFI_MODIS250m_kNN_Species_", kNNnames, "_v0.zip"))
   archives <- split(archives, archives[, "archive2"])
 
   postProcessedFilenames <- .suffix(targetFiles, suffix = suffix)
@@ -221,7 +231,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
                        ),
                        prepInputs)
 
-  names(speciesLayers) <- KnnNames
+  names(speciesLayers) <- kNNnames
 
   ## Sum species that share same final name
   if (!is.null(sppMerge)) {
@@ -237,7 +247,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
         sumSpecies <- sppMerge[[i]]
         newLayerName <- names(sppMerge)[i]
 
-        fname <- .suffix(file.path(dPath, paste0("KNN", newLayerName, ".tif")), suffix)
+        fname <- .suffix(file.path(dPath, paste0("kNN", newLayerName, ".tif")), suffix)
         a <- Cache(sumRastersBySpecies,
                    speciesLayers = speciesLayers[sumSpecies],
                    newLayerName = newLayerName,
@@ -287,9 +297,10 @@ sumRastersBySpecies <- function(speciesLayers, layersToSum, filenameToSave, newL
 
 #' Overlay layers within raster stacks
 #'
-#' Overlays rasters of different data resolution by filling in gaps in the highest resolution raster
-#'  with data available in lowest resolution one. If only high or low resolution data are available, it
-#'  will use it without attempting to overlay.
+#' Overlays rasters of different data resolution by filling in gaps in the highest
+#' resolution raster with data available in lowest resolution one.
+#' If only high or low resolution data are available, it will use it without
+#' attempting to overlay.
 #'
 #' @param highQualityStack      high quality list/stack of rasters (will be used preferencially)
 #' @param lowQualityStack       low quality list/stack of rasters (will be used to fill NAs in highQualityStack)
@@ -318,12 +329,12 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
   dtj[, LQ := any(!is.na(lowQualityStack[[SPP]][])), by = 1:nrow(dtj)]
 
   stackRas <- list()
-  for(x in 1:nrow(dtj)) {
-    stackRas[[x]] <- dtj[x, overlay.fun(SPP, HQ, LQ, hqLarger = hqLarger,
-                                        highQualityStack = highQualityStack,
-                                        lowQualityStack = lowQualityStack,
-                                        outputFilenameSuffix = outputFilenameSuffix,
-                                        destinationPath = destinationPath)]
+  for (x in 1:nrow(dtj)) {
+    stackRas[[x]] <- dtj[x, .overlay(SPP, HQ, LQ, hqLarger = hqLarger,
+                                     highQualityStack = highQualityStack,
+                                     lowQualityStack = lowQualityStack,
+                                     outputFilenameSuffix = outputFilenameSuffix,
+                                     destinationPath = destinationPath)]
   }
   names(stackRas) = dtj$SPP
 
@@ -332,20 +343,20 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
 
 #' Overlaying function
 #'
-#' Used internally in \code{overlayStacks}. Function to be applied to each row of a data.table containing information
-#' of whether the species layer exists in the HQ and LQ data.
-#' Only overlays if data exists in both layers, otherwise returns the layer with data
+#' Used internally in \code{overlayStacks}. Function to be applied to each row
+#' of a \code{data.table} containing information of whether the species layer
+#' exists in the HQ and LQ data.
+#' Only overlays if data exists in both layers, otherwise returns the layer with data.
 #'
-#' @param SPP data.table column of species layer name
-#' @param HQ data.table column of whether SPP is present in HQ layers
-#' @param LQ data.table column of whether SPP is present in LQ layers
 #' @inheritParams overlayStacks
+#' @param SPP \code{data.table} column of species layer name
+#' @param HQ \code{data.table} column of whether SPP is present in HQ layers
+#' @param LQ \code{data.table} column of whether SPP is present in LQ layers
 #'
-#' @export
 #' @importFrom reproducible .suffix prepInputs
-
-overlay.fun <- function(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack, outputFilenameSuffix = "overlay",
-                        destinationPath) {
+#' @keywords internal
+.overlay <- function(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack,
+                    outputFilenameSuffix = "overlay", destinationPath) {
   ## if HQ & LQ have data, pool
   if (HQ & LQ) {
     ## check equality of raster attributes and correct if necessary
@@ -359,7 +370,8 @@ overlay.fun <- function(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack
       if (!nzchar(filename(lowQualityStack[[SPP]]))) {
         LQCurName <- basename(tempfile(fileext = ".tif"))
         lowQualityStack[[SPP]][] <- as.integer(lowQualityStack[[SPP]][])
-        lowQualityStack[[SPP]] <- writeRaster(lowQualityStack[[SPP]], filename = LQCurName,
+        lowQualityStack[[SPP]] <- writeRaster(lowQualityStack[[SPP]],
+                                              filename = LQCurName,
                                               datatype = "INT2U")
       }
 

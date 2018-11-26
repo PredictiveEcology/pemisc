@@ -11,37 +11,41 @@ loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppNameVector,
 \arguments{
 \item{dPath}{path to the data directory}
 
-\item{rasterToMatch}{passed to \code{link[reproducible]{prepInputs}}}
+\item{rasterToMatch}{passed to \code{\link[reproducible]{prepInputs}}}
 
-\item{studyArea}{passed to \code{link[reproducible]{prepInputs}}}
+\item{studyArea}{passed to \code{\link[reproducible]{prepInputs}}}
 
 \item{sppNameVector}{a character vector of species names to download, in their final form}
 
-\item{speciesEquivalency}{table with species name equivalencies between the Knn format
-and the final naming format}
+\item{speciesEquivalency}{table with species name equivalencies between the
+kNN format and the final naming format.}
 
 \item{knnNamesCol}{character string indicating the column in \code{speciesEquivalency}
-containing Knn species names}
+containing kNN species names.}
 
 \item{sppEndNamesCol}{character string indicating the column in \code{speciesEquivalency}
-to use for final species names}
+to use for final species names.}
 
-\item{sppMerge}{a list of species names (as in \code{sppNameVector}) to which correspond
-more than one Knn layers that should be overlaid to produce a single species layer. List
-\code{names} should be the final desired names, whereas list entries will ideally match the Knn
-name format. However, \code{link[pemisc]{equivalentName}} is used internally to conform list names to
-LandR naming and list entries to Knn naming using \code{{link[pemisc]speciesEquivalencies}}.}
+\item{sppMerge}{list of kNN species layers that should be merged. List names
+correspond to final species names as in \code{sppEndNamesCol},
+list entries correspond to kNN species layers to be merged.
+Defaults to \code{NULL}.
+OTHER DESCRIPTION:(((a list of species names (as in \code{sppNameVector}) to which
+correspond more than one kNN layers that should be overlaid
+to produce a single species layer.
+List \code{names} should be the final desired names, whereas
+list entries will ideally match the kNN name format.
+However, \code{\link{equivalentName}} is used internally to
+conform list names to LandR naming and list entries to kNN
+naming using \code{\link{sppEquivalencies_CA}}.))) TODO: which description???}
 
 \item{thresh}{the minimum number of pixels where the species must have
 \code{biomass > 0} to be considered present in the study area.
 Defaults to 1.}
 
-\item{url}{the source url for the data, passed to \code{link[reproducible]{prepInputs}}}
+\item{url}{the source url for the data, passed to \code{\link[reproducible]{prepInputs}}}
 
-\item{...}{Additonal arguments passed to \code{link[reproducible]{Cache}} and \code{link[pemisc]{equivalentName}}}
-
-\item{sppMerge}{list of Knn species' layers that should be merged. List names correspond to final species
-names as in \code{sppEndNamesCol}, list entries correspond to Knn species layers to be merged. Defaults to NULL}
+\item{...}{Additonal arguments passed to \code{\link[reproducible]{Cache}} and \code{\link{equivalentName}}}
 }
 \value{
 a list of two elements: \code{speciesLayer}, a raster stack; and

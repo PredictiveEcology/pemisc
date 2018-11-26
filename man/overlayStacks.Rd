@@ -4,7 +4,7 @@
 \alias{overlayStacks}
 \title{Overlay layers within raster stacks}
 \usage{
-overlayStacks(highQualityStack, lowQualityStack, speciesList = NULL,
+overlayStacks(highQualityStack, lowQualityStack,
   outputFilenameSuffix = "overlay", destinationPath)
 }
 \arguments{
@@ -17,7 +17,8 @@ overlayStacks(highQualityStack, lowQualityStack, speciesList = NULL,
 \item{destinationPath}{directory for saved rasters}
 }
 \description{
-Overlays rasters of different data resolution by filling in gaps in the highest resolution raster
- with data available in lowest resolution one. If only high or low resolution data are available, it
- will use it without attempting to overlay.
+Overlays rasters of different data resolution by filling in gaps in the highest
+resolution raster with data available in lowest resolution one.
+If only high or low resolution data are available, it will use it without
+attempting to overlay.
 }
