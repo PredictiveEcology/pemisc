@@ -55,7 +55,7 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
                                MBper = 5e2,
                                maxNumClusters = parallel::detectCores(), ...) {
   cl <- NULL
-  if (is.null(maxNumClusters)) maxNumClusters = parallel::detectCores()
+  if (is.null(maxNumClusters)) maxNumClusters <- parallel::detectCores()
 
   if (!identical("windows", .Platform$OS.type)) {
     numClus <- if (isTRUE(useParallel)) {
@@ -97,7 +97,7 @@ makeForkClusterRandom <- function(..., iseed = NULL) {
   for (i in 1:4)
     cat(file = dots$outfile, "------------------------------------------------------------")
   cl <- do.call(makeForkCluster, args = dots)
-  message("  Starting a cluster with ", length(cl)," threads")
+  message("  Starting a cluster with ", length(cl), " threads")
   message("    Log file is ", dots$outfile, ". To prevent log file, pass outfile = ''")
   clusterSetRNGStream(cl, iseed = iseed)
   cl
@@ -183,7 +183,7 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
   allArgs <- getLocalArgsFor(fn, localFormalArgs, envir = envir, dots = dots)
 
   # These types don't correctly work with "length", so omit them from search
-  specialTypes = c("environment", "SpatialPolygons", "RasterLayer", "RasterStack", "RasterBrick")
+  specialTypes <- c("environment", "SpatialPolygons", "RasterLayer", "RasterStack", "RasterBrick")
   lengthOne <- unlist(lapply(allArgs, is.null)) | unlist(lapply(allArgs, function(x) {
     if (any(unlist(lapply(specialTypes, is, obj = x))) | length(x) == 1) {
       TRUE
@@ -220,7 +220,7 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
 #' @importFrom reproducible Cache
 #' @rdname MapOrDoCall
 #' @seealso \code{identifyVectorArgs}
-MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) {
+MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
   if (length(multiple)) {
     obj <- do.call(Cache, args = append(multiple, list(Map2, fn,
                                                        MoreArgs = single,
@@ -245,7 +245,7 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) {
 #' @importFrom parallel clusterMap
 #' @importFrom utils getFromNamespace
 #' @rdname Map2
-Map2 <- function(..., cl = NULL) {
+Map2 <- function(..., cl = NULL) { #nolint
   fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
   formsMap <- fnicd(mapply, ...)
   formsClusterMap <- fnicd(clusterMap, ...)

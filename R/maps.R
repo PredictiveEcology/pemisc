@@ -198,7 +198,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea,
       speciesList[speciesList[, 2] %in% x, 1]
     })
 
-    names(spp2sum) = dubs
+    names(spp2sum) <- dubs
 
     for (i in 1:length(spp2sum)) {
       sumSpecies <- spp2sum[[i]]
@@ -220,7 +220,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea,
 
   ## Rename species layers - note: merged species were renamed already
   nameReplace <- as.matrix(speciesList[, 2])
-  rownames(nameReplace) = speciesList[, 1]
+  rownames(nameReplace) <- speciesList[, 1]
 
   toReplace <- names(species1)[names(species1) %in% rownames(nameReplace)]
   names(species1)[names(species1) %in% toReplace] <- nameReplace[toReplace, 1]
@@ -248,10 +248,10 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea,
 #' @export
 #' @importFrom raster calc stack writeRaster
 sumRastersBySpecies <- function(speciesLayers, layersToSum, filenameToSave, newLayerName) {
-  ras_out <- raster::calc(raster::stack(speciesLayers[layersToSum]), sum)
-  names(ras_out) <- newLayerName
-  writeRaster(ras_out, filename = filenameToSave, datatype = "INT2U", overwrite = TRUE)
-  ras_out # Work around for Cache
+  out <- raster::calc(raster::stack(speciesLayers[layersToSum]), sum)
+  names(out) <- newLayerName
+  writeRaster(out, filename = filenameToSave, datatype = "INT2U", overwrite = TRUE)
+  out # Work around for Cache
 }
 
 #' Load kNN species data
