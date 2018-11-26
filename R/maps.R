@@ -127,18 +127,10 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #'                    containing kNN species names.
 #' @param sppEndNamesCol character string indicating the column in \code{speciesEquivalency}
 #'                       to use for final species names.
-#' @param sppMerge list of kNN species layers that should be merged. List names
-#'                 correspond to final species names as in \code{sppEndNamesCol},
+#' @param sppMerge list of kNN species layers that should be merged to produce a single species layer.
+#'                 List \code{names} correspond to final species names as in \code{sppEndNamesCol};
 #'                 list entries correspond to kNN species layers to be merged.
 #'                 Defaults to \code{NULL}.
-#'                 OTHER DESCRIPTION:(((a list of species names (as in \code{sppNameVector}) to which
-#'                 correspond more than one kNN layers that should be overlaid
-#'                 to produce a single species layer.
-#'                 List \code{names} should be the final desired names, whereas
-#'                 list entries will ideally match the kNN name format.
-#'                 However, \code{\link{equivalentName}} is used internally to
-#'                 conform list names to LandR naming and list entries to kNN
-#'                 naming using \code{\link{sppEquivalencies_CA}}.))) TODO: which description???
 #' @param thresh the minimum number of pixels where the species must have
 #'               \code{biomass > 0} to be considered present in the study area.
 #'               Defaults to 1.
