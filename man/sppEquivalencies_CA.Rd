@@ -6,15 +6,15 @@
 \title{Table of species name equivalencies for Canadian trees}
 \format{A \code{data.frame} with 271 rows and 10 variables:
 \describe{
-  \item{LANDIStest_names}{species names from LANDIS-II test parameter table}
-  \item{LANDIStraits_names}{species names from LANDIS-II traits parameter table}
-  \item{LandR_names}{species names from LandR modules}
-  \item{KNN_names}{species names from Knn datasets}
-  \item{CASFRI_names}{species names from CASFRI database}
-  \item{fullLatin}{accepted species latin names as in \url{http://theplantlist.org}}
-  \item{shortENGeneric}{Short version of species' common names in English}
-  \item{full.ENGeneric}{Full species common names in English}
-  \item{leadingNames}{Simple common english names used for leading species}
+  \item{LANDIS_test}{species names from LANDIS-II test parameter table}
+  \item{LANDIS_traits}{species names from LANDIS-II traits parameter table}
+  \item{LandR}{species names from LandR modules}
+  \item{KNN}{species names from Knn datasets}
+  \item{CASFRI}{species names from CASFRI database}
+  \item{Latin_full}{accepted species latin names as in \url{http://theplantlist.org}}
+  \item{EN_generic_short}{Short version of species' common names in English}
+  \item{EN_generic_full}{Full species common names in English}
+  \item{Leading}{Simple common english names used for leading species}
   \item{Notes}{additional notes and information}
 }}
 \usage{
