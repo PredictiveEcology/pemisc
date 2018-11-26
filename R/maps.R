@@ -28,7 +28,8 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
   if (!is.integer(LandCoverClassifiedMap[]))
     stop("LandCoverCLassifiedMap must be an integer")
   if (is.null(nonFlammClasses))
-    stop("Need nonFlammClasses, which are the classes that cannot burn in the LandCoverClassifiedMap")
+    stop("Need nonFlammClasses, which are the classes that cannot burn in
+         the LandCoverClassifiedMap")
 
   oldClass <- minValue(LandCoverClassifiedMap):maxValue(LandCoverClassifiedMap)
   newClass <- ifelse(oldClass %in% nonFlammClasses, 0L, 1L) ## NOTE: 0 codes for NON-flammable
@@ -70,7 +71,8 @@ prepInputsLCC <- function(year = 2005,
       url <- "ftp://ftp.ccrs.nrcan.gc.ca/ad/NLCCLandCover/LandcoverCanada2005_250m/LandCoverOfCanada2005_V1_4.zip"
       LCCfilename <- asPath("LCC2005_V1_4a.tif")
     } else {
-      stop("don't have the url for LCC2010 yet. Please find it and pass it as url = 'TheFTPAddress'")
+      stop("don't have the url for LCC2010 yet.
+           Please find it and pass it as url = 'TheFTPAddress'")
     }
   }
 
@@ -228,7 +230,9 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
   ## Sum species that share same final name
   if (!is.null(sppMerge)) {
     ## make sure species names and list names are in the right formats
-    sppMerge <- lapply(sppMerge, FUN = function(x) equivalentName(x, speciesEquivalency,  column = knnNamesCol))
+    sppMerge <- lapply(sppMerge, FUN = function(x) {
+      equivalentName(x, speciesEquivalency,  column = knnNamesCol)
+      })
     names(sppMerge) <- equivalentName(names(sppMerge), speciesEquivalency,  column = sppEndNamesCol)
 
     ## keep species present in the data
@@ -328,7 +332,7 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
                                      outputFilenameSuffix = outputFilenameSuffix,
                                      destinationPath = destinationPath)]
   }
-  names(stackRas) = dtj$SPP
+  names(stackRas) <- dtj$SPP
 
   stack(stackRas)
 }
@@ -443,4 +447,3 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
     }
   }
 }
-

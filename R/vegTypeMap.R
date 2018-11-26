@@ -15,12 +15,13 @@ if (getRversion() >= "3.1.0") {
 #' @importFrom raster getValues projection projection<- setValues
 #' @importFrom SpaDES.tools rasterizeReduced
 vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingProportion) {
-  species[species == "Pinu_ban" | species == "Pinu_con" | species == "Pinu_sp", speciesGroup := "PINU"]
+  species[species == "Pinu_ban" | species == "Pinu_con" | species == "Pinu_sp",
+          speciesGroup := "PINU"]
   species[species == "Betu_pap" | species == "Popu_bal" | species == "Popu_tre" |
             species == "Lari_lar", speciesGroup := "DECI"]
-  species[species == "Pice_mar" , speciesGroup := "PICE_MAR"]
+  species[species == "Pice_mar", speciesGroup := "PICE_MAR"]
   species[species == "Pice_gla", speciesGroup := "PICE_GLA"]
-  species[species == "Abie_sp" , speciesGroup := "ABIE"]
+  species[species == "Abie_sp", speciesGroup := "ABIE"]
 
   shortcohortdata <- setkey(cohortdata, speciesCode)[setkey(species[, .(speciesCode, speciesGroup)],
                                                             speciesCode), nomatch = 0]
