@@ -287,7 +287,9 @@ sumRastersBySpecies <- function(speciesLayers, layersToSum, filenameToSave, newL
 
 #' Overlay layers within raster stacks
 #'
-#' TODO: description needed
+#' Overlays rasters of different data resolution by filling in gaps in the highest resolution raster
+#'  with data available in lowest resolution one. If only high or low resolution data are available, it
+#'  will use it without attempting to overlay.
 #'
 #' @param highQualityStack      high quality list/stack of rasters (will be used preferencially)
 #' @param lowQualityStack       low quality list/stack of rasters (will be used to fill NAs in highQualityStack)
