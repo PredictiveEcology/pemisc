@@ -55,7 +55,7 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
 #' @export
 #' @importFrom reproducible asPath prepInputs
 prepInputsLCC <- function(year = 2005,
-                          destinationPath = ".",
+                          destinationPath = asPath("."),
                           studyArea = NULL,
                           rasterToMatch = NULL,
                           filename2 = NULL, ...) {
@@ -73,7 +73,7 @@ prepInputsLCC <- function(year = 2005,
   Cache(prepInputs, targetFile = LCCfilename,
         archive = asPath("LandCoverOfCanada2005_V1_4.zip"),
         url = url,
-        destinationPath = destinationPath,
+        destinationPath = asPath(destinationPath),
         studyArea = studyArea,
         rasterToMatch = rasterToMatch,
         method = "bilinear",

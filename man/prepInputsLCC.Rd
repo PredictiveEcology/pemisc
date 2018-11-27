@@ -4,8 +4,8 @@
 \alias{prepInputsLCC}
 \title{Simple prepInputs for LCC2005 or LCC2010}
 \usage{
-prepInputsLCC(year = 2005, destinationPath = ".", studyArea = NULL,
-  rasterToMatch = NULL, filename2 = NULL, ...)
+prepInputsLCC(year = 2005, destinationPath = asPath("."),
+  studyArea = NULL, rasterToMatch = NULL, filename2 = NULL, ...)
 }
 \arguments{
 \item{year}{Numeric, either 2005 or 2010 (not yet implemented)}

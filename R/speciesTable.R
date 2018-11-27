@@ -10,12 +10,12 @@ if (getRversion() >= "3.1.0") {
 #' @export
 #' @importFrom data.table data.table
 #' @importFrom magrittr %>%
-#' @importFrom reproducible Cache prepInputs
+#' @importFrom reproducible asPath Cache prepInputs
 #' @rdname speciesTable
 getSpeciesTable <- function(dPath = tempdir(), cacheTags = NULL) {
   url <- "https://raw.githubusercontent.com/dcyr/LANDIS-II_IA_generalUseFiles/master/speciesTraits.csv" # nolint
   speciesTable <- Cache(prepInputs, "speciesTraits.csv",
-                        destinationPath = dPath,
+                        destinationPath = asPath(dPath),
                         url = url,
                         fun = "utils::read.csv",
                         header = TRUE, stringsAsFactors = FALSE,
