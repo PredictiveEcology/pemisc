@@ -28,9 +28,7 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
 
   oldClass <- minValue(LandCoverClassifiedMap):maxValue(LandCoverClassifiedMap)
   newClass <- ifelse(oldClass %in% nonFlammClasses, 0L, 1L) ## NOTE: 0 codes for NON-flammable
-  #see mask argument for SpaDES::spread()
   flammableTable <- cbind(oldClass, newClass)
-  #according to Yong, Canada Landcover 2005 is loaded as LandCoverClassifiedMap
   rstFlammable <- ratify(reclassify(LandCoverClassifiedMap, flammableTable))
   if (!is.null(filename2))
     rstFlammable <- writeRaster(rstFlammable, filename = filename2, overwrite = TRUE)
