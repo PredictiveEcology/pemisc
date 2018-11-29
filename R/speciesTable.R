@@ -2,7 +2,11 @@ if (getRversion() >= "3.1.0") {
   utils::globalVariables(c(":=", ".SD", "species", "species1", "species2"))
 }
 
-#' Download species traits table for use with LBMR module
+#' Download and prepare a species traits table for use with LBMR module
+#'
+#' TODO: add detailed description
+#'
+#' @note This one is tailored to Canadian forests (?)
 #'
 #' @param dPath The destination path.
 #' @param cacheTags User tags to pass to \code{Cache}.
@@ -25,10 +29,6 @@ getSpeciesTable <- function(dPath = tempdir(), cacheTags = NULL) {
   return(speciesTable)
 }
 
-#' Prepare a species traits table for use with LBMR module
-#'
-#' TODO: add detailed description
-#'
 #' @param speciesTable  A raw species traits table from the LANDIS-II project
 #' (e.g., \url{"https://raw.githubusercontent.com/dcyr/LANDIS-II_IA_generalUseFiles/master/speciesTraits.csv"}).
 #'
