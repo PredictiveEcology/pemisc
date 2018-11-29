@@ -82,8 +82,8 @@ prepInputsLCC <- function(year = 2005,
 
 #' Make a vegetation type map from a stack of species abundances
 #'
-#' @param speciesStack A Raster Stack of species abundances. This must be one Raster Layer
-#'        per species.
+#' @param speciesStack A \code{RasterStack} of species abundances.
+#'                     This must be one \code{RasterLayer} per species.
 #' @param vegLeadingProportion The threshold as a proportion of the total abundance
 #'        that a species must have to be considered a "pure" stand of that type.
 #'        If no species reaches this proportion, then the pixel will be 'Mixed'.
