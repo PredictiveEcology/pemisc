@@ -5,17 +5,19 @@
 \alias{prepSpeciesTable}
 \title{Download and prepare a species traits table for use with LBMR module}
 \usage{
-getSpeciesTable(dPath = tempdir(), cacheTags = NULL)
+getSpeciesTable(url = NULL, dPath = tempdir(), cacheTags = NULL)
 
 prepSpeciesTable(speciesTable, speciesList, speciesLayers)
 }
 \arguments{
+\item{url}{If NULL (the default), uses one from D. Cyr's LANDIS-II files:
+\url{https://github.com/dcyr/LANDIS-II_IA_generalUseFiles/master/speciesTraits.csv}).}
+
 \item{dPath}{The destination path.}
 
 \item{cacheTags}{User tags to pass to \code{Cache}.}
 
-\item{speciesTable}{A raw species traits table from the LANDIS-II project
-(e.g., \url{"https://raw.githubusercontent.com/dcyr/LANDIS-II_IA_generalUseFiles/master/speciesTraits.csv"}).}
+\item{speciesTable}{A raw species traits table}
 
 \item{speciesList}{TODO: description needed}
 
