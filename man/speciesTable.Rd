@@ -3,7 +3,7 @@
 \name{getSpeciesTable}
 \alias{getSpeciesTable}
 \alias{prepSpeciesTable}
-\title{Download species traits table for use with LBMR module}
+\title{Download and prepare a species traits table for use with LBMR module}
 \usage{
 getSpeciesTable(dPath = tempdir(), cacheTags = NULL)
 
@@ -26,4 +26,7 @@ A \code{data.table} with columns ... TODO
 }
 \description{
 TODO: add detailed description
+}
+\note{
+This one is tailored to Canadian forests (?)
 }

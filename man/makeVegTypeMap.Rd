@@ -7,8 +7,8 @@
 makeVegTypeMap(speciesStack, vegLeadingProportion, mixed = TRUE)
 }
 \arguments{
-\item{speciesStack}{A Raster Stack of species abundances. This must be one Raster Layer
-per species.}
+\item{speciesStack}{A \code{RasterStack} of species abundances.
+This must be one \code{RasterLayer} per species.}
 
 \item{vegLeadingProportion}{The threshold as a proportion of the total abundance
 that a species must have to be considered a "pure" stand of that type.

@@ -33,9 +33,7 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
 
   oldClass <- minValue(LandCoverClassifiedMap):maxValue(LandCoverClassifiedMap)
   newClass <- ifelse(oldClass %in% nonFlammClasses, 0L, 1L) ## NOTE: 0 codes for NON-flammable
-  #see mask argument for SpaDES::spread()
   flammableTable <- cbind(oldClass, newClass)
-  #according to Yong, Canada Landcover 2005 is loaded as LandCoverClassifiedMap
   rstFlammable <- ratify(reclassify(LandCoverClassifiedMap, flammableTable))
   if (!is.null(filename2))
     rstFlammable <- writeRaster(rstFlammable, filename = filename2, overwrite = TRUE)
@@ -60,7 +58,7 @@ defineFlammable <- function(LandCoverClassifiedMap = NULL,
 #' @export
 #' @importFrom reproducible asPath prepInputs
 prepInputsLCC <- function(year = 2005,
-                          destinationPath = ".",
+                          destinationPath = asPath("."),
                           studyArea = NULL,
                           rasterToMatch = NULL,
                           filename2 = NULL, ...) {
@@ -78,7 +76,7 @@ prepInputsLCC <- function(year = 2005,
   Cache(prepInputs, targetFile = filename,
         archive = asPath("LandCoverOfCanada2005_V1_4.zip"),
         url = url,
-        destinationPath = destinationPath,
+        destinationPath = asPath(destinationPath),
         studyArea = studyArea,
         rasterToMatch = rasterToMatch,
         method = "bilinear",
@@ -86,11 +84,10 @@ prepInputsLCC <- function(year = 2005,
         filename2 = filename2, ...)
 }
 
-
 #' Make a vegetation type map from a stack of species abundances
 #'
-#' @param speciesStack A Raster Stack of species abundances. This must be one Raster Layer
-#'        per species.
+#' @param speciesStack A \code{RasterStack} of species abundances.
+#'                     This must be one \code{RasterLayer} per species.
 #' @param vegLeadingProportion The threshold as a proportion of the total abundance
 #'        that a species must have to be considered a "pure" stand of that type.
 #'        If no species reaches this proportion, then the pixel will be 'Mixed'.
@@ -101,7 +98,7 @@ prepInputsLCC <- function(year = 2005,
 #' @export
 #' @importFrom raster maxValue which.max
 makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
-  sumVegPct <- sum(speciesStack, na.rm = TRUE)
+  sumVegPct <- sum(speciesStack) ## na.rm = TRUE
 
   # create "mixed" layer, which is given a value slightly higher than any other layer
   #   if it is deemed a mixed pixel
