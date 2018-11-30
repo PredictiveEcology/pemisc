@@ -139,8 +139,9 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #'         \code{speciesList}, a vector(?) of species names.
 #'
 #' @export
-#' @importFrom raster ncell
-#' @importFrom reproducible Cache preProcess
+#' @importFrom magrittr %>%
+#' @importFrom raster ncell raster
+#' @importFrom reproducible Cache .prefix preProcess
 #' @importFrom utils untar
 loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
                                  speciesEquivalency, knnNamesCol, sppEndNamesCol,
