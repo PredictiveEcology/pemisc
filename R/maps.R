@@ -111,29 +111,40 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
   vegTypeMap
 }
 
-#' Function to load kNN species layers from online data repository
+#' Load kNN species layers from online data repository
 #'
 #' TODO: description needed
 #'
 #' @param dPath path to the data directory
+#'
 #' @param rasterToMatch passed to \code{\link[reproducible]{prepInputs}}
+#'
 #' @param studyArea passed to \code{\link[reproducible]{prepInputs}}
+#'
 #' @param sppNameVector a character vector of species names to download, in their final form
+#'
 #' @param speciesEquivalency table with species name equivalencies between the
 #'                           kNN format and the final naming format.
+#'
 #' @param knnNamesCol character string indicating the column in \code{speciesEquivalency}
 #'                    containing kNN species names.
+#'
 #' @param sppEndNamesCol character string indicating the column in \code{speciesEquivalency}
 #'                       to use for final species names.
+#'
 #' @param sppMerge list of kNN species layers that should be merged to produce a single species layer.
 #'                 List \code{names} correspond to final species names as in \code{sppEndNamesCol};
 #'                 list entries correspond to kNN species layers to be merged.
 #'                 Defaults to \code{NULL}.
+#'
 #' @param thresh the minimum number of pixels where the species must have
 #'               \code{biomass > 0} to be considered present in the study area.
 #'               Defaults to 1.
+#'
 #' @param url the source url for the data, passed to \code{\link[reproducible]{prepInputs}}
-#' @param ... Additonal arguments passed to \code{\link[reproducible]{Cache}} and \code{\link{equivalentName}}
+#'
+#' @param ... Additonal arguments passed to \code{\link[reproducible]{Cache}}
+#'            and \code{\link{equivalentName}}.
 #'
 #' @return a list of two elements: \code{speciesLayer}, a raster stack; and
 #'         \code{speciesList}, a vector(?) of species names.

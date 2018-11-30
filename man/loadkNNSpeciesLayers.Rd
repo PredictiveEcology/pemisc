@@ -2,7 +2,7 @@
 % Please edit documentation in R/maps.R
 \name{loadkNNSpeciesLayers}
 \alias{loadkNNSpeciesLayers}
-\title{Function to load kNN species layers from online data repository}
+\title{Load kNN species layers from online data repository}
 \usage{
 loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppNameVector,
   speciesEquivalency, knnNamesCol, sppEndNamesCol, sppMerge = NULL,
@@ -37,7 +37,8 @@ Defaults to 1.}
 
 \item{url}{the source url for the data, passed to \code{\link[reproducible]{prepInputs}}}
 
-\item{...}{Additonal arguments passed to \code{\link[reproducible]{Cache}} and \code{\link{equivalentName}}}
+\item{...}{Additonal arguments passed to \code{\link[reproducible]{Cache}}
+and \code{\link{equivalentName}}.}
 }
 \value{
 a list of two elements: \code{speciesLayer}, a raster stack; and
