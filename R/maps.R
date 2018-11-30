@@ -79,7 +79,6 @@ prepInputsLCC <- function(year = 2005,
         filename2 = filename2, ...)
 }
 
-
 #' Make a vegetation type map from a stack of species abundances
 #'
 #' @param speciesStack A \code{RasterStack} of species abundances.
@@ -94,7 +93,7 @@ prepInputsLCC <- function(year = 2005,
 #' @export
 #' @importFrom raster maxValue which.max
 makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
-  sumVegPct <- sum(speciesStack, na.rm = TRUE)
+  sumVegPct <- sum(speciesStack) ## na.rm = TRUE
 
   # create "mixed" layer, which is given a value slightly higher than any other layer
   #   if it is deemed a mixed pixel
@@ -136,7 +135,7 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
 #' @importFrom utils untar
 #'
 loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea,
-                                 speciesList = NULL, thresh = 1, url, cachePath, ...) {
+                             speciesList = NULL, thresh = 1, url, cachePath, ...) {
   if (class(speciesList) == "matrix") {
     ## check column names
     if (!setequal(colnames(speciesList), c("speciesNamesRaw", "speciesNamesEnd")))
@@ -144,7 +143,6 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea,
            "for raw species names and final species names respectively")
   }
 
-  # Changed by Eliot Oct 20 2018 -- can't start with untar because tar file may not be present
   suffix <- if (basename(cachePath) == "cache") {
     paste0(as.character(ncell(rasterToMatch)), "px")
   } else {
@@ -153,7 +151,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea,
   suffix <- paste0("_", suffix)
 
   ## Make sure raw names are compatible with kNN names
-  kNNnames <- lapply(strsplit(speciesList[,1], "_"), function(x) {
+  kNNnames <- lapply(strsplit(speciesList[, 1], "_"), function(x) {
     x[1] <- substring(x[1], 1, 4)
     x[2] <- paste0(toupper(substring(x[2], 1, 1)), substring(x[2], 2, 3))
     x
@@ -161,7 +159,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea,
   kNNnames <- sapply(kNNnames, function(x) paste(x, collapse = "_"))
   speciesList[, 1] <- kNNnames
 
-  species1 <- Cache(knnLoadFun, url = url, spp = speciesList, #[, "speciesNamesRaw"],
+  species1 <- Cache(knnLoadFun, url = url, spp = speciesList,
                     #loadFun,
                     dPath = dPath,
                     suffix = suffix,
@@ -169,18 +167,17 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea,
                     rasterToMatch = rasterToMatch,
                     userTags = "kNN_SppLoad")
 
-  ## get all kNN species
-  if (FALSE) { # TODO: This no longer does all species
+  ## get all kNN species # TODO: This no longer does all species
+  if (FALSE) {
     allSpp <- Cache(untar, tarfile = file.path(dPath, "kNN-Species.tar"), list = TRUE)
     allSpp <- allSpp %>%
       grep(".zip", ., value = TRUE) %>%
       sub("_v0.zip", "", .) %>%
       sub(".*Species_", "", .)
 
-
     ## check for missing species
     if (any(!speciesList[,1] %in% allSpp)) {
-      warning("Some species not present in kNN database./n  Check if this is correct.")
+      warning("Some species not present in kNN database. Check if this is correct.")
       speciesList <- speciesList[speciesList[, 1] %in% allSpp,]
     }
   }
