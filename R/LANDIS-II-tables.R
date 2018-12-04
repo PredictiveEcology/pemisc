@@ -5,6 +5,13 @@ if (getRversion() >= "3.1.0") {
                            "species", "species1", "species2", "wooddecayrate"))
 }
 
+#' Default LANDIS-II project repo url
+#'
+#' @keywords internal
+landisIIrepo <- paste0("https://raw.githubusercontent.com/LANDIS-II-Foundation/",
+                      "Extensions-Succession/master/biomass-succession-archive/",
+                      "trunk/tests/v6.0-2.0/")
+
 #' Download and prepare a species traits table for use with LBMR module
 #'
 #' TODO: add detailed description
@@ -137,7 +144,10 @@ prepSpeciesTable <- function(speciesTable, speciesList, speciesLayers) {
 #'
 #' @export
 #' @rdname prepInputsSpecies
-prepInputsSpecies <- function(url, dPath, cacheTags) {
+prepInputsSpecies <- function(url = NULL, dPath, cacheTags = NULL) {
+  if (is.null(url))
+    url <- paste0(landisIIrepo, "species.txt")
+
   mainInput <- prepInputsMainInput(url = NULL, dPath, cacheTags) ## uses default URL
 
   maxcol <- 13#max(count.fields(file.path(dPath, "species.txt"), sep = ""))
@@ -221,4 +231,107 @@ prepInputsMainInput <- function(url = NULL, dPath, cacheTags) {
   mainInput <- mainInput[col1 != ">>",]
 
   return(mainInput)
+}
+
+#' Prepare ecoregion table
+#'
+#' Get the dummy ecoregion table from LANDIS-II examples.
+#'
+#' @param url If NULL (the default), uses one from the LANDIS-II project:
+#' \url{https://github.com/LANDIS-II-Foundation/Extensions-Succession/master/biomass-succession-archive/trunk/tests/v6.0-2.0/ecoregion.txt"}).
+#'
+#' @param dPath The destination path.
+#'
+#' @param cacheTags User tags to pass to \code{Cache}.
+#'
+#' @return A \code{data.table}
+#'
+#' @export
+#' @importFrom data.table data.table
+#' @importFrom reproducible Cache prepInputs
+#' @importFrom utils count.fields
+#' @rdname prepInputsEcoregion
+prepInputsEcoregion <- function(url = NULL, dPath, cacheTags = NULL) {
+  if (is.null(url))
+    url <- paste0(landisIIrepo, "ecoregions.txt")
+
+  maxcol <- 5 #max(count.fields(file.path(dPath, "ecoregions.txt"), sep = ""))
+  ecoregion <- Cache(prepInputs,
+                     url = url,
+                     targetFile = "ecoregions.txt",
+                     destinationPath = dPath,
+                     fun = "utils::read.table",
+                     fill = TRUE,
+                     sep = "",
+                     # purge = 7,
+                     header = FALSE,
+                     blank.lines.skip = TRUE,
+                     stringsAsFactors = FALSE,
+                     userTags = cacheTags)
+  maxcol <- max(count.fields(file.path(dPath, "ecoregions.txt"), sep = ""))
+  colnames(ecoregion) <- c(paste("col", 1:maxcol, sep = ""))
+  ecoregion <- data.table(ecoregion)
+  ecoregion <- ecoregion[col1 != "LandisData",]
+  ecoregion <- ecoregion[col1 != ">>",]
+  names(ecoregion)[1:4] <- c("active", "mapcode", "ecoregion", "description")
+  ecoregion$mapcode <- as.integer(ecoregion$mapcode)
+
+  return(ecoregion)
+}
+
+#' Prepare species ecoregion table
+#'
+#' Get the dummy ecoregion table from LANDIS-II examples.
+#'
+#' @param url If NULL (the default), uses one from the LANDIS-II project:
+#' \url{https://github.com/LANDIS-II-Foundation/Extensions-Succession/master/biomass-succession-archive/trunk/tests/v6.0-2.0/biomass-succession-dynamic-inputs_test.txt"}).
+#'
+#' @param dPath The destination path.
+#'
+#' @param cacheTags User tags to pass to \code{Cache}.
+#'
+#' @return A \code{data.table}
+#'
+#' @export
+#' @importFrom data.table data.table
+#' @importFrom reproducible Cache prepInputs
+#' @importFrom utils count.fields
+#' @rdname prepInputsSpeciesEcoregion
+prepInputsSpeciesEcoregion <- function(url = NULL, dPath, cacheTags = NULL) {
+  if (is.null(url))
+    url <- paste0(landisIIrepo, "biomass-succession-dynamic-inputs_test.txt")
+
+  speciesEcoregion <- Cache(prepInputs,
+                            url = url,
+                            fun = "utils::read.table",
+                            destinationPath = dPath,
+                            targetFile = "biomass-succession-dynamic-inputs_test.txt",
+                            fill = TRUE,
+                            sep = "",
+                            header = FALSE,
+                            blank.lines.skip = TRUE,
+                            stringsAsFactors = FALSE,
+                            userTags = cacheTags)
+  maxcol <- max(count.fields(file.path(dPath, "biomass-succession-dynamic-inputs_test.txt"),
+                             sep = ""))
+  colnames(speciesEcoregion) <- paste("col", 1:maxcol, sep = "")
+  speciesEcoregion <- data.table(speciesEcoregion)
+  speciesEcoregion <- speciesEcoregion[col1 != "LandisData",]
+  speciesEcoregion <- speciesEcoregion[col1 != ">>",]
+  keepColNames <- c("year", "ecoregion", "species", "establishprob", "maxANPP", "maxB")
+  names(speciesEcoregion)[1:6] <- keepColNames
+  speciesEcoregion <- speciesEcoregion[, keepColNames, with = FALSE]
+  integerCols <- c("year", "establishprob", "maxANPP", "maxB")
+  speciesEcoregion[, (integerCols) := lapply(.SD, as.integer), .SDcols = integerCols]
+
+  ## TODO: use species equivalency table here
+  ## rename species for compatibility across modules (Genu_spe)
+  speciesEcoregion$species1 <- as.character(substring(speciesEcoregion$species, 1, 4))
+  speciesEcoregion$species2 <- as.character(substring(speciesEcoregion$species, 5, 7))
+  speciesEcoregion[, ':='(species = paste0(toupper(substring(species1, 1, 1)),
+                                           substring(species1, 2, 4), "_", species2))]
+
+  speciesEcoregion[, ':='(species1 = NULL, species2 = NULL)]
+
+  return(speciesEcoregion)
 }
