@@ -30,6 +30,7 @@ Imports:
     quickPlot,
     raster,
     reproducible,
+    sp,
     SpaDES.tools,
     stats,
     tools,
