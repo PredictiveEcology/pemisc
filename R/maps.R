@@ -190,9 +190,11 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #'
 #' @param speciesEquivalency table with species name equivalencies between the
 #'                           kNN format and the final naming format.
+#'                           See \code{data("sppEquivalencies_CA", "pemisc")}.
 #'
 #' @param knnNamesCol character string indicating the column in \code{speciesEquivalency}
 #'                    containing kNN species names.
+#'                    Default \code{"KNN"} for when \code{sppEquivalencies_CA} is used.
 #'
 #' @param sppEndNamesCol character string indicating the column in \code{speciesEquivalency}
 #'                       to use for final species names.
@@ -220,7 +222,7 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #' @importFrom reproducible Cache .prefix preProcess
 #' @importFrom utils untar
 loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
-                                 speciesEquivalency, knnNamesCol, sppEndNamesCol,
+                                 speciesEquivalency, knnNamesCol = "KNN", sppEndNamesCol,
                                  sppMerge = NULL, thresh = 1, url, ...) {
   dots <- list(...)
 

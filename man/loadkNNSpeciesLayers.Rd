@@ -5,8 +5,8 @@
 \title{Load kNN species layers from online data repository}
 \usage{
 loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppNameVector,
-  speciesEquivalency, knnNamesCol, sppEndNamesCol, sppMerge = NULL,
-  thresh = 1, url, ...)
+  speciesEquivalency, knnNamesCol = "KNN", sppEndNamesCol,
+  sppMerge = NULL, thresh = 1, url, ...)
 }
 \arguments{
 \item{dPath}{path to the data directory}
@@ -18,10 +18,12 @@ loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppNameVector,
 \item{sppNameVector}{a character vector of species names to download, in their final form}
 
 \item{speciesEquivalency}{table with species name equivalencies between the
-kNN format and the final naming format.}
+kNN format and the final naming format.
+See \code{data("sppEquivalencies_CA", "pemisc")}.}
 
 \item{knnNamesCol}{character string indicating the column in \code{speciesEquivalency}
-containing kNN species names.}
+containing kNN species names.
+Default \code{"KNN"} for when \code{sppEquivalencies_CA} is used.}
 
 \item{sppEndNamesCol}{character string indicating the column in \code{speciesEquivalency}
 to use for final species names.}
