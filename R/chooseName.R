@@ -6,10 +6,18 @@
 #' @param df      A \code{data.frame} where every row is a set of equivalent names.
 #' @param column  A character string or numeric of length 1, indicating the column
 #'                in \code{df} to return names from.
+#' @param multi   Logical. If \code{TRUE}, then all matches will be returned. Default
+#'                is \code{FALSE} for backwards compatibility.
 #'
 #' @export
-equivalentName <- function(value, df, column) {
-  out <- lapply(df, function(x) match(as.character(value), x))
+equivalentName <- function(value, df, column, multi = FALSE) {
+  out <- lapply(df, function(x) {
+    if (isTRUE(multi)) {
+      which(x %in% as.character(value))
+    } else {
+      match(as.character(value), x)
+    }
+  })
   likelyMatch <- which.max(unlist(lapply(out, function(x) sum(!is.na(x)))))
   df[[column]][out[[names(likelyMatch)]]]
 }

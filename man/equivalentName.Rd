@@ -4,7 +4,7 @@
 \alias{equivalentName}
 \title{Return equivalent name from a \code{data.frame} of equivalencies}
 \usage{
-equivalentName(value, df, column)
+equivalentName(value, df, column, multi = FALSE)
 }
 \arguments{
 \item{value}{Vector of values to match in \code{df}.}
@@ -13,6 +13,9 @@ equivalentName(value, df, column)
 
 \item{column}{A character string or numeric of length 1, indicating the column
 in \code{df} to return names from.}
+
+\item{multi}{Logical. If \code{TRUE}, then all matches will be returned. Default
+is \code{FALSE} for backwards compatibility.}
 }
 \description{
 This is simply a wrapper around \code{match} for a specific \code{data.frame} of values.
