@@ -396,17 +396,18 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
     ncell(highQualityStack) * prod(res(highQualityStack))
 
   ## make table of species layers in HQ and LQ
-  dt1 <- data.table(SPP = layerNames(highQualityStack), HQ = NA)
-  dt2 <- data.table(SPP = layerNames(lowQualityStack), LQ = NA)
+  dt1 <- data.table(SPP = layerNames(highQualityStack), HQ = layerNames(highQualityStack))
+  dt2 <- data.table(SPP = layerNames(lowQualityStack), LQ = layerNames(lowQualityStack))
   setkey(dt1, SPP); setkey(dt2, SPP)
   dtj <- merge(dt1, dt2, all = TRUE)
+  dtj[, c("HQ", "LQ") := list(!is.na(HQ), !is.na(LQ))]
 
   ## check which layers have species info in HQ and LQ
-  dtj[, HQ := any(!is.na(highQualityStack[[SPP]][])), by = 1:nrow(dtj)] #nolint
-  dtj[, LQ := any(!is.na(lowQualityStack[[SPP]][])), by = 1:nrow(dtj)] #nolint
+  #dtj[, HQ := any(!is.na(highQualityStack[[SPP]][])), by = 1:nrow(dtj)] #nolint
+  #dtj[, LQ := any(!is.na(lowQualityStack[[SPP]][])), by = 1:nrow(dtj)] #nolint
 
   stackRas <- list()
-  for (x in 1:nrow(dtj)) {
+  for (x in seq(nrow(dtj))) {
     stackRas[[x]] <- dtj[x, .overlay(SPP, HQ, LQ, hqLarger = hqLarger,
                                      highQualityStack = highQualityStack,
                                      lowQualityStack = lowQualityStack,
