@@ -65,7 +65,6 @@ getSpeciesTable <- function(url = NULL, dPath = tempdir(), cacheTags = NULL) {
 #' @rdname speciesTable
 prepSpeciesTable <- function(speciesTable, speciesLayers, sppNameVector,
                              speciesEquivalency = NULL, sppMerge, namesCol = "LandR") {
-  browser()
 
   if (is.null(speciesEquivalency))
     speciesEquivalency <- data.table(data("sppEquivalencies_CA", package = "pemisc"))
@@ -90,33 +89,13 @@ prepSpeciesTable <- function(speciesTable, speciesLayers, sppNameVector,
     "leafLignin",
     "hardsoft"
   )
-  speciesTable[, ':='(Area = NULL, hardsoft = NULL)] ## hardsoft used in fire model
-  speciesTable$species1 <- as.character(substring(speciesTable$species, 1, 4))
-  speciesTable$species2 <- as.character(substring(speciesTable$species, 6,
-                                                  nchar(as.character(speciesTable$species))))
-  speciesTable[, ':='(species = paste(
-    as.character(substring(species1, 1, 1)),
-    tolower(as.character(substring(species1, 2, nchar(species1)))),
-    "_", as.character(substring(species2, 1, 1)),
-    tolower(as.character(substring(species2, 2, nchar(species2)))),
-    sep = ""))]
 
-  speciesTable$species <- toSentenceCase(speciesTable$species)
-  speciesTable[species == "Pinu_con.con", species := "Pinu_con"]
-  speciesTable[species == "Pinu_con.lat", species := "Pinu_con"]
-  speciesTable[species == "Betu_all", species := "Betu_sp"]
+  sppNameVector <- equivalentName(sppNameVector, speciesEquivalency, namesCol)
+  speciesTable <- speciesTable[species %in% equivalentName(sppNameVector, speciesEquivalency, "LANDIS_traits", multi = TRUE) &
+                                 Area %in% c("BSW", "BP", "MC")]
 
-  ## select
-  speciesTable[species %in% sppNameVector, ]
-
-  ## filter table to existing species layers
-  names222 <- equivalentName(names(speciesLayers), speciesEquivalency, column = namesCol)
-  speciesTable <- speciesTable[species %in% names222]
-
-  ## Take the smallest values of every column, within species, because it is northern boreal forest
-  speciesTable <- speciesTable[species %in% names(speciesLayers), ][
-    , ':='(species1 = NULL, species2 = NULL)] %>%
-    .[, lapply(.SD, function(x) if (is.numeric(x)) min(x, na.rm = TRUE) else x[1]), by = "species"]
+  speciesTable[, species := equivalentName(speciesTable$species, speciesEquivalency, namesCol)]
+  speciesTable <- speciesTable[, lapply(.SD, function(x) if (is.numeric(x)) min(x, na.rm = TRUE) else x[1]), by = "species"]
 
   return(speciesTable)
 }
