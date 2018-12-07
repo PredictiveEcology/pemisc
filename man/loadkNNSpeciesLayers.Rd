@@ -44,7 +44,7 @@ and \code{\link{equivalentName}}.}
 }
 \value{
 a list of two elements: \code{speciesLayer}, a raster stack; and
-        \code{speciesList}, a vector(?) of species names.
+        \code{sppNameVector}, a vector of species names.
 }
 \description{
 TODO: description needed
