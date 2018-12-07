@@ -237,8 +237,8 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
                               archive = file.path(dPath, "kNN-Species.tar"),
                               url = url, destinationPath = dPath)
 
-  ## get all kNN species
-  allSpp <- Cache(untar, tarfile = outPreProcess$targetFilePath, list = TRUE)
+  ## get all kNN species - names only
+  allSpp <- untar(tarfile = outPreProcess$targetFilePath, list = TRUE)
   allSpp <- allSpp %>%
     grep(".zip", ., value = TRUE) %>%
     sub("_v0.zip", "", .) %>%
@@ -319,12 +319,15 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
         newLayerName <- names(sppMerge)[i]
 
         fname <- .suffix(file.path(dPath, paste0("kNN", newLayerName, ".tif")), suffix)
-        a <- Cache(sumRastersBySpecies,
-                   speciesLayers = speciesLayers[sumSpecies],
-                   newLayerName = newLayerName,
-                   filenameToSave = asPath(fname),
-                   ...)
-        a <- raster(fname) ## ensure a gets a filename
+        a <- calc(stack(speciesLayers[sumSpecies]), sum)
+        # a <- Cache(sumRastersBySpecies,
+        #            speciesLayers = speciesLayers[sumSpecies],
+        #            newLayerName = newLayerName,
+        #            filenameToSave = asPath(fname),
+        #            ...)
+        names(a) <- newLayerName
+        a <- writeRaster(a, filename = fname, overwrite = TRUE, ...)
+        #a <- raster(fname) ## ensure a gets a filename
 
         ## replace spp rasters by the summed one
         speciesLayers[sumSpecies] <- NULL
@@ -343,8 +346,11 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
 
   ## remove layers that had < thresh pixels with biomass
   belowThresh <- layerData < thresh
-  if (any(belowThresh))
+  if (any(belowThresh)) {
+    message(names(belowThresh)[belowThresh], " was removed because it had no data")
     speciesLayers[belowThresh] <- NULL
+
+  }
 
   ## return stack and updated species names vector
   list(speciesLayers = stack(speciesLayers), sppNameVector = sppNameVector)
