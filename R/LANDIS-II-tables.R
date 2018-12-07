@@ -49,15 +49,27 @@ getSpeciesTable <- function(url = NULL, dPath = tempdir(), cacheTags = NULL) {
 
 #' @param speciesTable  A raw species traits table
 #'
-#' @param speciesList   TODO: description needed
-#'
 #' @param speciesLayers TODO: description needed
+#'
+#' @param sppNameVector TODO: description needed
+#'
+#' @param speciesEquivalency TODO: description needed
+#'
+#' @param sppMerge TODO: description needed
+#'
+#' @param namesCol TODO: description needed
 #'
 #' @return A \code{data.table} with columns ... TODO
 #'
 #' @export
 #' @rdname speciesTable
-prepSpeciesTable <- function(speciesTable, speciesList, speciesLayers) {
+prepSpeciesTable <- function(speciesTable, speciesLayers, sppNameVector,
+                             speciesEquivalency = NULL, sppMerge, namesCol = "LandR") {
+  browser()
+
+  if (is.null(speciesEquivalency))
+    speciesEquivalency <- data.table(data("sppEquivalencies_CA", package = "pemisc"))
+
   names(speciesTable) <- c(
     "species",
     "Area",
@@ -94,26 +106,12 @@ prepSpeciesTable <- function(speciesTable, speciesList, speciesLayers) {
   speciesTable[species == "Pinu_con.lat", species := "Pinu_con"]
   speciesTable[species == "Betu_all", species := "Betu_sp"]
 
-  ## convert species names to match user-input list
-  rownames(speciesList) <- sapply(strsplit(speciesList[, 1], "_"), function(x) {
-    x[1] <- substring(x[1], 1, 4)
-    x[2] <-  substring(x[2], 1, 3)
-    paste(x, collapse = "_")
-  })
-
-  ## replace eventual "spp" and "all" by sp (currently used instead of spp)
-  rownames(speciesList) <- sub("_spp*", "_sp", rownames(speciesList))
-  rownames(speciesList) <- sub("_all", "_sp", rownames(speciesList))
-
-  ## match rownames to speciesTable$species
-  rownames(speciesList) <- toSentenceCase(rownames(speciesList))
-
-  ## find matching names to replace in speciesTable
-  matchNames <- speciesTable[species %in% rownames(speciesList), species]
-  speciesTable[species %in% rownames(speciesList), species := speciesList[matchNames, 2]]
+  ## select
+  speciesTable[species %in% sppNameVector, ]
 
   ## filter table to existing species layers
-  speciesTable <- speciesTable[species %in% names(speciesLayers)]
+  names222 <- equivalentName(names(speciesLayers), speciesEquivalency, column = namesCol)
+  speciesTable <- speciesTable[species %in% names222]
 
   ## Take the smallest values of every column, within species, because it is northern boreal forest
   speciesTable <- speciesTable[species %in% names(speciesLayers), ][
