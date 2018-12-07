@@ -214,7 +214,7 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #'            and \code{\link{equivalentName}}.
 #'
 #' @return a list of two elements: \code{speciesLayer}, a raster stack; and
-#'         \code{speciesList}, a vector(?) of species names.
+#'         \code{sppNameVector}, a vector of species names.
 #'
 #' @export
 #' @importFrom magrittr %>%
