@@ -353,7 +353,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
   }
 
   ## return stack and updated species names vector
-  list(speciesLayers = stack(speciesLayers), sppNameVector = sppNameVector)
+  stack(speciesLayers)#, sppNameVector = sppNameVector)
 }
 
 #' Function to sum rasters of species layers
