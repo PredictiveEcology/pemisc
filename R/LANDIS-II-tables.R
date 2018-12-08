@@ -93,11 +93,14 @@ prepSpeciesTable <- function(speciesTable, speciesLayers, sppNameVector,
   )
 
   sppNameVector <- equivalentName(sppNameVector, speciesEquivalency, namesCol)
-  speciesTable <- speciesTable[species %in% equivalentName(sppNameVector, speciesEquivalency, "LANDIS_traits", multi = TRUE) &
+  speciesTable <- speciesTable[species %in% equivalentName(sppNameVector, speciesEquivalency,
+                                                           "LANDIS_traits", multi = TRUE) &
                                  Area %in% c("BSW", "BP", "MC")]
 
   speciesTable[, species := equivalentName(speciesTable$species, speciesEquivalency, namesCol)]
-  speciesTable <- speciesTable[, lapply(.SD, function(x) if (is.numeric(x)) min(x, na.rm = TRUE) else x[1]), by = "species"]
+  speciesTable <- speciesTable[, lapply(.SD, function(x) {
+    if (is.numeric(x)) min(x, na.rm = TRUE) else x[1]
+  }), by = "species"]
 
   return(speciesTable)
 }
@@ -139,12 +142,12 @@ prepInputsSpecies <- function(url = NULL, dPath, cacheTags = NULL) {
                    sep = "",
                    header = FALSE,
                    blank.lines.skip = TRUE,
-                   col.names = c(paste("col",1:maxcol, sep = "")),
+                   col.names = c(paste("col", 1:maxcol, sep = "")),
                    stringsAsFactors = FALSE,
                    overwrite = TRUE)
   species <- data.table(species[, 1:11])
-  species <- species[col1!= "LandisData",]
-  species <- species[col1!= ">>",]
+  species <- species[col1 != "LandisData",]
+  species <- species[col1 != ">>",]
   colNames <- c("species", "longevity", "sexualmature", "shadetolerance",
                 "firetolerance", "seeddistance_eff", "seeddistance_max",
                 "resproutprob", "resproutage_min", "resproutage_max",
