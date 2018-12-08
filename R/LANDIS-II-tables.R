@@ -1,5 +1,5 @@
 if (getRversion() >= "3.1.0") {
-  utils::globalVariables(c(":=", ".SD", "col1", "growthcurve",
+  utils::globalVariables(c(":=", ".SD", "Area", "col1", "growthcurve",
                            "leafLignin", "leaflongevity", "mortalityshape",
                            "seeddistance_eff", "seeddistance_max",
                            "species", "species1", "species2", "wooddecayrate"))
@@ -67,7 +67,9 @@ prepSpeciesTable <- function(speciesTable, speciesLayers, sppNameVector,
                              speciesEquivalency = NULL, sppMerge, namesCol = "LandR") {
 
   if (is.null(speciesEquivalency))
-    speciesEquivalency <- data.table(data("sppEquivalencies_CA", package = "pemisc"))
+    speciesEquivalency <- data.table(utils::data("sppEquivalencies_CA",
+                                                 package = "pemisc",
+                                                 envir = environment()))
 
   names(speciesTable) <- c(
     "species",

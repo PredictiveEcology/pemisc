@@ -35,8 +35,7 @@ Defaults to 1.}
 and \code{\link{equivalentName}}.}
 }
 \value{
-a list of two elements: \code{speciesLayer}, a raster stack; and
-        a vector of species names.
+A raster stack of percent cover layers by species.
 }
 \description{
 TODO: description needed
