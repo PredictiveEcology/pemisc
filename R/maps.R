@@ -186,16 +186,16 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #'
 #' @param studyArea passed to \code{\link[reproducible]{prepInputs}}
 #'
-#' @param speciesEquivalency table with species name equivalencies between the
+#' @param sppEquiv table with species name equivalencies between the
 #'                           kNN format and the final naming format.
 #'                           See \code{data("sppEquivalencies_CA", "pemisc")}.
 #'
-#' @param knnNamesCol character string indicating the column in \code{speciesEquivalency}
+#' @param knnNamesCol character string indicating the column in \code{sppEquiv}
 #'                    containing kNN species names.
 #'                    Default \code{"KNN"} for when \code{sppEquivalencies_CA} is used.
 #'
-#' @param sppEndNamesCol character string indicating the column in \code{speciesEquivalency}
-#'                       to use for final species names.
+#' @param sppEquivCol character string indicating the column in \code{sppEquiv}
+#'                    to use for final species names.
 #'
 #' @param thresh the minimum number of pixels where the species must have
 #'               \code{biomass > 0} to be considered present in the study area.
@@ -214,14 +214,14 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #' @importFrom reproducible Cache .prefix preProcess
 #' @importFrom utils untar
 loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector,
-                                 speciesEquivalency, knnNamesCol = "KNN", sppEndNamesCol,
+                                 sppEquiv, knnNamesCol = "KNN", sppEquivCol,
                                  #sppMerge = NULL,
                                  thresh = 1, url, ...) {
   dots <- list(...)
 
-  sppEquiv <- speciesEquivalency[!is.na(speciesEquivalency[[sppEndNamesCol]]),]
-  sppNameVector <- unique(sppEquiv[[sppEndNamesCol]])
-  sppMerge <- unique(sppEquiv[[sppEndNamesCol]][duplicated(sppEquiv[[sppEndNamesCol]])])
+  sppEquiv <- sppEquiv[!is.na(sppEquiv[[sppEquivCol]]),]
+  sppNameVector <- unique(sppEquiv[[sppEquivCol]])
+  sppMerge <- unique(sppEquiv[[sppEquivCol]][duplicated(sppEquiv[[sppEquivCol]])])
 
 
   if ("cachePath" %in% names(dots)) {
@@ -252,7 +252,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector
 
   ## if there are NA's, that means some species can't be found in kNN data base
   if (any(is.na(kNNnames))) {
-    warning(paste0("Can't find ", sppNameVector[is.na(kNNnames)], " in `speciesEquivalency$",
+    warning(paste0("Can't find ", sppNameVector[is.na(kNNnames)], " in `sppEquiv$",
                    knnNamesCol, ".\n Will use remaining matching species, but check if this is correct"))
     ## select only available species
     kNNnames <- kNNnames[!is.na(kNNnames)]
@@ -313,7 +313,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector
   }
 
   ## Rename species layers - note: merged species were renamed already (these can appear as NAs)
-  nameChanges <- equivalentName(names(speciesLayers), sppEquiv, column = sppEndNamesCol)
+  nameChanges <- equivalentName(names(speciesLayers), sppEquiv, column = sppEquivCol)
   names(speciesLayers)[!is.na(nameChanges)] <- nameChanges[!is.na(nameChanges)]
 
   ## remove layers that have less data than thresh (i.e. spp absent in study area)
@@ -526,7 +526,7 @@ mergeSppRaster <- function(sppMerge, speciesLayers, sppEquiv, column, suffix, dP
     sppMerges <- lapply(sppMerge, FUN = function(x) {
       equivalentName(x, sppEquiv,  column = "KNN", multi = TRUE)
     })
-    #names(sppMerges) <- equivalentName(names(sppMerges), sppEquiv,  column = sppEndNamesCol)
+    #names(sppMerges) <- equivalentName(names(sppMerges), sppEquiv,  column = sppEquivCol)
 
     ## keep species present in the data
     sppMerges <- lapply(sppMerges, FUN = function(x) x[x %in% names(speciesLayers)])

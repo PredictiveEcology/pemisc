@@ -53,21 +53,21 @@ getSpeciesTable <- function(url = NULL, dPath = tempdir(), cacheTags = NULL) {
 #'
 #' @param sppNameVector TODO: description needed
 #'
-#' @param speciesEquivalency TODO: description needed
+#' @param sppEquiv TODO: description needed
 #'
 #' @param sppMerge TODO: description needed
 #'
-#' @param namesCol TODO: description needed
+#' @param sppEquivCol TODO: description needed
 #'
 #' @return A \code{data.table} with columns ... TODO
 #'
 #' @export
 #' @rdname speciesTable
 prepSpeciesTable <- function(speciesTable, speciesLayers, sppNameVector,
-                             speciesEquivalency = NULL, sppMerge, namesCol = "LandR") {
+                             sppEquiv = NULL, sppMerge, sppEquivCol = "LandR") {
 
-  if (is.null(speciesEquivalency))
-    speciesEquivalency <- data.table(utils::data("sppEquivalencies_CA",
+  if (is.null(sppEquiv))
+    sppEquiv <- data.table(utils::data("sppEquivalencies_CA",
                                                  package = "pemisc",
                                                  envir = environment()))
 
@@ -92,12 +92,12 @@ prepSpeciesTable <- function(speciesTable, speciesLayers, sppNameVector,
     "hardsoft"
   )
 
-  sppNameVector <- equivalentName(sppNameVector, speciesEquivalency, namesCol)
-  speciesTable <- speciesTable[species %in% equivalentName(sppNameVector, speciesEquivalency,
+  sppNameVector <- equivalentName(sppNameVector, sppEquiv, sppEquivCol)
+  speciesTable <- speciesTable[species %in% equivalentName(sppNameVector, sppEquiv,
                                                            "LANDIS_traits", multi = TRUE) &
                                  Area %in% c("BSW", "BP", "MC")]
 
-  speciesTable[, species := equivalentName(speciesTable$species, speciesEquivalency, namesCol)]
+  speciesTable[, species := equivalentName(speciesTable$species, sppEquiv, sppEquivCol)]
   speciesTable <- speciesTable[, lapply(.SD, function(x) {
     if (is.numeric(x)) min(x, na.rm = TRUE) else x[1]
   }), by = "species"]

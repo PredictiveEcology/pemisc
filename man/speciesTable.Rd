@@ -8,7 +8,7 @@
 getSpeciesTable(url = NULL, dPath = tempdir(), cacheTags = NULL)
 
 prepSpeciesTable(speciesTable, speciesLayers, sppNameVector,
-  speciesEquivalency = NULL, sppMerge, namesCol = "LandR")
+  sppEquiv = NULL, sppMerge, sppEquivCol = "LandR")
 }
 \arguments{
 \item{url}{If NULL (the default), uses one from D. Cyr's LANDIS-II files:
@@ -24,11 +24,11 @@ prepSpeciesTable(speciesTable, speciesLayers, sppNameVector,
 
 \item{sppNameVector}{TODO: description needed}
 
-\item{speciesEquivalency}{TODO: description needed}
+\item{sppEquiv}{TODO: description needed}
 
 \item{sppMerge}{TODO: description needed}
 
-\item{namesCol}{TODO: description needed}
+\item{sppEquivCol}{TODO: description needed}
 }
 \value{
 A \code{data.table} with columns ... TODO
