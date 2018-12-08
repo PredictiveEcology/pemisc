@@ -4,9 +4,8 @@
 \alias{loadkNNSpeciesLayers}
 \title{Load kNN species layers from online data repository}
 \usage{
-loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppNameVector,
-  speciesEquivalency, knnNamesCol = "KNN", sppEndNamesCol,
-  sppMerge = NULL, thresh = 1, url, ...)
+loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, speciesEquivalency,
+  knnNamesCol = "KNN", sppEndNamesCol, thresh = 1, url, ...)
 }
 \arguments{
 \item{dPath}{path to the data directory}
@@ -14,8 +13,6 @@ loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppNameVector,
 \item{rasterToMatch}{passed to \code{\link[reproducible]{prepInputs}}}
 
 \item{studyArea}{passed to \code{\link[reproducible]{prepInputs}}}
-
-\item{sppNameVector}{a character vector of species names to download, in their final form}
 
 \item{speciesEquivalency}{table with species name equivalencies between the
 kNN format and the final naming format.
@@ -28,11 +25,6 @@ Default \code{"KNN"} for when \code{sppEquivalencies_CA} is used.}
 \item{sppEndNamesCol}{character string indicating the column in \code{speciesEquivalency}
 to use for final species names.}
 
-\item{sppMerge}{list of kNN species layers that should be merged to produce a single species layer.
-List \code{names} correspond to final species names as in \code{sppEndNamesCol};
-list entries correspond to kNN species layers to be merged.
-Defaults to \code{NULL}.}
-
 \item{thresh}{the minimum number of pixels where the species must have
 \code{biomass > 0} to be considered present in the study area.
 Defaults to 1.}
@@ -44,7 +36,7 @@ and \code{\link{equivalentName}}.}
 }
 \value{
 a list of two elements: \code{speciesLayer}, a raster stack; and
-        \code{sppNameVector}, a vector of species names.
+        a vector of species names.
 }
 \description{
 TODO: description needed

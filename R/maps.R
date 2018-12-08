@@ -186,8 +186,6 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #'
 #' @param studyArea passed to \code{\link[reproducible]{prepInputs}}
 #'
-#' @param sppNameVector a character vector of species names to download, in their final form
-#'
 #' @param speciesEquivalency table with species name equivalencies between the
 #'                           kNN format and the final naming format.
 #'                           See \code{data("sppEquivalencies_CA", "pemisc")}.
@@ -199,11 +197,6 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #' @param sppEndNamesCol character string indicating the column in \code{speciesEquivalency}
 #'                       to use for final species names.
 #'
-#' @param sppMerge list of kNN species layers that should be merged to produce a single species layer.
-#'                 List \code{names} correspond to final species names as in \code{sppEndNamesCol};
-#'                 list entries correspond to kNN species layers to be merged.
-#'                 Defaults to \code{NULL}.
-#'
 #' @param thresh the minimum number of pixels where the species must have
 #'               \code{biomass > 0} to be considered present in the study area.
 #'               Defaults to 1.
@@ -214,17 +207,23 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #'            and \code{\link{equivalentName}}.
 #'
 #' @return a list of two elements: \code{speciesLayer}, a raster stack; and
-#'         \code{sppNameVector}, a vector of species names.
+#'         a vector of species names.
 #'
 #' @export
 #' @importFrom magrittr %>%
 #' @importFrom raster ncell raster
 #' @importFrom reproducible Cache .prefix preProcess
 #' @importFrom utils untar
-loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
+loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector,
                                  speciesEquivalency, knnNamesCol = "KNN", sppEndNamesCol,
-                                 sppMerge = NULL, thresh = 1, url, ...) {
+                                 #sppMerge = NULL,
+                                 thresh = 1, url, ...) {
   dots <- list(...)
+
+  sppEquiv <- speciesEquivalency[!is.na(speciesEquivalency[[sppEndNamesCol]]),]
+  sppNameVector <- unique(sppEquiv[[sppEndNamesCol]])
+  sppMerge <- unique(sppEquiv[[sppEndNamesCol]][duplicated(sppEquiv[[sppEndNamesCol]])])
+
 
   if ("cachePath" %in% names(dots)) {
     cachePath <- dots$cachePath
@@ -250,12 +249,12 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
       sppNameVector <- allSpp
 
   ## Make sure spp names are compatible with kNN names
-  kNNnames <- as.character(equivalentName(sppNameVector, speciesEquivalency, column = knnNamesCol))
+  kNNnames <- as.character(equivalentName(sppNameVector, sppEquiv, column = knnNamesCol, multi = TRUE))
 
   ## if there are NA's, that means some species can't be found in kNN data base
   if (any(is.na(kNNnames))) {
     warning(paste0("Can't find ", sppNameVector[is.na(kNNnames)], " in `speciesEquivalency$",
-            knnNamesCol, ".\n Will use remaining matching species, but check if this is correct"))
+                   knnNamesCol, ".\n Will use remaining matching species, but check if this is correct"))
     ## select only available species
     kNNnames <- kNNnames[!is.na(kNNnames)]
     sppNameVector <- sppNameVector[!is.na(kNNnames)]
@@ -279,14 +278,20 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
 
   ## select which archives/targetFiles to extract
   targetFiles <- paste0("NFI_MODIS250m_kNN_Species_", kNNnames, "_v0.tif")
+  # this sorting is necessary because split fn call below will sort
+  #   regardless, so this will ensure archive and targetFiles are same
+  targetFiles <- sort(targetFiles)
   names(targetFiles) <- targetFiles
   archives <- cbind(archive1 = file.path(dPath, "kNN-Species.tar"),
                     archive2 = paste0("NFI_MODIS250m_kNN_Species_", kNNnames, "_v0.zip"))
   archives <- split(archives, archives[, "archive2"])
 
+  if (!all(file_path_sans_ext(names(archives))==file_path_sans_ext(targetFiles)))
+    stop("Something is wrong. File a bug report re: loadkNNSpeciesLayers and archive ordering")
+
   postProcessedFilenames <- .suffix(targetFiles, suffix = suffix)
 
-  speciesLayers <- Map(targetFile = targetFiles, archive = archives,
+  speciesLayers <- Cache(Map, targetFile = targetFiles, archive = archives,
                        filename2 = postProcessedFilenames,
                        MoreArgs = list(url = url,
                                        destinationPath = asPath(dPath),
@@ -302,42 +307,40 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppNameVector,
 
   names(speciesLayers) <- kNNnames
 
-  ## Sum species that share same final name
   if (!is.null(sppMerge)) {
-    ## make sure species names and list names are in the right formats
-    sppMerge <- lapply(sppMerge, FUN = function(x) {
-      equivalentName(x, speciesEquivalency,  column = knnNamesCol)
-    })
-    names(sppMerge) <- equivalentName(names(sppMerge), speciesEquivalency,  column = sppEndNamesCol)
-
-    ## keep species present in the data
-    sppMerge <- sppMerge[sapply(sppMerge, FUN = function(x) all(x %in% names(speciesLayers)))]
-
-    if (length(sppMerge)) {
-      for (i in 1:length(sppMerge)) {
-        sumSpecies <- sppMerge[[i]]
-        newLayerName <- names(sppMerge)[i]
-
-        fname <- .suffix(file.path(dPath, paste0("kNN", newLayerName, ".tif")), suffix)
-        a <- calc(stack(speciesLayers[sumSpecies]), sum)
-        # a <- Cache(sumRastersBySpecies,
-        #            speciesLayers = speciesLayers[sumSpecies],
-        #            newLayerName = newLayerName,
-        #            filenameToSave = asPath(fname),
-        #            ...)
-        names(a) <- newLayerName
-        a <- writeRaster(a, filename = fname, overwrite = TRUE, ...)
-        #a <- raster(fname) ## ensure a gets a filename
-
-        ## replace spp rasters by the summed one
-        speciesLayers[sumSpecies] <- NULL
-        speciesLayers[[newLayerName]] <- a
-      }
-    }
+    speciesLayers <- mergeSppRaster(sppMerge = sppMerge, speciesLayers = speciesLayers,
+                                    sppEquiv = sppEquiv, column = "KNN", suffix = suffix,
+                                    dPath = dPath)
   }
+  ## Sum species that share same final name
+  # if (!is.null(sppMerge)) {
+  #   ## make sure species names and list names are in the right formats
+  #   names(sppMerge) <- sppMerge
+  #   sppMerges <- lapply(sppMerge, FUN = function(x) {
+  #      equivalentName(x, sppEquiv,  column = "KNN", multi = TRUE)
+  #   })
+  #   #names(sppMerges) <- equivalentName(names(sppMerges), sppEquiv,  column = sppEndNamesCol)
+  #
+  #   ## keep species present in the data
+  #   sppMerges <- lapply(sppMerges, FUN = function(x) x[x %in% names(speciesLayers)])
+  #
+  #   for (i in seq(length(sppMerges))) {
+  #     sumSpecies <- sppMerges[[i]]
+  #     newLayerName <- names(sppMerges)[i]
+  #
+  #     fname <- .suffix(file.path(dPath, paste0("kNN", newLayerName, ".tif")), suffix)
+  #     a <- calc(stack(speciesLayers[sumSpecies]), sum, na.rm = TRUE)
+  #     names(a) <- newLayerName
+  #     a <- writeRaster(a, filename = fname, overwrite = TRUE, ...)
+  #     ## replace spp rasters by the summed one
+  #     speciesLayers[sumSpecies] <- NULL
+  #     speciesLayers[[newLayerName]] <- a
+  #     message("  Merging ", paste(sumSpecies, collapse = ", "), "; becoming: ", newLayerName)
+  #   }
+  # }
 
   ## Rename species layers - note: merged species were renamed already (these can appear as NAs)
-  nameChanges <- equivalentName(names(speciesLayers), speciesEquivalency, column = sppEndNamesCol)
+  nameChanges <- equivalentName(names(speciesLayers), sppEquiv, column = sppEndNamesCol)
   names(speciesLayers)[!is.na(nameChanges)] <- nameChanges[!is.na(nameChanges)]
 
   ## remove layers that have less data than thresh (i.e. spp absent in study area)
@@ -434,7 +437,7 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
 #' @importFrom reproducible .suffix prepInputs
 #' @keywords internal
 .overlay <- function(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack, #nolint
-                    outputFilenameSuffix = "overlay", destinationPath) {
+                     outputFilenameSuffix = "overlay", destinationPath) {
   ## if HQ & LQ have data, pool
   if (HQ & LQ) {
     ## check equality of raster attributes and correct if necessary
@@ -527,4 +530,32 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
       return(HQRast)
     }
   }
+}
+
+mergeSppRaster <- function(sppMerge, speciesLayers, sppEquiv, column, suffix, dPath, ...) {
+    ## make sure species names and list names are in the right formats
+    names(sppMerge) <- sppMerge
+    sppMerges <- lapply(sppMerge, FUN = function(x) {
+      equivalentName(x, sppEquiv,  column = "KNN", multi = TRUE)
+    })
+    #names(sppMerges) <- equivalentName(names(sppMerges), sppEquiv,  column = sppEndNamesCol)
+
+    ## keep species present in the data
+    sppMerges <- lapply(sppMerges, FUN = function(x) x[x %in% names(speciesLayers)])
+
+    for (i in seq(length(sppMerges))) {
+      sumSpecies <- sppMerges[[i]]
+      newLayerName <- names(sppMerges)[i]
+
+      fname <- .suffix(file.path(dPath, paste0("kNN", newLayerName, ".tif")), suffix)
+      a <- calc(stack(speciesLayers[sumSpecies]), sum, na.rm = TRUE)
+      names(a) <- newLayerName
+      a <- writeRaster(a, filename = fname, overwrite = TRUE, ...)
+      ## replace spp rasters by the summed one
+      speciesLayers[sumSpecies] <- NULL
+      speciesLayers[[newLayerName]] <- a
+      message("  Merging ", paste(sumSpecies, collapse = ", "), "; becoming: ", newLayerName)
+    }
+  speciesLayers
+
 }
