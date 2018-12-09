@@ -186,16 +186,16 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #'
 #' @param studyArea passed to \code{\link[reproducible]{prepInputs}}
 #'
-#' @param speciesEquivalency table with species name equivalencies between the
+#' @param sppEquiv table with species name equivalencies between the
 #'                           kNN format and the final naming format.
 #'                           See \code{data("sppEquivalencies_CA", "pemisc")}.
 #'
-#' @param knnNamesCol character string indicating the column in \code{speciesEquivalency}
+#' @param knnNamesCol character string indicating the column in \code{sppEquiv}
 #'                    containing kNN species names.
 #'                    Default \code{"KNN"} for when \code{sppEquivalencies_CA} is used.
 #'
-#' @param sppEndNamesCol character string indicating the column in \code{speciesEquivalency}
-#'                       to use for final species names.
+#' @param sppEquivCol character string indicating the column in \code{sppEquiv}
+#'                    to use for final species names.
 #'
 #' @param thresh the minimum number of pixels where the species must have
 #'               \code{biomass > 0} to be considered present in the study area.
@@ -206,8 +206,7 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #' @param ... Additonal arguments passed to \code{\link[reproducible]{Cache}}
 #'            and \code{\link{equivalentName}}.
 #'
-#' @return a list of two elements: \code{speciesLayer}, a raster stack; and
-#'         a vector of species names.
+#' @return A raster stack of percent cover layers by species.
 #'
 #' @export
 #' @importFrom magrittr %>%
@@ -215,14 +214,14 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #' @importFrom reproducible Cache .prefix preProcess
 #' @importFrom utils untar
 loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector,
-                                 speciesEquivalency, knnNamesCol = "KNN", sppEndNamesCol,
+                                 sppEquiv, knnNamesCol = "KNN", sppEquivCol,
                                  #sppMerge = NULL,
                                  thresh = 1, url, ...) {
   dots <- list(...)
 
-  sppEquiv <- speciesEquivalency[!is.na(speciesEquivalency[[sppEndNamesCol]]),]
-  sppNameVector <- unique(sppEquiv[[sppEndNamesCol]])
-  sppMerge <- unique(sppEquiv[[sppEndNamesCol]][duplicated(sppEquiv[[sppEndNamesCol]])])
+  sppEquiv <- sppEquiv[!is.na(sppEquiv[[sppEquivCol]]),]
+  sppNameVector <- unique(sppEquiv[[sppEquivCol]])
+  sppMerge <- unique(sppEquiv[[sppEquivCol]][duplicated(sppEquiv[[sppEquivCol]])])
 
 
   if ("cachePath" %in% names(dots)) {
@@ -253,7 +252,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector
 
   ## if there are NA's, that means some species can't be found in kNN data base
   if (any(is.na(kNNnames))) {
-    warning(paste0("Can't find ", sppNameVector[is.na(kNNnames)], " in `speciesEquivalency$",
+    warning(paste0("Can't find ", sppNameVector[is.na(kNNnames)], " in `sppEquiv$",
                    knnNamesCol, ".\n Will use remaining matching species, but check if this is correct"))
     ## select only available species
     kNNnames <- kNNnames[!is.na(kNNnames)]
@@ -312,35 +311,9 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector
                                     sppEquiv = sppEquiv, column = "KNN", suffix = suffix,
                                     dPath = dPath)
   }
-  ## Sum species that share same final name
-  # if (!is.null(sppMerge)) {
-  #   ## make sure species names and list names are in the right formats
-  #   names(sppMerge) <- sppMerge
-  #   sppMerges <- lapply(sppMerge, FUN = function(x) {
-  #      equivalentName(x, sppEquiv,  column = "KNN", multi = TRUE)
-  #   })
-  #   #names(sppMerges) <- equivalentName(names(sppMerges), sppEquiv,  column = sppEndNamesCol)
-  #
-  #   ## keep species present in the data
-  #   sppMerges <- lapply(sppMerges, FUN = function(x) x[x %in% names(speciesLayers)])
-  #
-  #   for (i in seq(length(sppMerges))) {
-  #     sumSpecies <- sppMerges[[i]]
-  #     newLayerName <- names(sppMerges)[i]
-  #
-  #     fname <- .suffix(file.path(dPath, paste0("kNN", newLayerName, ".tif")), suffix)
-  #     a <- calc(stack(speciesLayers[sumSpecies]), sum, na.rm = TRUE)
-  #     names(a) <- newLayerName
-  #     a <- writeRaster(a, filename = fname, overwrite = TRUE, ...)
-  #     ## replace spp rasters by the summed one
-  #     speciesLayers[sumSpecies] <- NULL
-  #     speciesLayers[[newLayerName]] <- a
-  #     message("  Merging ", paste(sumSpecies, collapse = ", "), "; becoming: ", newLayerName)
-  #   }
-  # }
 
   ## Rename species layers - note: merged species were renamed already (these can appear as NAs)
-  nameChanges <- equivalentName(names(speciesLayers), sppEquiv, column = sppEndNamesCol)
+  nameChanges <- equivalentName(names(speciesLayers), sppEquiv, column = sppEquivCol)
   names(speciesLayers)[!is.na(nameChanges)] <- nameChanges[!is.na(nameChanges)]
 
   ## remove layers that have less data than thresh (i.e. spp absent in study area)
@@ -352,11 +325,10 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector
   if (any(belowThresh)) {
     message(names(belowThresh)[belowThresh], " was removed because it had no data")
     speciesLayers[belowThresh] <- NULL
-
   }
 
   ## return stack and updated species names vector
-  stack(speciesLayers)#, sppNameVector = sppNameVector)
+  stack(speciesLayers)
 }
 
 #' Function to sum rasters of species layers
@@ -388,10 +360,9 @@ sumRastersBySpecies <- function(speciesLayers, layersToSum, filenameToSave, newL
 #' @param destinationPath       directory for saved rasters
 #'
 #' @export
-#' @importFrom gdalUtils gdalwarp
+#' @importFrom data.table data.table
 #' @importFrom quickPlot layerNames
-#' @importFrom raster compareRaster crs extent filename ncell projectExtent
-#' @importFrom raster raster res writeRaster xmax xmin ymax ymin
+#' @importFrom raster ncell res stack
 overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffix = "overlay",
                           destinationPath) {
   ## check if HQ resolution > LQ resolutions
@@ -434,7 +405,9 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
 #' @param HQ \code{data.table} column of whether SPP is present in HQ layers
 #' @param LQ \code{data.table} column of whether SPP is present in LQ layers
 #'
-#' @importFrom reproducible .suffix prepInputs
+#' @importFrom gdalUtils gdalwarp
+#' @importFrom raster compareRaster crs extent filename res projectExtent raster
+#' @importFrom raster writeRaster xmax xmin ymax ymin
 #' @keywords internal
 .overlay <- function(SPP, HQ, LQ, hqLarger, highQualityStack, lowQualityStack, #nolint
                      outputFilenameSuffix = "overlay", destinationPath) {
@@ -532,13 +505,28 @@ overlayStacks <- function(highQualityStack, lowQualityStack, outputFilenameSuffi
   }
 }
 
+#' Merge species pecent-cover rasters
+#'
+#' Used internally in \code{overlayStacks}.
+#'
+#' @param sppMerge TODO
+#' @param speciesLayers TODO
+#' @param sppEquiv TODO
+#' @param column TODO
+#' @param dPath destination path TODO
+#' @param suffix TODO
+#' @param ... Additonal arguments TODO
+#'
+#' @importFrom raster calc stack writeRaster
+#' @importFrom reproducible .suffix prepInputs
+#' @keywords internal
 mergeSppRaster <- function(sppMerge, speciesLayers, sppEquiv, column, suffix, dPath, ...) {
     ## make sure species names and list names are in the right formats
     names(sppMerge) <- sppMerge
     sppMerges <- lapply(sppMerge, FUN = function(x) {
       equivalentName(x, sppEquiv,  column = "KNN", multi = TRUE)
     })
-    #names(sppMerges) <- equivalentName(names(sppMerges), sppEquiv,  column = sppEndNamesCol)
+    #names(sppMerges) <- equivalentName(names(sppMerges), sppEquiv,  column = sppEquivCol)
 
     ## keep species present in the data
     sppMerges <- lapply(sppMerges, FUN = function(x) x[x %in% names(speciesLayers)])
@@ -557,5 +545,4 @@ mergeSppRaster <- function(sppMerge, speciesLayers, sppEquiv, column, suffix, dP
       message("  Merging ", paste(sumSpecies, collapse = ", "), "; becoming: ", newLayerName)
     }
   speciesLayers
-
 }

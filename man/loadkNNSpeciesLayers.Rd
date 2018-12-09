@@ -4,8 +4,8 @@
 \alias{loadkNNSpeciesLayers}
 \title{Load kNN species layers from online data repository}
 \usage{
-loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, speciesEquivalency,
-  knnNamesCol = "KNN", sppEndNamesCol, thresh = 1, url, ...)
+loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, sppEquiv,
+  knnNamesCol = "KNN", sppEquivCol, thresh = 1, url, ...)
 }
 \arguments{
 \item{dPath}{path to the data directory}
@@ -14,15 +14,15 @@ loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, speciesEquivalency,
 
 \item{studyArea}{passed to \code{\link[reproducible]{prepInputs}}}
 
-\item{speciesEquivalency}{table with species name equivalencies between the
+\item{sppEquiv}{table with species name equivalencies between the
 kNN format and the final naming format.
 See \code{data("sppEquivalencies_CA", "pemisc")}.}
 
-\item{knnNamesCol}{character string indicating the column in \code{speciesEquivalency}
+\item{knnNamesCol}{character string indicating the column in \code{sppEquiv}
 containing kNN species names.
 Default \code{"KNN"} for when \code{sppEquivalencies_CA} is used.}
 
-\item{sppEndNamesCol}{character string indicating the column in \code{speciesEquivalency}
+\item{sppEquivCol}{character string indicating the column in \code{sppEquiv}
 to use for final species names.}
 
 \item{thresh}{the minimum number of pixels where the species must have
@@ -35,8 +35,7 @@ Defaults to 1.}
 and \code{\link{equivalentName}}.}
 }
 \value{
-a list of two elements: \code{speciesLayer}, a raster stack; and
-        a vector of species names.
+A raster stack of percent cover layers by species.
 }
 \description{
 TODO: description needed
