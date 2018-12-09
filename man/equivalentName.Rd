@@ -4,7 +4,7 @@
 \alias{equivalentName}
 \title{Return equivalent name from a \code{data.frame} of equivalencies}
 \usage{
-equivalentName(value, df, column, multi = FALSE)
+equivalentName(value, df, column, multi = FALSE, searchColumn = NULL)
 }
 \arguments{
 \item{value}{Vector of values to match in \code{df}.}
@@ -15,8 +15,16 @@ equivalentName(value, df, column, multi = FALSE)
 in \code{df} to return names from.}
 
 \item{multi}{Logical. If \code{TRUE}, then all matches will be returned. Default
-is \code{FALSE} for backwards compatibility.}
+is \code{FALSE} for backwards compatibility. This may result in more
+elements than were in \code{value}, as each \code{value} may be matched
+by more than one entry, returning more than one result each from \code{column}.
+If a species is found in the \code{df}, but there is no corresponding
+value in \code{column}, it will return \code{NA}}
+
+\item{searchColumn}{Optionally, provide the name of a column in \code{df} that results
+must be found in. The return value will still be from \code{column}}
 }
 \description{
-This is simply a wrapper around \code{match} for a specific \code{data.frame} of values.
+This is simply a wrapper around \code{match} or \code{\%in\%} for
+a specific \code{data.frame} of values.
 }
