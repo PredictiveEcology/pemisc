@@ -87,7 +87,8 @@ prepSpeciesTable <- function(speciesTable, speciesLayers, sppEquiv = NULL, sppEq
     "hardsoft"
   )
 
-  sppNameVector <- unique(na.omit(sppEquiv[[sppEquivCol]]))
+  sppEquiv <- sppEquiv[!is.na(sppEquiv[[sppEquivCol]]),]
+  sppNameVector <- unique(sppEquiv[[sppEquivCol]])
   speciesTable <- speciesTable[species %in% equivalentName(sppNameVector, sppEquiv,
                                                            "LANDIS_traits", multi = TRUE) &
                                  Area %in% c("BSW", "BP", "MC")]
