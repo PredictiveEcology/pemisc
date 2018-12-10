@@ -7,8 +7,8 @@
 \usage{
 getSpeciesTable(url = NULL, dPath = tempdir(), cacheTags = NULL)
 
-prepSpeciesTable(speciesTable, speciesLayers, sppNameVector,
-  sppEquiv = NULL, sppMerge, sppEquivCol = "LandR")
+prepSpeciesTable(speciesTable, speciesLayers, sppEquiv = NULL,
+  sppEquivCol = "LandR")
 }
 \arguments{
 \item{url}{If NULL (the default), uses one from D. Cyr's LANDIS-II files:
@@ -22,11 +22,7 @@ prepSpeciesTable(speciesTable, speciesLayers, sppNameVector,
 
 \item{speciesLayers}{TODO: description needed}
 
-\item{sppNameVector}{TODO: description needed}
-
 \item{sppEquiv}{TODO: description needed}
-
-\item{sppMerge}{TODO: description needed}
 
 \item{sppEquivCol}{TODO: description needed}
 }
