@@ -213,16 +213,13 @@ vegTypeMapGenerator <- function(species, cohortdata, pixelGroupMap, vegLeadingPr
 #' @importFrom raster ncell raster
 #' @importFrom reproducible Cache .prefix preProcess
 #' @importFrom utils untar
-loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, #sppNameVector,
-                                 sppEquiv, knnNamesCol = "KNN", sppEquivCol,
-                                 #sppMerge = NULL,
-                                 thresh = 1, url, ...) {
+loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppEquiv,
+                                 knnNamesCol = "KNN", sppEquivCol, thresh = 1, url, ...) {
   dots <- list(...)
 
   sppEquiv <- sppEquiv[!is.na(sppEquiv[[sppEquivCol]]),]
   sppNameVector <- unique(sppEquiv[[sppEquivCol]])
   sppMerge <- unique(sppEquiv[[sppEquivCol]][duplicated(sppEquiv[[sppEquivCol]])])
-
 
   if ("cachePath" %in% names(dots)) {
     cachePath <- dots$cachePath
