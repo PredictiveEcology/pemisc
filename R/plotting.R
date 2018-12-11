@@ -42,15 +42,37 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
   facVals <- factorValues2(vtm, vtm[], att = "Species", na.rm = TRUE)
   df <- data.table(species = as.character(facVals), stringsAsFactors = FALSE)
   df <- df[!is.na(df$species)]
-  df$species <- equivalentName(df$species, sppEquiv, "EN_generic_short")
 
-  if (all(df$species %in% names(colors)))
-      df$cols <- colors
-  else
+  colorsEN <- equivalentName(names(colors), sppEquiv, "EN_generic_short")
+  speciesEN <- equivalentName(df$species, sppEquiv, "EN_generic_short")
+  if (all(na.omit(speciesEN) %in% colorsEN) ){
+    colDT <- data.table(cols = colors, species = colorsEN)
+
+    hasMixed <- isTRUE("Mixed" %in% unique(df$species))
+    if (hasMixed) {
+      mixedString <- "Mixed"
+      whMixed <- which(df$species == mixedString)
+      whMixedColors <- which(names(colors) == mixedString)
+      colDT[whMixedColors, species := mixedString]
+
+    }
+
+    df$species <- speciesEN
+
+    if (hasMixed)
+      df[whMixed, species := mixedString]
+
+
+    df <- colDT[df, on = "species"] # merge color and species
+
+  } else {
     stop("Species names of 'colors' must match those in 'speciesStack'.")
+  }
+
 
   cols2 <- df$cols
-  #names(cols2) <- df$species
+  names(cols2) <- df$species # This makes colours match the species
+
   initialLeadingPlot <- ggplot(data = df, aes(species, fill = species)) +
     scale_fill_manual(values = cols2) +
     geom_bar(position = "stack") +
@@ -59,6 +81,7 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
 
   Plot(initialLeadingPlot, title = title)
 
+  browser()
   ## plot inital types raster
   vtmTypes <- factorValues(vtm, seq(minValue(vtm), maxValue(vtm)), att = "Species")[[1]]
   vtmCols <- equivalentName(vtmTypes, df = sppEquiv, "cols")
