@@ -96,18 +96,23 @@ prepInputsLCC <- function(year = 2005,
 #' @return A factor raster
 #'
 #' @export
-#' @importFrom raster maxValue which.max
+#' @importFrom quickPlot numLayers
+#' @importFrom raster levels maxValue raster
+#' @importFrom SpaDES.tools inRange
 makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
-  if (!inRange(vegLeadingProportion, 0, 1)) stop("vegLeadingProportion must be a proportion")
+  if (!inRange(vegLeadingProportion, 0, 1))
+    stop("vegLeadingProportion must be a proportion")
+
   sumVegPct <- sum(speciesStack) ## TODO: how is the sum >100 ?
 
-  # create "mixed" layer, which is given a value slightly higher than any other layer
-  #   if it is deemed a mixed pixel
   if (isTRUE(mixed)) {
-    # All layers must be below vegLeadingProportion to be called Mixed
-    #  This check turns stack to binary, 1 if < vegLeadingProportion, 0 if more than
-    #  Then, sum should be numLayers of all are below vegLeadingProportion
-    whMixed <- which(sum(speciesStack < (100 * vegLeadingProportion))[] == numLayers(speciesStack))
+    ## create "mixed" layer, which is given a value slightly higher than any
+    ## other layer. if it is deemed a mixed pixel
+    ## All layers must be below vegLeadingProportion to be called Mixed
+    ##  This check turns stack to binary: 1 if < vegLeadingProportion; 0 if more than.
+    ##  Then, sum should be numLayers of all are below vegLeadingProportion
+    whMixed <- which(sum(speciesStack < (100 * vegLeadingProportion))[] ==
+                       numLayers(speciesStack))
     MixedRas <- speciesStack[[1]]
     MixedRas[!is.na(speciesStack[[1]][])] <- 0
     MixedRas[whMixed] <- max(maxValue(speciesStack)) * 1.01
@@ -125,10 +130,8 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
     return(whMax)
   })
 
-
   vegTypeMap <- raster(speciesStack[[1]])
   vegTypeMap[!nas] <- maxes
-  #vegTypeMap <- raster::which.max(speciesStack)
 
   layerNames <- names(speciesStack)
   names(layerNames) <- layerNames
