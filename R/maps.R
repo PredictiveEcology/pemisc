@@ -98,12 +98,14 @@ prepInputsLCC <- function(year = 2005,
 #' @export
 #' @importFrom raster maxValue which.max
 makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
-  sumVegPct <- sum(speciesStack) ## na.rm = TRUE
+  sumVegPct <- sum(speciesStack) ## TODO: how is the sum >100 ?
 
   # create "mixed" layer, which is given a value slightly higher than any other layer
   #   if it is deemed a mixed pixel
-  speciesStack$Mixed <- all(speciesStack / sumVegPct < vegLeadingProportion) * #nolint
-    max(maxValue(speciesStack)) * 1.01
+  if (isTRUE(mixed)) {
+    speciesStack$Mixed <- all(speciesStack / sumVegPct < vegLeadingProportion) * #nolint
+      max(maxValue(speciesStack)) * 1.01
+  }
   vegTypeMap <- raster::which.max(speciesStack)
   layerNames <- names(speciesStack)
   names(layerNames) <- layerNames
