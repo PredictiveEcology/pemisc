@@ -15,7 +15,9 @@
 #'
 #' @param sppEquivCol the column name to use from \code{sppEquiv}.
 #'
-#' @param title The title te use for the generated plots.
+#' @param colors Named vector of colour codes, named using species names.
+#'
+#' @param title The title to use for the generated plots.
 #'
 #' @author Eilot McIntire
 #' @export
@@ -25,7 +27,7 @@
 #' @importFrom raster factorValues maxValue minValue
 #' @importFrom reproducible Cache
 plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
-                    sppEquiv, sppEquivCol, title = "Leading vegetation types") {
+                    sppEquiv, sppEquivCol, colors, title = "Leading vegetation types") {
   if (is.null(vtm)) {
     if (!is.null(speciesStack))
       vtm <- Cache(makeVegTypeMap, speciesStack, vegLeadingProportion, mixed = TRUE)
@@ -41,10 +43,14 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
   df <- data.table(species = as.character(facVals), stringsAsFactors = FALSE)
   df <- df[!is.na(df$species)]
   df$species <- equivalentName(df$species, sppEquiv, "EN_generic_short")
-  df$cols <- equivalentName(df$species, sppEquiv, "cols")
+
+  if (all(df$species %in% names(colors)))
+      df$cols <- colors
+  else
+    stop("Species names of 'colors' must match those in 'speciesStack'.")
 
   cols2 <- df$cols
-  names(cols2) <- df$species
+  #names(cols2) <- df$species
   initialLeadingPlot <- ggplot(data = df, aes(species, fill = species)) +
     scale_fill_manual(values = cols2) +
     geom_bar(position = "stack") +
@@ -60,8 +66,6 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
 
   Plot(vtm, title = title)
 }
-
-
 
 #' Create species color vector from a sppEquiv table
 #'

@@ -5,7 +5,7 @@
 \title{Summary plots of leading vegetation types}
 \usage{
 plotVTM(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
-  sppEquiv, sppEquivCol, title = "Leading vegetation types")
+  sppEquiv, sppEquivCol, colors, title = "Leading vegetation types")
 }
 \arguments{
 \item{speciesStack}{A \code{RasterStack} of percent-cover-by-species layers.}
@@ -20,7 +20,9 @@ a species to be the "leading" one. Default 0.8.}
 
 \item{sppEquivCol}{the column name to use from \code{sppEquiv}.}
 
-\item{title}{The title te use for the generated plots.}
+\item{colors}{Named vector of colour codes, named using species names.}
+
+\item{title}{The title to use for the generated plots.}
 }
 \description{
 Create raster of leading vegetation types and \code{Plot} a bar chart summary
