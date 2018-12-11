@@ -32,7 +32,8 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
     if (!is.null(speciesStack))
       vtm <- Cache(makeVegTypeMap, speciesStack, vegLeadingProportion, mixed = TRUE)
     else
-      stop("plotVTM requires either a speciesStack of percent cover or a vegetation type map (vtm).")
+      stop("plotVTM requires either a speciesStack of percent cover or a",
+           " vegetation type map (vtm).")
   }
 
   ## the ones we want
@@ -54,7 +55,6 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
       whMixed <- which(df$species == mixedString)
       whMixedColors <- which(names(colors) == mixedString)
       colDT[whMixedColors, species := mixedString]
-
     }
 
     df$species <- speciesEN
@@ -62,13 +62,11 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
     if (hasMixed)
       df[whMixed, species := mixedString]
 
-
     df <- colDT[df, on = "species"] # merge color and species
 
   } else {
     stop("Species names of 'colors' must match those in 'speciesStack'.")
   }
-
 
   cols2 <- df$cols
   names(cols2) <- df$species # This makes colours match the species
@@ -81,10 +79,9 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
 
   Plot(initialLeadingPlot, title = title)
 
-  browser()
   ## plot inital types raster
   vtmTypes <- factorValues(vtm, seq(minValue(vtm), maxValue(vtm)), att = "Species")[[1]]
-  vtmCols <- equivalentName(vtmTypes, df = sppEquiv, "cols")
+  vtmCols <- colors[match(vtmTypes, names(colors))]
   setColors(vtm, vtmTypes) <- vtmCols
 
   Plot(vtm, title = title)
