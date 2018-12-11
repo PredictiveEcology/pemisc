@@ -30,6 +30,7 @@ Imports:
     parallel,
     quickPlot,
     raster,
+    RColorBrewer,
     reproducible,
     sp,
     SpaDES.tools,
