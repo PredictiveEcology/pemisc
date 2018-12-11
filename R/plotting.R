@@ -60,3 +60,34 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
 
   Plot(vtm, title = title)
 }
+
+
+
+#' Create species color vector from a sppEquiv table
+#'
+#' Create species color vector from a sppEquiv table
+#' @param sppEquiv A species equivalency table, e.g., data("sppEquivalencies_CA")
+#' @param sppEquivCol The name of the column to get names from
+#' @param newVals An optional character vector of extra names to use, e.g., "Mixed"
+#' @param palette An RColorBrewer palette, e.g., "Accent"
+#'
+#' Can get RColorBrewer palette names from \code{rownames(RColorBrewer::brewer.pal.info)}
+#'
+#' @export
+#' @return
+#' A named vector of color codes, where the names are the species names plus
+#' any extra names passed with \code{newVals}
+#'
+sppColors <- function(sppEquiv, sppEquivCol, newVals, palette) {
+  sppColorNames <- c(na.omit(unique(sppEquiv[[sppEquivCol]])), newVals)
+
+  sppColors <- NULL
+  sppColors <- if (is.character(palette))
+    if (palette %in% rownames(RColorBrewer::brewer.pal.info))
+      RColorBrewer::brewer.pal(length(sppColorNames), palette)
+
+  if (is.null(sppColors))
+    stop("Currently palette must be one of the RColorBrewer::brewer.pal names")
+  names(sppColors) <- sppColorNames
+  sppColors
+}
