@@ -98,15 +98,38 @@ prepInputsLCC <- function(year = 2005,
 #' @export
 #' @importFrom raster maxValue which.max
 makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
+  if (!inRange(vegLeadingProportion, 0, 1)) stop("vegLeadingProportion must be a proportion")
   sumVegPct <- sum(speciesStack) ## TODO: how is the sum >100 ?
 
   # create "mixed" layer, which is given a value slightly higher than any other layer
   #   if it is deemed a mixed pixel
   if (isTRUE(mixed)) {
-    speciesStack$Mixed <- all(speciesStack / sumVegPct < vegLeadingProportion) * #nolint
-      max(maxValue(speciesStack)) * 1.01
+    # All layers must be below vegLeadingProportion to be called Mixed
+    #  This check turns stack to binary, 1 if < vegLeadingProportion, 0 if more than
+    #  Then, sum should be numLayers of all are below vegLeadingProportion
+    whMixed <- which(sum(speciesStack < (100 * vegLeadingProportion))[] == numLayers(speciesStack))
+    MixedRas <- speciesStack[[1]]
+    MixedRas[!is.na(speciesStack[[1]][])] <- 0
+    MixedRas[whMixed] <- max(maxValue(speciesStack)) * 1.01
+
+    speciesStack$Mixed <- MixedRas
   }
-  vegTypeMap <- raster::which.max(speciesStack)
+
+  a <- speciesStack[]
+  nas <- is.na(a[,1])
+  maxes <- apply(a[!nas,], 1, function(x) {
+    whMax <- which(x == max(x))
+    if (length(whMax) > 1) {
+      whMax <- sample(whMax, size = 1)
+    }
+    return(whMax)
+  })
+
+
+  vegTypeMap <- raster(speciesStack[[1]])
+  vegTypeMap[!nas] <- maxes
+  #vegTypeMap <- raster::which.max(speciesStack)
+
   layerNames <- names(speciesStack)
   names(layerNames) <- layerNames
   levels(vegTypeMap) <- data.frame(ID = seq(layerNames), Species = names(layerNames))
