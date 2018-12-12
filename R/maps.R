@@ -123,7 +123,7 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
   a <- speciesStack[]
   nas <- is.na(a[,1])
   maxes <- apply(a[!nas,], 1, function(x) {
-    whMax <- which(x == max(x))
+    whMax <- which(x == max(x, na.rm = TRUE))
     if (length(whMax) > 1) {
       whMax <- sample(whMax, size = 1)
     }
@@ -131,6 +131,7 @@ makeVegTypeMap <- function(speciesStack, vegLeadingProportion, mixed = TRUE) {
   })
 
   vegTypeMap <- raster(speciesStack[[1]])
+
   vegTypeMap[!nas] <- maxes
 
   layerNames <- names(speciesStack)
@@ -315,6 +316,7 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppEquiv,
 
   postProcessedFilenames <- .suffix(targetFiles, suffix = suffix)
 
+  message("Running prepInputs for ", paste(kNNnames, collapse = ", "))
   speciesLayers <- Cache(Map, targetFile = targetFiles, archive = archives,
                        filename2 = postProcessedFilenames,
                        MoreArgs = list(url = url,
