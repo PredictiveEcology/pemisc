@@ -337,9 +337,13 @@ loadkNNSpeciesLayers <- function(dPath, rasterToMatch, studyArea, sppEquiv,
                                     dPath = dPath)
   }
 
-  ## Rename species layers - note: merged species were renamed already (these can appear as NAs)
+  ## Rename species layers - There will be 2 groups -- one
   nameChanges <- equivalentName(names(speciesLayers), sppEquiv, column = sppEquivCol)
-  names(speciesLayers)[!is.na(nameChanges)] <- nameChanges[!is.na(nameChanges)]
+  nameChangeNA <- is.na(nameChanges)
+  names(speciesLayers)[!nameChangeNA] <- nameChanges[!nameChangeNA]
+
+  nameChangesNonMerged <- equivalentName(names(speciesLayers)[nameChangeNA], sppEquiv, column = sppEquivCol)
+  names(speciesLayers)[nameChangeNA] <- nameChangesNonMerged
 
   ## remove layers that have less data than thresh (i.e. spp absent in study area)
   ## count no. of pixels that have biomass
