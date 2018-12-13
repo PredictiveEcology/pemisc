@@ -80,9 +80,9 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
   Plot(initialLeadingPlot, title = title)
 
   ## plot inital types raster
-  vtmTypes <- factorValues(vtm, seq(minValue(vtm), maxValue(vtm)), att = "Species")[[1]]
+  vtmTypes <- as.character(factorValues2(vtm, raster::levels(vtm)[[1]]$ID, att = "Species"))
   vtmCols <- colors[match(vtmTypes, names(colors))]
-  setColors(vtm, vtmTypes) <- vtmCols
+  setColors(vtm, length(vtmTypes)) <- vtmCols # setColors for factors must have an entry for each row in raster::levels
 
   Plot(vtm, title = title)
 }
