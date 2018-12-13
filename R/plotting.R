@@ -22,7 +22,7 @@
 #'
 #' @author Eilot McIntire
 #' @export
-#' @importFrom data.table data.table
+#' @importFrom data.table data.table setkeyv
 #' @importFrom ggplot2 aes element_blank element_text geom_bar ggplot scale_fill_manual theme
 #' @importFrom ggplot2 guides guide_legend guide_legend scale_x_discrete
 #' @importFrom quickPlot Plot setColors<-
@@ -94,8 +94,8 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
   names(cols2) <- colDT$species
 
   initialLeadingPlot <- ggplot(data = df, aes(species, fill = species)) +
-    scale_x_discrete(drop=FALSE) +
-    guides(fill = guide_legend(reverse=TRUE)) +
+    scale_x_discrete(drop = FALSE) +
+    guides(fill = guide_legend(reverse = TRUE)) +
     scale_fill_manual(values = cols2, drop = FALSE) +
     geom_bar(position = "stack") +
     theme(legend.text = element_text(size = 6), legend.title = element_blank(),
@@ -107,7 +107,6 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
   ## plot inital types raster
   levels(vtm) <- facLevels
   setColors(vtm, length(vtmTypes)) <- vtmCols # setColors for factors must have an entry for each row in raster::levels
-
 
   Plot(vtm, title = title)
 }
