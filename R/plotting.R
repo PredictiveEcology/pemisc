@@ -101,7 +101,6 @@ plotVTM <- function(speciesStack = NULL, vtm = NULL, vegLeadingProportion = 0.8,
     theme(legend.text = element_text(size = 6), legend.title = element_blank(),
           axis.text = element_text(size = 6))
 
-
   Plot(initialLeadingPlot, title = title)
 
   ## plot inital types raster
