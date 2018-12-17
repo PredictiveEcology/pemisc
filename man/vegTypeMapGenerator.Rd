@@ -4,17 +4,21 @@
 \alias{vegTypeMapGenerator}
 \title{Generate vegetation type map}
 \usage{
-vegTypeMapGenerator(species, cohortdata, pixelGroupMap,
-  vegLeadingProportion)
+vegTypeMapGenerator(cohortdata, pixelGroupMap, vegLeadingProportion,
+  colors, unitTest = getOption("pemisc.unitTest", FALSE))
 }
 \arguments{
-\item{species}{A \code{data.table} of stuff}
-
 \item{cohortdata}{A different \code{data.table} of stuff}
 
 \item{pixelGroupMap}{A \code{raster}}
 
 \item{vegLeadingProportion}{Numeric between 0-1.}
+
+\item{colors}{A named vector of color codes. The names MUST match the names of species
+in \code{cohortdata$speciesCode}, plus an optional "Mixed" color}
+
+\item{unitTest}{A logical indicating whether some internal tests should be run to
+ensure the function is running correctly.}
 }
 \description{
 Generate vegetation type map

@@ -1,5 +1,7 @@
 if (getRversion() >= "3.1.0") {
-  utils::globalVariables(c(".", ":=", "HQ", "LQ", "SPP"))
+  utils::globalVariables(c(".", ":=", "B", "HQ", "leading", "LQ", "mixed",
+                           "pixelGroup", "speciesCode", "speciesGroupB",
+                           "speciesProportion","SPP", "totalB"))
 }
 
 #' Define flammability map
