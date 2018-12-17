@@ -20,13 +20,14 @@ a species to be the "leading" one. Default 0.8.}
 
 \item{sppEquivCol}{the column name to use from \code{sppEquiv}.}
 
-\item{colors}{Named vector of colour codes, named using species names.}
+\item{colors}{Named vector of colour codes, named using species names. NOTE:
+plot order will follow this order.}
 
 \item{title}{The title to use for the generated plots.}
 }
 \description{
 Create raster of leading vegetation types and \code{Plot} a bar chart summary
-and a vegetation type map.
+and a vegetation type map. NOTE: plot order will follow \code{colors} order.
 }
 \author{
 Eilot McIntire
