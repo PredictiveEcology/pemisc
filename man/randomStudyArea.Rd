@@ -10,7 +10,7 @@ randomStudyArea(center = NULL, size = 10000, seed = NULL)
 \item{center}{\code{SpatialPoints} object specifying a set of coordinates and
 a projection. Default is an area in southern Alberta, Canada.}
 
-\item{size}{Numeric specifying the approximate size of the area in hectares (ha).
+\item{size}{Numeric specifying the approximate size of the area in m^2.
 Default \code{1e4}.}
 
 \item{seed}{Numeric indicating the random seed to set internally

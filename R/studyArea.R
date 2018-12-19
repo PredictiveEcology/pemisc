@@ -3,7 +3,7 @@
 #' @param center \code{SpatialPoints} object specifying a set of coordinates and
 #'               a projection. Default is an area in southern Alberta, Canada.
 #'
-#' @param size   Numeric specifying the approximate size of the area in hectares (ha).
+#' @param size   Numeric specifying the approximate size of the area in m^2.
 #'               Default \code{1e4}.
 #'
 #' @param seed   Numeric indicating the random seed to set internally
