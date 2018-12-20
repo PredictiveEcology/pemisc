@@ -133,3 +133,39 @@ assignLightProb <- function(sufficientLight, newCohortData) {
   ## siteShade + 2 is necessary to skip the first column
   newCohortData[ , lightProb := sufficientLight[cbind(shadetolerance, siteShade + 2)]]
 }
+
+
+#' Create the correct string for pixelGroups
+#'
+#' @param maxPixelGroup A length 1 numeric/integer indicating the current maximum pixelGroup value
+#' @param ecoregionGroup  A vector of ecoregionGroup strings
+#' @param speciesGroup  A vector of speciesGroup strings
+#'
+#' @return  TODO: description needed
+#'
+#' @export
+makePixelGroups <- function(maxPixelGroup, ecoregionGroup, speciesGroup) {
+  as.integer(maxPixelGroup) +
+    as.integer(factor(paste(ecoregionGroup, speciesGroup, sep = "_")))
+}
+
+#' Add the correct pixelGroups to a pixel-cohortData object
+#'
+#' @inheritParams makePixelGroups
+#' @param pixelCohortData  # pixel groups are groups of identical pixels based
+#'   on speciesGroup x Age and ecoregionGroup
+#'
+#' @note
+#' This should not (yey) be used where age is an issue
+#'
+#' @export
+addPixelGroup <- function(pixelCohortData, maxPixelGroup) {
+
+  pixelCohortData[, speciesInt := as.integer(speciesCode)]
+  pixelCohortData[, speciesGroup := sum(2^(unique(speciesInt)-1)),  by = "pixelIndex"]
+  pixelCohortData[, speciesGroup := paddedFloatToChar(speciesGroup, padL = max(nchar(as.character(speciesGroup))))]
+  setkey(pixelCohortData, ecoregionGroup, speciesGroup)
+  pixelCohortData[ , pixelGroup := makePixelGroups(maxPixelGroup, ecoregionGroup, speciesGroup)]
+  pixelCohortData[, c("speciesInt", "speciesGroup") := NULL]
+  pixelCohortData
+}
