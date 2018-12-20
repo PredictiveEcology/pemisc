@@ -8,18 +8,24 @@ addNewCohorts(newCohortData, cohortData, pixelGroupMap, time,
   speciesEcoregion)
 }
 \arguments{
-\item{newCohortData}{TODO: description needed}
+\item{newCohortData}{must be a complete cohortData object with entirely new
+\code{pixelGroup} values (i.e., already non-overlapping with
+\code{cohortData}. Columns it must have: \code{pixelGroup}, \code{speciesCode},
+\code{ecoregionGroup}}
 
-\item{cohortData}{TODO: description needed}
+\item{cohortData}{a \code{data.table} with columns:
+"pixelGroup", "ecoregionGroup", "speciesCode", "age", "B", "mortality", "aNPPAct", "sumB"}
 
-\item{pixelGroupMap}{TODO: description needed}
+\item{pixelGroupMap}{Raster layer with pixel values equal to a pixel group number that
+correspondsd exactly to ]\code{pixelGroup} column in \code{cohortData}}
 
-\item{time}{TODO: description needed}
+\item{time}{Current time e.g., time(sim). This is used to extract the correct
+parameters in \code{speciesEcoregion} table if there are different values over time}
 
-\item{speciesEcoregion}{TODO: description needed}
+\item{speciesEcoregion}{A speciesEcoregion table.}
 }
 \value{
-TODO: description needed
+A \code{data.table} with a new, \code{rbindlist}ed cohortData
 }
 \description{
 Does the following:
@@ -29,9 +35,4 @@ Does the following:
   \item assign the new pixelgroup to the pixels that have new cohort;
   \item update the pixelgroup map.
 }
-}
-\details{
-\code{newCohortData} must have the original \code{pixelgroup}, regenerated species
-and \code{pixelindex}.
-It also would be better if it has the columns of \code{cohortData} plus \code{pixelIndex}.
 }
