@@ -6,7 +6,7 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2018-12-18
+Date: 2018-12-20
 Version: 0.0.1.9000
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
@@ -34,6 +34,7 @@ Imports:
     RColorBrewer,
     reproducible,
     sp,
+    SpaDES.core,
     SpaDES.tools,
     stats,
     tools,

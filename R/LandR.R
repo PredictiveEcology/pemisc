@@ -1,7 +1,8 @@
 if (getRversion() >= "3.1.0") {
   utils::globalVariables(c(".", ":=", "age", "ecoregion", "ecoregionGroup",
                            "lightProb", "maxANPP", "maxB", "maxB_eco", "pixelIndex",
-                           "shadetolerance", "siteShade", "speciesposition", "sumB",
+                           "shadetolerance", "siteShade", "speciesposition",
+                           "speciesGroup", "speciesInt", "sumB",
                            "temppixelGroup", "year"))
 }
 
@@ -31,7 +32,7 @@ if (getRversion() >= "3.1.0") {
 #' A \code{data.table} with a new, \code{rbindlist}ed cohortData
 #'
 #' @export
-#' @importFrom data.table rbindlist set setkey
+#' @importFrom data.table copy rbindlist set setkey
 #' @importFrom raster getValues
 #'
 addNewCohorts <- function(newCohortData, cohortData, pixelGroupMap, time, speciesEcoregion) {
@@ -149,16 +150,18 @@ makePixelGroups <- function(maxPixelGroup, ecoregionGroup, speciesGroup) {
     as.integer(factor(paste(ecoregionGroup, speciesGroup, sep = "_")))
 }
 
-#' Add the correct pixelGroups to a pixel-cohortData object
+#' Add the correct \code{pixelGroups} to a \code{pixelCohortData} object
 #'
 #' @inheritParams makePixelGroups
 #' @param pixelCohortData  # pixel groups are groups of identical pixels based
-#'   on speciesGroup x Age and ecoregionGroup
+#'   on \code{speciesGroup} x \code{Age} and \code{ecoregionGroup}.
 #'
 #' @note
-#' This should not (yey) be used where age is an issue
+#' This should not (yet) be used where age is an issue.
 #'
 #' @export
+#' @importFrom data.table setkey
+#' @importFrom SpaDES.core paddedFloatToChar
 addPixelGroup <- function(pixelCohortData, maxPixelGroup) {
 
   pixelCohortData[, speciesInt := as.integer(speciesCode)]
