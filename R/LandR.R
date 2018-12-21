@@ -169,3 +169,18 @@ addPixelGroup <- function(pixelCohortData, maxPixelGroup) {
   pixelCohortData[, c("speciesInt", "speciesGroup") := NULL]
   pixelCohortData
 }
+
+
+#' Pull out the values from speciesEcoregion table for current time
+#'
+#' @param speciesEcoregion A data.table with speciesEcoregion values
+#' @param currentTime The current time e.g., time(sim)
+#'
+#' @note
+#' TODO
+#'
+#' @export
+speciesEcoregionLatestYear <- function(speciesEcoregion, currentTime) {
+  spEco <- speciesEcoregion[year <= currentTime]
+  spEco[year == max(spEco$year)]
+}
