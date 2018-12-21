@@ -20,22 +20,12 @@ Depends:
     R (>= 3.3.0)
 Imports:
     backports,
-    data.table,
-    dplyr,
     fasterize,
-    gdalUtils,
-    ggplot2,
-    grDevices,
-    magrittr,
     methods,
     parallel,
-    quickPlot,
     raster,
-    RColorBrewer,
     reproducible,
     sp,
-    SpaDES.core,
-    SpaDES.tools,
     stats,
     tools,
     utils
