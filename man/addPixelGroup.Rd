@@ -2,19 +2,19 @@
 % Please edit documentation in R/LandR.R
 \name{addPixelGroup}
 \alias{addPixelGroup}
-\title{Add the correct pixelGroups to a pixel-cohortData object}
+\title{Add the correct \code{pixelGroups} to a \code{pixelCohortData} object}
 \usage{
 addPixelGroup(pixelCohortData, maxPixelGroup)
 }
 \arguments{
 \item{pixelCohortData}{# pixel groups are groups of identical pixels based
-on speciesGroup x Age and ecoregionGroup}
+on \code{speciesGroup} x \code{Age} and \code{ecoregionGroup}.}
 
 \item{maxPixelGroup}{A length 1 numeric/integer indicating the current maximum pixelGroup value}
 }
 \description{
-Add the correct pixelGroups to a pixel-cohortData object
+Add the correct \code{pixelGroups} to a \code{pixelCohortData} object
 }
 \note{
-This should not (yey) be used where age is an issue
+This should not (yet) be used where age is an issue.
 }
