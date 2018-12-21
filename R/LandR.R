@@ -173,11 +173,10 @@ addPixelGroup <- function(pixelCohortData, maxPixelGroup) {
   pixelCohortData
 }
 
-
 #' Pull out the values from speciesEcoregion table for current time
 #'
-#' @param speciesEcoregion A data.table with speciesEcoregion values
-#' @param currentTime The current time e.g., time(sim)
+#' @param speciesEcoregion A \code{data.table} with \code{speciesEcoregion} values
+#' @param currentTime The current time e.g., \code{time(sim)}
 #'
 #' @note
 #' TODO
