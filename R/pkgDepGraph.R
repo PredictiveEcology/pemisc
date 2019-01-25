@@ -4,6 +4,10 @@
 #' @importFrom data.table data.table rbindlist
 #' @importFrom reproducible pkgDep
 #' @importFrom igraph graph_from_data_frame
+#' @param pkgs A character vector of package names. Default is
+#'    c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core",
+#'    "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")
+#' @param plot.it Logical. If \code{TRUE}, it will plot the igraph
 #' @return
 #' A list of 2: \code{dt} a data.table of the dependencies, and \code{dtGraph}
 #' an igraph object that can be plotted with \code{plot()}
