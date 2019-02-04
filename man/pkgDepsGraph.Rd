@@ -10,8 +10,7 @@ pkgDepsGraph(pkgs = c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools",
 }
 \arguments{
 \item{pkgs}{A character vector of package names. Default is
-c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core",
-"SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")}
+\code{c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core", "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")}}
 
 \item{plot.it}{Logical. If \code{TRUE}, it will plot the igraph}
 }
@@ -20,5 +19,5 @@ A list of 2: \code{dt} a data.table of the dependencies, and \code{dtGraph}
 an igraph object that can be plotted with \code{plot()}
 }
 \description{
-Uses \code{igraph} and \code{reproducible::pkgDep}
+Uses \code{igraph} and \code{reproducible::pkgDep}.
 }

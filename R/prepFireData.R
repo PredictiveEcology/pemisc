@@ -1,9 +1,7 @@
 #' Download the National Burn Area Composite (Fires) in Canada
 #'
-#' Downloads data from CWFIS Datamart at
-#' \url{http://cwfis.cfs.nrcan.gc.ca/datamart}.
-#' This runs \code{prepInputs} internally, so use can pass
-#' \code{studyArea} etc.
+#' Downloads data from CWFIS Datamart at \url{http://cwfis.cfs.nrcan.gc.ca/datamart}.
+#' This runs \code{prepInputs} internally, so use can pass \code{studyArea} etc.
 #'
 #' @param year Numeric, length 1. Which year, from 1986 to 2018 (currently)
 #'   to download
@@ -12,10 +10,17 @@
 #' @param urlBase The url of the directory where the NBAC are stored. Default
 #'   is the currently known url. If this url becomes stale, please notify
 #'   the predictive ecology team.
+#' @param ... Additional arguments.
+#'
 #' @return
 #' A SpatialPolygonsDataFrame plus several downloaded files, including
 #' the .zip archive and the extracted files. Because it is running
 #' \code{prepInputs}, checksumming is occurring too.
+#'
+#' @export
+#' @importFrom RCurl getURL
+#' @importFrom reproducible prepInputs
+#'
 #' @examples
 #' \dontrun{
 #'   # This will download 2 recent years
@@ -24,8 +29,6 @@
 #'   Points <- prepFireCanada(yr, type = "Points", fun = "st_read")
 #'   Polygons <- prepFireCanada(yr, type = "Polygons")
 #' }
-#' @importFrom reproducible prepInputs
-#' @importFrom RCurl getURL
 prepFireCanada <- function(year, type = c("NBAC", "Polygon", "Point"),
                            urlBase = "http://cwfis.cfs.nrcan.gc.ca/downloads/nbac/",
                          ...) {
@@ -36,8 +39,8 @@ prepFireCanada <- function(year, type = c("NBAC", "Polygon", "Point"),
   type <- possTypes[pmatch(tolower(type), tolower(possTypes))]
   if (identical(type, possTypes[1])) {
     a <- Cache(getURL, urlBase,
-               verbose=TRUE,
-               dirlistonly = TRUE, notOlderThan = Sys.time() - (1440 *60))
+               verbose = TRUE,
+               dirlistonly = TRUE, notOlderThan = Sys.time() - (1440 * 60))
     lineWithFile <- grep(paste0("nbac_", year, ".*\\.zip"), strsplit(a, "\n")[[1]], value = TRUE)
     #gsub(".*href=\\\"(.*\\.zip)", "\\1", lineWithFile)
     filename <- gsub(".*>(.*\\.zip)<.*", "\\1", lineWithFile)
@@ -60,6 +63,3 @@ prepFireCanada <- function(year, type = c("NBAC", "Polygon", "Point"),
 
   return(out)
 }
-
-
-

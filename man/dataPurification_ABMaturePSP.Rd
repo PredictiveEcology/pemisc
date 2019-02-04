@@ -2,7 +2,7 @@
 % Please edit documentation in R/psp_clean.R
 \name{dataPurification_ABMaturePSP}
 \alias{dataPurification_ABMaturePSP}
-\title{Clean Permanent Sampling Plot Data from Alberta. Will not remove treeNumber = 9999}
+\title{Clean Permanent Sampling Plot Data from Alberta.}
 \usage{
 dataPurification_ABMaturePSP(treeDataRaw, plotHeaderDataRaw)
 }
@@ -12,5 +12,8 @@ dataPurification_ABMaturePSP(treeDataRaw, plotHeaderDataRaw)
 \item{plotHeaderDataRaw}{plot level data inc. location}
 }
 \description{
-Clean Permanent Sampling Plot Data from Alberta. Will not remove treeNumber = 9999
+Clean Permanent Sampling Plot Data from Alberta.
+}
+\note{
+Will not remove treeNumber = 9999
 }

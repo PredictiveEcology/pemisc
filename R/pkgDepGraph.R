@@ -1,13 +1,16 @@
 #' Build the pkg dependency graph
 #'
-#' Uses \code{igraph} and \code{reproducible::pkgDep}
-#' @importFrom data.table data.table rbindlist
-#' @importFrom reproducible pkgDep
-#' @importFrom igraph graph_from_data_frame
+#' Uses \code{igraph} and \code{reproducible::pkgDep}.
+#'
 #' @param pkgs A character vector of package names. Default is
-#'    c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core",
-#'    "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")
+#' \code{c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core", "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")}
+#'
 #' @param plot.it Logical. If \code{TRUE}, it will plot the igraph
+#'
+#' @importFrom data.table data.table rbindlist
+#' @importFrom graphics plot
+#' @importFrom igraph graph_from_data_frame
+#' @importFrom reproducible pkgDep
 #' @return
 #' A list of 2: \code{dt} a data.table of the dependencies, and \code{dtGraph}
 #' an igraph object that can be plotted with \code{plot()}

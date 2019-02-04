@@ -17,6 +17,8 @@ National Burn Area Composite, the Polygon or the Point datasets.}
 \item{urlBase}{The url of the directory where the NBAC are stored. Default
 is the currently known url. If this url becomes stale, please notify
 the predictive ecology team.}
+
+\item{...}{Additional arguments.}
 }
 \value{
 A SpatialPolygonsDataFrame plus several downloaded files, including
@@ -24,10 +26,8 @@ the .zip archive and the extracted files. Because it is running
 \code{prepInputs}, checksumming is occurring too.
 }
 \description{
-Downloads data from CWFIS Datamart at
-\url{http://cwfis.cfs.nrcan.gc.ca/datamart}.
-This runs \code{prepInputs} internally, so use can pass
-\code{studyArea} etc.
+Downloads data from CWFIS Datamart at \url{http://cwfis.cfs.nrcan.gc.ca/datamart}.
+This runs \code{prepInputs} internally, so use can pass \code{studyArea} etc.
 }
 \examples{
 \dontrun{
