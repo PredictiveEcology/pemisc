@@ -58,11 +58,12 @@ setMethod(
       stop("Please select the correct equationSource Lambert2005 or Ung2008")
     }
     # the below parameters are from Table 3 in Lambert 2005
-    if(!includeHeight){
-      tempdatatable <- data.table::data.table(species = species, DBH = DBH)
+    if(!includeHeight) {
+      tempdatatable <-
+        data.table::data.table(species = species, DBH = DBH)
       uniqueSpecies <- unique(species)
-      for (individualSpecies in uniqueSpecies){
-        if(individualSpecies == "alpine fir"){
+      for (individualSpecies in uniqueSpecies) {
+        if (individualSpecies == "alpine fir") {
           wood1 <- 0.0528
           wood2 <- 2.4309
           bark1 <- 0.0108
@@ -72,11 +73,11 @@ setMethod(
           foliage1 <- 0.0251
           foliage2 <- 2.0389
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "balsam fir"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "balsam fir") {
           wood1 <- 0.0534
           wood2 <- 2.4030
           bark1 <- 0.0115
@@ -86,11 +87,11 @@ setMethod(
           foliage1 <- 0.0840
           foliage2 <- 1.6695
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "balsam poplar"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "balsam poplar") {
           wood1 <- 0.0510
           wood2 <- 2.4529
           bark1 <- 0.0297
@@ -100,12 +101,12 @@ setMethod(
           foliage1 <- 0.0276
           foliage2 <- 1.6215
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
 
-        } else if (individualSpecies == "basswood"){
+        } else if (individualSpecies == "basswood") {
           wood1 = 0.0562
           wood2 <- 2.4102
           bark1 <- 0.0302
@@ -115,11 +116,11 @@ setMethod(
           foliage1 <- 0.0288
           foliage2 <- 1.6378
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if(individualSpecies == "black ash"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "black ash") {
           wood1 <- 0.0941
           wood2 <- 2.3491
           bark1 <- 0.0323
@@ -129,11 +130,11 @@ setMethod(
           foliage1 <- 0.0538
           foliage2 <- 1.3584
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "black cherry"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "black cherry") {
           wood1 <- 0.3743
           wood2 <- 1.9406
           bark1 <- 0.0679
@@ -143,12 +144,12 @@ setMethod(
           foliage1 <- 0.0840
           foliage2 <- 1.2319
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "black spruce"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "black spruce") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0477
             wood2 <- 2.5147
             bark1 <- 0.0153
@@ -168,11 +169,11 @@ setMethod(
             foliage2 <- 1.4222
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "douglas-fir"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "douglas-fir") {
           wood1 <- 0.0204
           wood2 <- 2.6974
           bark1 <- 0.0069
@@ -182,11 +183,11 @@ setMethod(
           foliage1 <- 0.1233
           foliage2 <- 1.6636
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "engelmann spruce"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "engelmann spruce") {
           wood1 <- 0.0223
           wood2 <- 2.7169
           bark1 <- 0.0118
@@ -196,11 +197,11 @@ setMethod(
           foliage1 <- 0.0683
           foliage2 <- 1.8022
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "eastern hemlock"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "eastern hemlock") {
           wood1 <- 0.0619
           wood2 <- 2.3821
           bark1 <- 0.0139
@@ -210,10 +211,10 @@ setMethod(
           foliage1 <- 0.0776
           foliage2 <- 1.6995
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "eastern redcedar"){
           wood1 <- 0.1277
           wood2 <- 1.9778
@@ -224,10 +225,10 @@ setMethod(
           foliage1 <- 0.0550
           foliage2 <- 1.8656
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "eastern white-cedar"){
           wood1 <- 0.0654
           wood2 <- 2.2121
@@ -238,10 +239,10 @@ setMethod(
           foliage1 <- 0.0499
           foliage2 <- 1.7278
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "eastern white pine"){
           wood1 <- 0.0997
           wood2 <- 2.2709
@@ -252,10 +253,10 @@ setMethod(
           foliage1 <- 0.0284
           foliage2 <- 1.9375
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "grey birch"){
           wood1 <- 0.0720
           wood2 <- 2.3885
@@ -266,10 +267,10 @@ setMethod(
           foliage1 <- 0.0099
           foliage2 <- 1.8985
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "hickory"){
           wood1 <- 0.2116
           wood2 <- 2.2013
@@ -280,11 +281,11 @@ setMethod(
           foliage1 <- 0.0173
           foliage2 <- 1.9830
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "hop-hornbeam"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "hop-hornbeam") {
           wood1 <- 0.1929
           wood2 <- 1.9672
           bark1 <- 0.0671
@@ -294,11 +295,11 @@ setMethod(
           foliage1 <- 0.0293
           foliage2 <- 1.9502
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "jack pine"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "jack pine") {
           wood1 <- 0.0804
           wood2 <- 2.4041
           bark1 <- 0.0184
@@ -308,11 +309,11 @@ setMethod(
           foliage1 <- 0.0389
           foliage2 <- 1.7290
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "largetooth aspen"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "largetooth aspen") {
           wood1 <- 0.0959
           wood2 <- 2.3430
           bark1 <- 0.0308
@@ -322,10 +323,10 @@ setMethod(
           foliage1 <- 0.0080
           foliage2 <- 2.0149
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "lodgepole pine"){
           if(equationSource == "Lambert2005"){
             wood1 <- 0.0475
@@ -347,10 +348,10 @@ setMethod(
             foliage2 <- 1.6432
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if(individualSpecies == "pacific silver fir"){
           wood1 <- 0.0424
           wood2 <- 2.4289
@@ -361,10 +362,10 @@ setMethod(
           foliage1 <- 0.0645
           foliage2 <- 1.9400
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if(individualSpecies == "red alder" | individualSpecies == "black cottonwood"){
           wood1 <- 0.0460
           wood2 <- 2.4312
@@ -375,10 +376,10 @@ setMethod(
           foliage1 <- 0.0114
           foliage2 <- 2.0860
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if(individualSpecies == "red ash"){
           wood1 <- 0.1571
           wood2 <- 2.1817
@@ -389,10 +390,10 @@ setMethod(
           foliage1 <- 0.1041
           foliage2 <- 1.2185
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "red maple"){
           wood1 <- 0.1014
           wood2 <- 2.3448
@@ -403,10 +404,10 @@ setMethod(
           foliage1 <- 0.0515
           foliage2 <- 1.5198
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "red oak"){
           wood1 <- 0.1754
           wood2 <- 2.1616
@@ -417,10 +418,10 @@ setMethod(
           foliage1 <- 0.0373
           foliage2 <- 1.6740
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "red pine"){
           wood1 <- 0.0564
           wood2 <- 2.4465
@@ -431,10 +432,10 @@ setMethod(
           foliage1 <- 0.0212
           foliage2 <- 2.0690
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "red spruce"){
           wood1 <- 0.0989
           wood2 <- 2.2814
@@ -445,10 +446,10 @@ setMethod(
           foliage1 <- 0.0066
           foliage2 <- 2.4213
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "sitka spruce"){
           wood1 <- 0.0302
           wood2 <- 2.5776
@@ -459,10 +460,10 @@ setMethod(
           foliage1 <- 0.0157
           foliage2 <- 2.3113
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "subalpine fir"){
           wood1 <- 0.0250
           wood2 <- 2.6378
@@ -473,10 +474,10 @@ setMethod(
           foliage1 <- 0.0416
           foliage2 <- 2.0130
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "silver maple"){
           wood1 <- 0.2324
           wood2 <- 2.1000
@@ -487,10 +488,10 @@ setMethod(
           foliage1 <- 0.1430
           foliage2 <- 1.2580
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "sugar maple"){
           wood1 <- 0.1315
           wood2 <- 2.3129
@@ -501,10 +502,10 @@ setMethod(
           foliage1 <- 0.0393
           foliage2 <- 1.6930
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "tamarack larch"){
           wood1 <- 0.0625
           wood2 <- 2.4475
@@ -515,10 +516,10 @@ setMethod(
           foliage1 <- 0.0801
           foliage2 <- 1.4875
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "trembling aspen"){
           if(equationSource == "Lambert2005"){
             wood1 <- 0.0605
@@ -540,10 +541,10 @@ setMethod(
             foliage2 <- 1.6656
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "western hemlock"){
           wood1 <- 0.0141
           wood2 <- 2.8668
@@ -554,10 +555,10 @@ setMethod(
           foliage1 <- 0.1676
           foliage2 <- 1.4339
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "western redcedar"){
           wood1 <- 0.0111
           wood2 <- 2.8027
@@ -568,10 +569,10 @@ setMethod(
           foliage1 <- 0.1233
           foliage2 <- 1.5152
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else if (individualSpecies == "white ash"){
           wood1 <- 0.1861
           wood2 <- 2.1665
@@ -582,12 +583,12 @@ setMethod(
           foliage1 <- 0.1106
           foliage2 <- 1.2277
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "white birch"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "white birch") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0593
             wood2 <- 2.5026
             bark1 <- 0.0135
@@ -607,11 +608,11 @@ setMethod(
             foliage2 <- 1.6036
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "white elm"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "white elm") {
           wood1 <- 0.0402
           wood2 <- 2.5804
           bark1 <- 0.0073
@@ -621,11 +622,11 @@ setMethod(
           foliage1 <- 0.0750
           foliage2 <- 1.3436
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "white oak"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "white oak") {
           wood1 <- 0.0762
           wood2 <- 2.3335
           bark1 <- 0.0338
@@ -635,12 +636,12 @@ setMethod(
           foliage1 <- 0.0188
           foliage2 <- 1.7881
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "white spruce"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "white spruce") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0359
             wood2 <- 2.5775
             bark1 <- 0.0116
@@ -660,11 +661,11 @@ setMethod(
             foliage2 <- 1.5012
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "yellow birch"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "yellow birch") {
           wood1 <- 0.1932
           wood2 <- 2.1569
           bark1 <- 0.0192
@@ -674,12 +675,12 @@ setMethod(
           foliage1 <- 0.1119
           foliage2 <- 1.3973
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "hardwood"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "hardwood") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0871
             wood2 <- 2.3702
             bark1 <- 0.0241
@@ -700,12 +701,12 @@ setMethod(
           }
 
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
-        } else if (individualSpecies == "softwood"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "softwood") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0648
             wood2 <- 2.3927
             bark1 <- 0.0162
@@ -725,10 +726,10 @@ setMethod(
             foliage2 <- 1.6106
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*DBH^wood2+
-                          bark1*DBH^bark2+
-                          foliage1*DBH^foliage2+
-                          branches1*DBH^branches2]
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
         } else {
           tempdatatable[species == individualSpecies,
                         biomass := 0]
@@ -738,10 +739,11 @@ setMethod(
     } else {
       tempdatatable <- data.table::data.table(species = species,
                                               DBH = DBH,
-                                              height = height)
+                                              height = height
+      )
       uniqueSpecies <- unique(species)
-      for (individualSpecies in uniqueSpecies){
-        if(individualSpecies == "alpine fir"){
+      for (individualSpecies in uniqueSpecies) {
+        if (individualSpecies == "alpine fir") {
           wood1 <- 0.0268
           wood2 <- 1.7579
           wood3 <- 0.9871
@@ -755,11 +757,11 @@ setMethod(
           foliage2 <- 1.7585
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "balsam fir"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "balsam fir") {
           wood1 <- 0.0294
           wood2 <- 1.8357
           wood3 <- 0.8640
@@ -773,11 +775,11 @@ setMethod(
           foliage2 <- 2.5230
           foliage3 <- -1.1230
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "balsam poplar"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "balsam poplar") {
           wood1 <- 0.0117
           wood2 <- 1.7757
           wood3 <- 1.2555
@@ -791,11 +793,11 @@ setMethod(
           foliage2 <- 1.8615
           foliage3 <- -0.5375
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "basswood"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "basswood") {
           wood1 <- 0.0168
           wood2 <- 1.9844
           wood3 <- 0.8989
@@ -809,11 +811,11 @@ setMethod(
           foliage2 <- 1.8300
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "beech"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "beech") {
           wood1 <- 0.0432
           wood2 <- 2.0378
           wood3 <- 0.7000
@@ -827,11 +829,11 @@ setMethod(
           foliage2 <- 1.5567
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "black ash"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "black ash") {
           wood1 <- 0.0306
           wood2 <- 2.1836
           wood3 <- 0.5740
@@ -845,11 +847,11 @@ setMethod(
           foliage2 <- 1.0325
           foliage3 <- 0.8747
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "black cherry"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "black cherry") {
           wood1 <- 0.0181
           wood2 <- 1.7013
           wood3 <- 1.3057
@@ -863,12 +865,12 @@ setMethod(
           foliage2 <- 1.4421
           foliage3 <- -0.5264
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "black spruce"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "black spruce") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0309
             wood2 <- 1.7527
             wood3 <- 1.0014
@@ -896,11 +898,11 @@ setMethod(
             foliage3 <- -1.3453
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "douglas-fir"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "douglas-fir") {
           wood1 <- 0.0191
           wood2 <- 1.5365
           wood3 <- 1.3634
@@ -914,11 +916,11 @@ setMethod(
           foliage2 <- 2.2935
           foliage3 <- -0.4744
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "engelmann spruce"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "engelmann spruce") {
           wood1 <- 0.0133
           wood2 <- 1.3303
           wood3 <- 1.6877
@@ -932,11 +934,11 @@ setMethod(
           foliage2 <- 2.4388
           foliage3 <- -0.7630
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "eastern hemlock"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "eastern hemlock") {
           wood1 <- 0.0257
           wood2 <- 1.9277
           wood3 <- 0.8576
@@ -950,11 +952,11 @@ setMethod(
           foliage2 <- 2.0108
           foliage3 <- -0.6080
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "eastern redcedar"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "eastern redcedar") {
           wood1 <- 0.0520
           wood2 <- 1.7731
           wood3 <- 0.7054
@@ -968,11 +970,11 @@ setMethod(
           foliage2 <- 2.5136
           foliage3 <- -1.5565
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "eastern white-cedar"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "eastern white-cedar") {
           wood1 <- 0.0295
           wood2 <- 1.7026
           wood3 <- 0.9428
@@ -986,11 +988,11 @@ setMethod(
           foliage2 <- 2.2180
           foliage3 <- -0.7907
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "eastern white pine"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "eastern white pine") {
           wood1 <- 0.0170
           wood2 <- 1.7779
           wood3 <- 1.1370
@@ -1004,11 +1006,11 @@ setMethod(
           foliage2 <- 2.2389
           foliage3 <- -0.5968
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "grey birch"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "grey birch") {
           wood1 <- 0.0295
           wood2 <- 1.9064
           wood3 <- 0.9139
@@ -1022,11 +1024,11 @@ setMethod(
           foliage2 <- 2.6447
           foliage3 <- -1.4955
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "hickory"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "hickory") {
           wood1 <- 0.0139
           wood2 <- 1.5913
           wood3 <- 1.5080
@@ -1040,11 +1042,11 @@ setMethod(
           foliage2 <- 2.0865
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "hop-hornbeam"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "hop-hornbeam") {
           wood1 <- 0.0083
           wood2 <- 1.6534
           wood3 <- 1.7479
@@ -1058,11 +1060,11 @@ setMethod(
           foliage2 <- 2.0056
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "jack pine"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "jack pine") {
           wood1 <- 0.0199
           wood2 <- 1.6883
           wood3 <- 1.2456
@@ -1076,11 +1078,11 @@ setMethod(
           foliage2 <- 1.7879
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "largetooth aspen"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "largetooth aspen") {
           wood1 <- 0.0128
           wood2 <- 2.0633
           wood3 <- 0.9516
@@ -1094,12 +1096,12 @@ setMethod(
           foliage2 <- 2.1673
           foliage3 <- -0.6842
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "lodgepole pine"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "lodgepole pine") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0202
             wood2 <- 1.7179
             wood3 <- 1.2078
@@ -1127,11 +1129,11 @@ setMethod(
             foliage3 <- -1.2484
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "pacific silver fir"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "pacific silver fir") {
           wood1 <- 0.0315
           wood2 <- 1.8297
           wood3 <- 0.8056
@@ -1145,11 +1147,12 @@ setMethod(
           foliage2 <- 2.4867
           foliage3 <- -0.4982
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "red alder" | individualSpecies == "black cottonwood"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "red alder" |
+                   individualSpecies == "black cottonwood") {
           wood1 <- 0.0051
           wood2 <- 1.0697
           wood3 <- 2.2748
@@ -1163,11 +1166,11 @@ setMethod(
           foliage2 <- 1.8368
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "red ash"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "red ash") {
           wood1 <- 0.0224
           wood2 <- 1.7845
           wood3 <- 1.0600
@@ -1181,11 +1184,11 @@ setMethod(
           foliage2 <- 1.3077
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "red maple"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "red maple") {
           wood1 <- 0.0315
           wood2 <- 2.0342
           wood3 <- 0.7485
@@ -1199,11 +1202,11 @@ setMethod(
           foliage2 <- 1.4898
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "red oak"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "red oak") {
           wood1 <- 0.0285
           wood2 <- 1.8501
           wood3 <- 1.0204
@@ -1217,11 +1220,11 @@ setMethod(
           foliage2 <- 1.5438
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "red pine"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "red pine") {
           wood1 <- 0.0106
           wood2 <- 1.7725
           wood3 <- 1.3285
@@ -1235,11 +1238,11 @@ setMethod(
           foliage2 <- 2.3439
           foliage3 <- -0.7378
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "red spruce"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "red spruce") {
           wood1 <- 0.0143
           wood2 <- 1.6441
           wood3 <- 1.4065
@@ -1253,11 +1256,11 @@ setMethod(
           foliage2 <- 2.2709
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "sitka spruce"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "sitka spruce") {
           wood1 <- 0.0237
           wood2 <- 2.5813
           wood3 <- 0.0822
@@ -1271,11 +1274,11 @@ setMethod(
           foliage2 <- 3.1305
           foliage3 <- -0.9070
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "subalpine fir"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "subalpine fir") {
           wood1 <- 0.0220
           wood2 <- 1.6469
           wood3 <- 1.1714
@@ -1289,11 +1292,11 @@ setMethod(
           foliage2 <- 2.9909
           foliage3 <- -1.2271
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "silver maple"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "silver maple") {
           wood1 <- 0.0274
           wood2 <- 1.7126
           wood3 <- 1.1086
@@ -1307,11 +1310,11 @@ setMethod(
           foliage2 <- 2.1092
           foliage3 <- -2.1697
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "sugar maple"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "sugar maple") {
           wood1 <- 0.0301
           wood2 <- 2.0313
           wood3 <- 0.8171
@@ -1325,11 +1328,11 @@ setMethod(
           foliage2 <- 2.4527
           foliage3 <- -2.3008
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "tamarack larch"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "tamarack larch") {
           wood1 <- 0.0276
           wood2 <- 1.6724
           wood3 <- 1.1443
@@ -1343,12 +1346,12 @@ setMethod(
           foliage2 <- 2.1140
           foliage3 <- -0.8781
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "trembling aspen"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "trembling aspen") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0142
             wood2 <- 1.9389
             wood3 <- 1.0572
@@ -1376,11 +1379,11 @@ setMethod(
             foliage3 <- 0
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "western hemlock"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "western hemlock") {
           wood1 <- 0.0113
           wood2 <- 1.9332
           wood3 <- 1.1125
@@ -1394,11 +1397,11 @@ setMethod(
           foliage2 <- 2.0107
           foliage3 <- -0.7963
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "western redcedar"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "western redcedar") {
           wood1 <- 0.0188
           wood2 <- 1.3376
           wood3 <- 1.5293
@@ -1412,11 +1415,11 @@ setMethod(
           foliage2 <- 1.5530
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "white ash"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "white ash") {
           wood1 <- 0.0224
           wood2 <- 1.7438
           wood3 <- 1.1899
@@ -1430,12 +1433,12 @@ setMethod(
           foliage2 <- 1.0509
           foliage3 <- 0.7836
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "white birch"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "white birch") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0338
             wood2 <- 2.0702
             wood3 <- 0.6876
@@ -1463,11 +1466,11 @@ setMethod(
             foliage3 <- -1.0934
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "white elm"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "white elm") {
           wood1 <- 0.0207
           wood2 <- 2.2276
           wood3 <- 0.6488
@@ -1481,11 +1484,11 @@ setMethod(
           foliage2 <- 1.4511
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "white oak"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "white oak") {
           wood1 <- 0.0442
           wood2 <- 1.6818
           wood3 <- 1.0310
@@ -1499,12 +1502,12 @@ setMethod(
           foliage2 <- 1.2822
           foliage3 <- 1.1323
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "white spruce"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "white spruce") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0265
             wood2 <- 1.7952
             wood3 <- 0.9733
@@ -1532,11 +1535,11 @@ setMethod(
             foliage3 <- -1.0948
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "yellow birch"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "yellow birch") {
           wood1 <- 0.0259
           wood2 <- 1.9044
           wood3 <- 0.9715
@@ -1550,12 +1553,12 @@ setMethod(
           foliage2 <- 1.2764
           foliage3 <- 0
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "hardwood"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "hardwood") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0359
             wood2 <- 2.0263
             wood3 <- 0.6987
@@ -1583,12 +1586,12 @@ setMethod(
             foliage3 <- -0.5491
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
-        } else if(individualSpecies == "softwood"){
-          if(equationSource == "Lambert2005"){
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
+        } else if (individualSpecies == "softwood") {
+          if (equationSource == "Lambert2005") {
             wood1 <- 0.0284
             wood2 <- 1.6894
             wood3 <- 1.0857
@@ -1616,10 +1619,10 @@ setMethod(
             foliage3 <- -1.0418
           }
           tempdatatable[species == individualSpecies,
-                        biomass := wood1*(DBH^wood2)*(height^wood3)+
-                          bark1*(DBH^bark2)*(height^bark3)+
-                          foliage1*(DBH^foliage2)*(height^foliage3)+
-                          branches1*(DBH^branches2)*(height^branches3)]
+                        biomass := wood1 * (DBH ^ wood2) * (height ^ wood3) +
+                          bark1 * (DBH ^ bark2) * (height ^ bark3) +
+                          foliage1 * (DBH ^ foliage2) * (height ^ foliage3) +
+                          branches1 * (DBH ^ branches2) * (height ^ branches3)]
         } else {
           tempdatatable[species == individualSpecies,
                         biomass := 0]
@@ -1627,61 +1630,118 @@ setMethod(
       }
     }
 
-    return(list(biomass = tempdatatable$biomass,
-                missedSpecies = unique(tempdatatable[biomass == 0,]$species)))
+    return(list(
+      biomass = tempdatatable$biomass,
+      missedSpecies = unique(tempdatatable[biomass == 0,]$species)
+    ))
   })
 
 #' @export
 #' @rdname biomassCalculation
 setMethod(
   "biomassCalculation",
-  signature = c(species = "character", DBH = "numeric", includeHeight = "missing",
-                height = "numeric", equationSource = "character"),
+  signature = c(
+    species = "character",
+    DBH = "numeric",
+    includeHeight = "missing",
+    height = "numeric",
+    equationSource = "character"
+  ),
   definition = function(species, DBH, height, equationSource) {
-    biomassCalculation(species = species, DBH = DBH, includeHeight = FALSE,
-                       height = height, equationSource = equationSource)
-  })
+    biomassCalculation(
+      species = species,
+      DBH = DBH,
+      includeHeight = FALSE,
+      height = height,
+      equationSource = equationSource
+    )
+  }
+)
 
 #' @export
 #' @rdname biomassCalculation
 setMethod(
   "biomassCalculation",
-  signature = c(species = "character", DBH = "numeric", includeHeight = "logical",
-                height = "numeric", equationSource = "missing"),
+  signature = c(
+    species = "character",
+    DBH = "numeric",
+    includeHeight = "logical",
+    height = "numeric",
+    equationSource = "missing"
+  ),
   definition = function(species, DBH, includeHeight, height) {
-    biomassCalculation(species = species, DBH = DBH, includeHeight = includeHeight,
-                       height = height, equationSource = "Lambert2005")
-  })
+    biomassCalculation(
+      species = species,
+      DBH = DBH,
+      includeHeight = includeHeight,
+      height = height,
+      equationSource = "Lambert2005"
+    )
+  }
+)
 
 #' @export
 #' @rdname biomassCalculation
 setMethod(
   "biomassCalculation",
-  signature = c(species = "character", DBH = "numeric", includeHeight = "missing",
-                height = "numeric", equationSource = "missing"),
+  signature = c(
+    species = "character",
+    DBH = "numeric",
+    includeHeight = "missing",
+    height = "numeric",
+    equationSource = "missing"
+  ),
   definition = function(species, DBH, height) {
-    biomassCalculation(species = species, DBH = DBH, includeHeight = FALSE,
-                       height = height, equationSource = "Lambert2005")
-  })
+    biomassCalculation(
+      species = species,
+      DBH = DBH,
+      includeHeight = FALSE,
+      height = height,
+      equationSource = "Lambert2005"
+    )
+  }
+)
 
 #' @export
 #' @rdname biomassCalculation
 setMethod(
   "biomassCalculation",
-  signature = c(species = "character", DBH = "numeric", includeHeight = "missing",
-                height = "missing", equationSource = "character"),
+  signature = c(
+    species = "character",
+    DBH = "numeric",
+    includeHeight = "missing",
+    height = "missing",
+    equationSource = "character"
+  ),
   definition = function(species, DBH, equationSource) {
-    biomassCalculation(species = species, DBH = DBH, includeHeight = FALSE,
-                       height = 1, equationSource = equationSource)
-  })
+    biomassCalculation(
+      species = species,
+      DBH = DBH,
+      includeHeight = FALSE,
+      height = 1,
+      equationSource = equationSource
+    )
+  }
+)
 
 #' @export
 #' @rdname biomassCalculation
 setMethod(
   "biomassCalculation",
-  signature = c(species = "character", DBH = "numeric", includeHeight = "missing",
-                height = "missing", equationSource = "missing"),
+  signature = c(
+    species = "character",
+    DBH = "numeric",
+    includeHeight = "missing",
+    height = "missing",
+    equationSource = "missing"
+  ),
   definition = function(species, DBH) {
-    biomassCalculation(species = species, DBH = DBH, includeHeight = FALSE,
-                       height = 1, equationSource = "Lambert2005")
-  })
+    biomassCalculation(
+      species = species,
+      DBH = DBH,
+      includeHeight = FALSE,
+      height = 1,
+      equationSource = "Lambert2005"
+    )
+  }
+)
