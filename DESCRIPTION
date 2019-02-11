@@ -48,3 +48,12 @@ BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
 LazyData: true
 RoxygenNote: 6.1.1
+Collate: 
+    'MapOrDoCall.R'
+    'biomassCalculation.R'
+    'gis.R'
+    'helpers.R'
+    'pemisc-package.R'
+    'pkgDepGraph.R'
+    'prepFireData.R'
+    'psp_clean.R'
