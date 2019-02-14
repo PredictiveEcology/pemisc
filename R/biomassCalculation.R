@@ -34,12 +34,13 @@
 #'  species <- c(rep("jack pine", 10), rep("black spruce", 10))
 #'  species[1] <- "wrongSpecies"
 #'  height <- seq(20, 40, length = 20)
-#'  biomass1 <- biomassCalculation(species = species, DBH = DBH) # without height information and
-#'                                                              # and taking the eqations from Lambert 2005
 #'
-#'  biomass2 <- biomassCalculation(species = species, DBH = DBH, includeHeight = TRUE, height = height)
-#'                                                              # with height information and
-#'                                                              # and taking the eqations from Lambert 2005
+#'  # without height information and and taking the equations from Lambert 2005
+#'  biomass1 <- biomassCalculation(species = species, DBH = DBH)
+#'
+#'  # with height information and and taking the equations from Lambert 2005
+#'  biomass2 <- biomassCalculation(species = species, DBH = DBH,
+#'                                 includeHeight = TRUE, height = height)
 #' }
 setGeneric("biomassCalculation", function(species, DBH, includeHeight,
                                           height, equationSource) {
@@ -47,7 +48,7 @@ setGeneric("biomassCalculation", function(species, DBH, includeHeight,
 })
 
 #' @export
-#' @rdname moduleCoverage
+#' @rdname biomassCalculation
 setMethod(
   "biomassCalculation",
   signature = c(species = "character", DBH = "numeric", includeHeight = "logical",
