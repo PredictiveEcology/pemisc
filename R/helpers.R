@@ -29,7 +29,8 @@ user <- function(username = NULL) {
 #'
 #' Useful for debugging.
 #'
-#' @param file Character specifying the filename (default \code{"events.txt"}).
+#' @param sim     A \code{simList} object.
+#' @param file    Character specifying the filename (default \code{"events.txt"}).
 #' @param append  Logical indicating whether to append to the file (default \code{FALSE}).
 #'
 #' @return Nothing returned. Invoked for its side-effect of writing to file.
@@ -49,7 +50,7 @@ writeEventInfo <- function(sim, file = "events.txt", append = FALSE) {
 #'
 #' Useful for debugging and ensuring reproducibility.
 #'
-#' @param file Character specifying the filename (default \code{"seed.txt"}).
+#' @param file    Character specifying the filename (default \code{"seed.txt"}).
 #' @param append  Logical indicating whether to append to the file (default \code{FALSE}).
 #'
 #' @return Nothing returned. Invoked for its side-effect of writing to file.

@@ -7,6 +7,8 @@
 writeEventInfo(sim, file = "events.txt", append = FALSE)
 }
 \arguments{
+\item{sim}{A \code{simList} object.}
+
 \item{file}{Character specifying the filename (default \code{"events.txt"}).}
 
 \item{append}{Logical indicating whether to append to the file (default \code{FALSE}).}
