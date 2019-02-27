@@ -24,3 +24,22 @@ user <- function(username = NULL) {
     identical(username, Sys.info()[["user"]])
   }
 }
+
+#' Write RNG seed info to file
+#'
+#' Useful for debugging and ensuring reproducibility.
+#'
+#' @param file Character specifying the filename (default \code{"seed.txt"}).
+#' @param append  Logical indicating whether to append to the file (default \code{FALSE}).
+#'
+#' @return Nothing returned. Invoked for its side-effect of writing to file.
+#'
+#' @author Alex Chubaty
+#' @export
+#' @importFrom reproducible normPath
+writeSeedInfo <- function(file = "seed.txt", append = FALSE) {
+  fseed <- normPath(file)
+  cat("\tStart of new RNG stream: ", file = fseed, append = append)
+  cat(.Random.seed[1:10], file = fseed, sep = ", ", append = append)
+  cat(".", file = fseed, sep = "\n", append = append)
+}
