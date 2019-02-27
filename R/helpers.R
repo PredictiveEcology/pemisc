@@ -40,6 +40,7 @@ user <- function(username = NULL) {
 writeSeedInfo <- function(file = "seed.txt", append = FALSE) {
   fseed <- normPath(file)
   cat("\tStart of new RNG stream: ", file = fseed, append = append)
-  cat(.Random.seed[1:10], file = fseed, sep = ", ", append = append)
+  ## NOTE: the first element of .Random.seed specifies the RNG type, so omit it
+  cat(.Random.seed[2:11], file = fseed, sep = ", ", append = append)
   cat(".", file = fseed, sep = "\n", append = append)
 }
