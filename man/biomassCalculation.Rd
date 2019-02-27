@@ -9,8 +9,7 @@
 \alias{biomassCalculation,character,numeric,missing,numeric,missing-method}
 \alias{biomassCalculation,character,numeric,missing,missing,character-method}
 \alias{biomassCalculation,character,numeric,missing,missing,missing-method}
-\title{this function is to calculate aboveground biomass for canadian tree species based on DBH
-or DBH and Height}
+\title{Calculate aboveground biomass for Canadian tree species}
 \usage{
 biomassCalculation(species, DBH, includeHeight, height, equationSource)
 
@@ -58,11 +57,7 @@ Default \code{Lambert2005}}
 Biomass (kg) and missedSpecies list that was not calculated.
 }
 \description{
-this function is to calculate aboveground biomass for canadian tree species based on DBH
-or DBH and Height
-}
-\note{
-no note#'
+Based on DBH or DBH and Height.
 }
 \examples{
 \dontrun{

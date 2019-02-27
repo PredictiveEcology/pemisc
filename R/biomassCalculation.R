@@ -1,6 +1,10 @@
-################################################################################
-#' this function is to calculate aboveground biomass for canadian tree species based on DBH
-#' or DBH and Height
+if (getRversion() >= "3.1.0") {
+  utils::globalVariables(c(":=", ".", "biomass"))
+}
+
+#' Calculate aboveground biomass for Canadian tree species
+#'
+#' Based on DBH or DBH and Height.
 #'
 #' @param species  Character string. The species name.
 #'
@@ -19,14 +23,11 @@
 #'
 #' @return Biomass (kg) and missedSpecies list that was not calculated.
 #'
-#' @importFrom data.table data.table ':='
-#'
-#' @note no note#'
-#' @export
-#' @docType methods
-#' @rdname biomassCalculation
 #'
 #' @author Yong Luo
+#' @export
+#' @importFrom data.table := data.table
+#' @rdname biomassCalculation
 #'
 #' @examples
 #' \dontrun{
