@@ -13,6 +13,10 @@ Map2(..., cl = NULL)
 }
 \description{
 This will send to Map or clusterMap, depending on whether cl is provided.
+Also, passes the correct "function" arg... noting that \code{Map}
+takes \code{f} and \code{clusterMap} takes \code{fun}, and if the
+user is used to using \code{lapply}, that takes \code{FUN}. All
+three of these will work.
 }
 \examples{
 

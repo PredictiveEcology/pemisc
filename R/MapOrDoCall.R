@@ -237,6 +237,10 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
 #' \code{Map} and \code{parallel::clusterMap} together
 #'
 #' This will send to Map or clusterMap, depending on whether cl is provided.
+#' Also, passes the correct "function" arg... noting that \code{Map}
+#' takes \code{f} and \code{clusterMap} takes \code{fun}, and if the
+#' user is used to using \code{lapply}, that takes \code{FUN}. All
+#' three of these will work.
 #'
 #' @param ... passed to \code{Map} or \code{clusterMap}
 #' @param cl A cluster object, passed to \code{clusterMap}
@@ -257,6 +261,7 @@ Map2 <- function(..., cl = NULL) { #nolint
   fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
   formsMap <- fnicd(mapply, ...)
   formsClusterMap <- fnicd(clusterMap, ...)
+  #argList <- list(...)
   argList <- rlang::quos(...)
   if (is.null(cl)) {
     #browser()
