@@ -14,3 +14,11 @@ Map2(..., cl = NULL)
 \description{
 This will send to Map or clusterMap, depending on whether cl is provided.
 }
+\examples{
+
+\dontrun{
+a <- 1:5
+Map2(a, function(x) x)
+
+}
+}
