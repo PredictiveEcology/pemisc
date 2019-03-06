@@ -238,6 +238,7 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
 #'
 #' This will send to Map or clusterMap, depending on whether cl is provided.
 #'
+#' @param f passed as \code{f} to \code{Map} or \code{fun} to \code{clusterMap}
 #' @param ... passed to \code{Map} or \code{clusterMap}
 #' @param cl A cluster object, passed to \code{clusterMap}
 #'
@@ -245,39 +246,61 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
 #' @importFrom parallel clusterMap
 #' @importFrom utils getFromNamespace
 #' @rdname Map2
-Map2 <- function(..., cl = NULL) { #nolint
-  fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
-  formsMap <- fnicd(mapply, ...)
-  formsClusterMap <- fnicd(clusterMap, ...)
+#' @examples
+#'
+#' \dontrun{
+#' a <- 1:5
+#' Map2(a, f = function(x) x)
+#'
+#' }
+Map2 <- function(f, ..., cl = NULL) { #nolint
+  #fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
+  #formsMap <- fnicd(mapply, ...)
+  #formsClusterMap <- fnicd(clusterMap, ...)
+  argList <- list(...)
+  if (any(c("fun", "FUN") %in% names(argList)))
+    stop("Please use f, not fun or FUN, to supply the function")
+  #argList <- rlang::quos(...)
   if (is.null(cl)) {
-    argList <- list(...)
-    wrongFun1 <- "fun" %in% names(argList)
-    if (wrongFun1) {
-      fun <- argList$fun
-    }
-    wrongFun2 <- "FUN" %in% names(argList)
-    if (wrongFun2) {
-      fun <- argList$FUN
-    }
-    argList[setdiff(formsMap, formsClusterMap)] <- NULL
-    if (wrongFun1 || wrongFun2) {
-      argList$f <- fun
-    }
-    do.call(Map, args = argList)
+    #browser()
+    #argList <- list(...)
+    # wrongFun1 <- "fun" %in% names(argList)
+    # if (wrongFun1) {
+    #   fun <- argList$fun
+    # }
+    # wrongFun2 <- "FUN" %in% names(argList)
+    # if (wrongFun2) {
+    #   fun <- argList$FUN
+    #   argList$FUN <- NULL
+    # }
+    # argList[setdiff(formsMap, formsClusterMap)] <- NULL
+    # if (wrongFun1 || wrongFun2) {
+    #   argList$f <- fun
+    #   argList$fun <- NULL
+    # }
+    # eval_tidy(eval_tidy(quos(Map(!!!argList)))[[1]])
+    Map(f = f, ...)
+    #Map(!!!(argList))
+    #do.call(Map, args = argList)
   } else {
-    argList <- list(...)
-    wrongFun1 <- "f" %in% names(argList)
-    if (wrongFun1) {
-      fun <- argList$f
-    }
-    wrongFun2 <- "FUN" %in% names(argList)
-    if (wrongFun2) {
-      fun <- argList$FUN
-    }
-    argList[setdiff(formsClusterMap, formsMap)] <- NULL
-    if (wrongFun1 || wrongFun2) {
-      argList$fun <- fun
-    }
-    do.call(clusterMap, append(list(cl = cl), argList))
+    #argList <- list(...)
+    # wrongFun1 <- "f" %in% names(argList)
+    # if (wrongFun1) {
+    #   fun <- argList$f
+    #   argList$fun <- NULL
+    # }
+    # wrongFun2 <- "FUN" %in% names(argList)
+    # if (wrongFun2) {
+    #   fun <- argList$FUN
+    #   argList$FUN <- NULL
+    # }
+    # argList[setdiff(formsClusterMap, formsMap)] <- NULL
+    # if (wrongFun1 || wrongFun2) {
+    #   argList$fun <- fun
+    # }
+    # argList$cl <- quo(cl)
+    clusterMap(cl = cl, fun = f, ...)
+    #eval_tidy(eval_tidy(quos(clusterMap(!!!argList)))[[1]])
+    #do.call(clusterMap, append(list(cl = cl), argList))
   }
 }
