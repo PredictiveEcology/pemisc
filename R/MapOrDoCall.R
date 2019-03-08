@@ -87,7 +87,7 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #' @importFrom parallel clusterSetRNGStream makeForkCluster
 #' @importFrom reproducible checkPath
 #' @export
-#' @rdname makeForkClusterRandom
+#' @rdname makeClusterRandom
 makeForkClusterRandom <- function(..., iseed = NULL) {
   dots <- list(...)
   if (!("outfile" %in% names(dots))) {
@@ -97,6 +97,24 @@ makeForkClusterRandom <- function(..., iseed = NULL) {
   for (i in 1:4)
     cat(file = dots$outfile, "------------------------------------------------------------")
   cl <- do.call(makeForkCluster, args = dots)
+  message("  Starting a cluster with ", length(cl), " threads")
+  message("    Log file is ", dots$outfile, ". To prevent log file, pass outfile = ''")
+  clusterSetRNGStream(cl, iseed = iseed)
+  cl
+}
+
+#' @export
+#' @rdname makeClusterRandom
+makeClusterRandom <- function(..., iseed = NULL) {
+  dots <- list(...)
+  if (!("outfile" %in% names(dots))) {
+    dots$outfile <- file.path("outputs", ".log.txt")
+  }
+  checkPath(dirname(dots$outfile), create = TRUE)
+  for (i in 1:4)
+    cat(file = dots$outfile, "------------------------------------------------------------")
+  cl <- do.call(makeCluster, args = dots)
+  browser()
   message("  Starting a cluster with ", length(cl), " threads")
   message("    Log file is ", dots$outfile, ". To prevent log file, pass outfile = ''")
   clusterSetRNGStream(cl, iseed = iseed)

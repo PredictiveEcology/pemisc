@@ -2,9 +2,12 @@
 % Please edit documentation in R/MapOrDoCall.R
 \name{makeForkClusterRandom}
 \alias{makeForkClusterRandom}
+\alias{makeClusterRandom}
 \title{\code{makeForkCluster} with random seed set}
 \usage{
 makeForkClusterRandom(..., iseed = NULL)
+
+makeClusterRandom(..., iseed = NULL)
 }
 \arguments{
 \item{...}{passed to \code{makeForkCluster}, e.g.,}
