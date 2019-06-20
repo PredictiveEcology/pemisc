@@ -76,6 +76,12 @@ matrix:
   - os: linux
     dist: trusty
     r: release
+    r_binary_packages:
+      - BH
+      - dplyr
+      - stringi
+      - RSQlite
+      - igraph
     addons:
       apt:
         sources:
@@ -105,6 +111,12 @@ matrix:
   - os: linux
     dist: trusty
     r: devel
+    r_binary_packages:
+      - BH
+      - dplyr
+      - stringi
+      - RSQlite
+      - igraph
     addons:
       apt:
         sources:
