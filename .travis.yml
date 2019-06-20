@@ -28,6 +28,7 @@ matrix:
       - BH
       - dplyr
       - git2r
+      - memoise
       - stringi
     r_packages:
       - rgdal
