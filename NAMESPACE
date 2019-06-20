@@ -2,6 +2,7 @@
 
 export(Map2)
 export(MapOrDoCall)
+export(availableMemory)
 export(biomassCalculation)
 export(createPrjFile)
 export(dataPurification_ABMaturePSP)

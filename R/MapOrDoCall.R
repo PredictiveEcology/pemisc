@@ -7,17 +7,16 @@
 #'
 #' @export
 #' @rdname optimalClusterNum
-optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = 1) {
+optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::detectCores()) {
   if (Sys.info()["sysname"] == "Linux") {
     detectedNumCores <- parallel::detectCores()
     shouldUseCluster <- (maxNumClusters > 0)
 
     if (shouldUseCluster) {
       # try to scale to available RAM
-      try(aa <- system("free -lm", intern = TRUE))
-      if (!is(aa, "try-error")) {
-        bb <- strsplit(aa[2], split = " ") # 'Mem:' row
-        availMem <- as.numeric(bb[[1]][nzchar(bb[[1]])][7]) # 'available' column
+      availMem <- availableMemory() / 1e6
+      #try(aa <- system("free -lm", intern = TRUE))
+      if (!is.null(availMem)) {
         numClusters <- floor(min(detectedNumCores, availMem / memRequiredMB))
       } else {
         message("The OS function, 'free' is not available. Returning 1 cluster")
