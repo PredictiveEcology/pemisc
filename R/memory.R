@@ -1,7 +1,8 @@
 #' Report the estimated amount of available memory in the OS
 #'
 #' This uses \code{system("free -lb", intern = TRUE))}, which will
-#' only work on Linux-alikes.
+#' only work on Linux-alikes. On if the program 'free' is not installed
+#' on the system, this function returns \code{NULL}
 #'
 #' @export
 #' @return

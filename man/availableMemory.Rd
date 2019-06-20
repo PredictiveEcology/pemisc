@@ -13,5 +13,6 @@ in any units with format, e.g.,
 }
 \description{
 This uses \code{system("free -lb", intern = TRUE))}, which will
-only work on Linux-alikes.
+only work on Linux-alikes. On if the program 'free' is not installed
+on the system, this function returns \code{NULL}
 }
