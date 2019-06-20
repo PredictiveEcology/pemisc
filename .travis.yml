@@ -15,7 +15,6 @@ matrix:
       - git2r
       - dplyr
       - stringi
-      - RSQlite
     addons:
       apt:
         sources:
