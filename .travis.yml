@@ -9,6 +9,7 @@ matrix:
   include:
   - os: linux
     dist: xenial
+    r: oldrel
     addons:
       apt:
         sources:
@@ -23,7 +24,6 @@ matrix:
         - libudunits2-dev
     services:
       - xvfb
-    r: oldrel
     r_binary_packages:
       - BH
       - dplyr
