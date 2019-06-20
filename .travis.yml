@@ -29,6 +29,7 @@ matrix:
       - dplyr
       - git2r
       - memoise
+      - RSQLite
       - stringi
     r_packages:
       - rgdal
