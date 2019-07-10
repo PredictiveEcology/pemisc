@@ -39,8 +39,6 @@ Suggests:
     roxygen2,
     rmarkdown,
     testthat
-Remotes:
-    PredictiveEcology/reproducible@development
 Encoding: UTF-8
 Language: en-CA
 License: GPL-3
