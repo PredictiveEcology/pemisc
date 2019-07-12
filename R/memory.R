@@ -10,7 +10,7 @@
 #' in any units with format, e.g.,
 #' \code{format(availableMemory(), unit = "GB")}
 availableMemory <- function() {
-  try(aa <- system("free -lb", intern = TRUE))
+  aa <- try(system("free -lb", intern = TRUE), silent = TRUE)
   availMem <- if (!is(aa, "try-error")) {
     bb <- strsplit(aa[2], split = " ")
     as.numeric(bb[[1]][nzchar(bb[[1]])][7])
