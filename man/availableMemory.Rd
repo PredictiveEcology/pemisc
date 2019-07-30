@@ -7,12 +7,13 @@
 availableMemory()
 }
 \value{
-Returns a numeric, of class "object_size", so it can be reported
-in any units with format, e.g.,
-\code{format(availableMemory(), unit = "GB")}
+Numeric of class "object_size", so it can be reported in any units with format,
+e.g., \code{format(availableMemory(), unit = "GB")}.
 }
 \description{
-This uses \code{system("free -lb", intern = TRUE))}, which will
-only work on Linux-alikes. On if the program 'free' is not installed
-on the system, this function returns \code{NULL}
+This reports the 'available' memory from a system \code{free} call.
+If \code{free} is not installed on the system (e.g., non-Linux), returns \code{NULL}.
+}
+\seealso{
+\code{man free} for description of available memory estimation.
 }
