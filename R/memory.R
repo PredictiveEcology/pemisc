@@ -17,6 +17,12 @@ availableMemory <- function() {
   } else {
     NULL
   }
-  class(availMem) <- "object_size"
+
+  if (!is.null(availMem)) {
+    class(availMem) <- "object_size"
+  } else {
+    warning("unable to determine available memory.",
+            " 'free' must be available on your system (typically Linux-only).")
+  }
   return(availMem)
 }
