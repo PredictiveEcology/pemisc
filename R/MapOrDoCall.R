@@ -103,8 +103,8 @@ makeForkClusterRandom <- function(..., iseed = NULL) {
 }
 
 #' @export
-#' @rdname makeClusterRandom
 #' @importFrom parallel makeCluster
+#' @rdname makeClusterRandom
 makeClusterRandom <- function(..., iseed = NULL) {
   dots <- list(...)
   if (!("outfile" %in% names(dots))) {

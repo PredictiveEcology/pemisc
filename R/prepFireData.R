@@ -31,9 +31,9 @@
 #' }
 prepFireCanada <- function(year, type = c("NBAC", "Polygon", "Point"),
                            urlBase = "http://cwfis.cfs.nrcan.gc.ca/downloads/nbac/",
-                         ...) {
+                           ...) {
   if (length(type) > 1)
-    type = type[1]
+    type <- type[1]
 
   possTypes <- c("NBAC", "Polygons", "Points")
   type <- possTypes[pmatch(tolower(type), tolower(possTypes))]
