@@ -254,7 +254,7 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
 
 #' \code{Map} and \code{parallel::clusterMap} together
 #'
-#' This will send to Map or clusterMap, depending on whether cl is provided.
+#' This will send to \code{Map} or \code{clusterMap}, depending on whether \code{cl} is provided.
 #'
 #' @param f passed as \code{f} to \code{Map} or \code{fun} to \code{clusterMap}
 #' @param ... passed to \code{Map} or \code{clusterMap}
@@ -277,7 +277,7 @@ Map2 <- function(f, ..., cl = NULL) { #nolint
   #formsClusterMap <- fnicd(clusterMap, ...)
   argList <- list(...)
   if (any(c("fun", "FUN") %in% names(argList)))
-    stop("Please use f, not fun or FUN, to supply the function")
+    stop("Please use f, not fun or FUN, to supply the function.")
   #argList <- rlang::quos(...)
   if (is.null(cl)) {
     #browser()
