@@ -14,7 +14,7 @@ Map2(f, ..., cl = NULL)
 \item{cl}{A cluster object, passed to \code{clusterMap}}
 }
 \description{
-This will send to Map or clusterMap, depending on whether cl is provided.
+This will send to \code{Map} or \code{clusterMap}, depending on whether \code{cl} is provided.
 }
 \examples{
 
