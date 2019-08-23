@@ -32,3 +32,53 @@ pkgDepsGraph <- function(pkgs = c("LandR", "pemisc", "map", "SpaDES",
     plot(dtGraph)
   return(list(dt = dt, dtGraph = dtGraph))
 }
+
+#' Check whether a package is one installed from GitHub
+#'
+#' Determines whether a string that may correspond to a package name
+#' (e.g., \code{repo/package@branch}), could be a package installed from GitHub.
+#' This is determined solely by the presence of a \code{/} in the string.
+#' See example below.
+#'
+#' @param x character vector of package names
+#'
+#' @return a named logical vector
+#'
+#' @export
+#'
+#' @examples
+#' pkgs <- c("dplyr", "PredictiveEcology/pemisc", "PredictiveEcology/SpaDES.core@development")
+#' isGitHubPkg(pkgs) ## FALSE TRUE TRUE
+isGitHubPkg <- Vectorize(function(x) {
+  if (length(strsplit(x, "/")[[1]]) == 1) FALSE else TRUE
+})
+
+#' Get the package name from a GitHub \code{repo/package@branch} string
+#'
+#' @param x character vector of package names
+#'
+#' @return a named character vector
+#'
+#' @export
+#'
+#' @examples
+#' pkgs <- c("dplyr", "PredictiveEcology/pemisc", "PredictiveEcology/SpaDES.core@development")
+#' ghPkgName(pkgs) ## "dplyr" "pemisc" "SpaDES.core"
+ghPkgName <- Vectorize(function(x) {
+  y <- strsplit(x, "/")[[1]]
+
+  if (length(y) == 1) {
+    repo <- NULL
+    pkg <- y
+    branch <- NULL
+  } else {
+    z <- strsplit(y[2], "@")[[1]]
+
+    repo <- y[1]
+    pkg <- z[1]
+    branch <- z[2]
+    if (is.na(branch)) branch <- "master"
+  }
+
+  return(pkg)
+})
