@@ -91,7 +91,7 @@ matrix:
       - rgeos
   - os: osx
     osx_image: xcode9.4
-        addons:
+    addons:
       homebrew:
         packages:
         - udunits
