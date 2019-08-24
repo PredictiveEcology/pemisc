@@ -10,11 +10,11 @@ Date: 2019-08-23
 Version: 0.0.1.9004
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
-    role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
+           role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
     person("Alex M", "Chubaty", email = "alex.chubaty@gmail.com",
-    role = c("aut"), comment = c(ORCID = "0000-0001-7146-8135")),
+           role = c("aut"), comment = c(ORCID = "0000-0001-7146-8135")),
     person("Her Majesty the Queen in Right of Canada, as represented by the Minister of Natural Resources Canada",
-    role = "cph")
+           role = "cph")
     )
 Depends:
     R (>= 3.5)
