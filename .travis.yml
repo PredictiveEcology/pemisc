@@ -91,6 +91,11 @@ matrix:
       - rgeos
   - os: osx
     osx_image: xcode9.4
+        addons:
+      homebrew:
+        packages:
+        - udunits
+        update: true
     latex: false
     r_build_args: '--no-build-vignettes'
     r_check_args: '--as-cran --ignore-vignettes --no-examples'
