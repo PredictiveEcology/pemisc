@@ -15,5 +15,5 @@ dataPurification_ABMaturePSP(treeDataRaw, plotHeaderDataRaw)
 Clean Permanent Sampling Plot Data from Alberta.
 }
 \note{
-Will not remove treeNumber = 9999
+Will not remove \code{treeNumber == 9999}
 }

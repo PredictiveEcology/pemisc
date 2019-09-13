@@ -13,9 +13,9 @@
 #' @param ... Additional arguments.
 #'
 #' @return
-#' A SpatialPolygonsDataFrame plus several downloaded files, including
-#' the .zip archive and the extracted files. Because it is running
-#' \code{prepInputs}, checksumming is occurring too.
+#' A \code{SpatialPolygonsDataFrame} plus several downloaded files, including
+#' the \file{.zip} archive and the extracted files.
+#' Because it is running \code{prepInputs}, checksumming is occurring too.
 #'
 #' @export
 #' @importFrom RCurl getURL

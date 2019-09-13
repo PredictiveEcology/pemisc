@@ -16,16 +16,15 @@ getLocalArgsFor(fn, localFormalArgs, envir, dots)
 \item{dots}{TODO: need description}
 }
 \value{
-List of named objects. The names are the formals in fn, and
-the objects are the values for those formals. This can easily
-be passed to do.call(fn, args1)
+List of named objects. The names are the formals in \code{fn}, and
+the objects are the values for those formals.
+This can easily be passed to \code{do.call(fn, args1)}
 }
 \description{
-Search among local objects (which will often be arguments passed
-into a function) as well as dot objects to match the
-formals needed by \code{fn}. If \code{localFormalArgs} is named,
-then it will match the formal (name of localFormaArgs) with the
-local object, e.g., localFormalArgs = c(x = "obj") will find
-the object in the local environment called "obj", and this will
-be found because it matches the \code{x} argument in \code{fn}.
+Search among local objects (which will often be arguments passed into a function) as well as
+dot objects to match the formals needed by \code{fn}.
+If \code{localFormalArgs} is named, then it will match the formal
+(name of \code{localFormalArgs}) with the local object,
+e.g., \code{localFormalArgs = c(x = "obj")} will find the object in the local environment called
+\code{"obj"}, and this will be found because it matches the \code{x} argument in \code{fn}.
 }

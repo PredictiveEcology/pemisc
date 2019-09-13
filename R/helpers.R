@@ -25,12 +25,12 @@ user <- function(username = NULL) {
   }
 }
 
-#' Write sim event info to file
+#' Write simulation event info to file
 #'
 #' Useful for debugging.
 #'
 #' @param sim     A \code{simList} object.
-#' @param file    Character specifying the filename (default \code{"events.txt"}).
+#' @param file    Character specifying the filename (default \file{"events.txt"}).
 #' @param append  Logical indicating whether to append to the file (default \code{FALSE}).
 #'
 #' @return Nothing returned. Invoked for its side-effect of writing to file.

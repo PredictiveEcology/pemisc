@@ -58,7 +58,7 @@ setGeneric(
     standardGeneric("rasterToMatch")
 })
 
-#' @param studyArea A SpatialPolygon* object that will be sent to \code{postProcess}.
+#' @param studyArea A \code{SpatialPolygon*} object that will be sent to \code{postProcess}.
 #'
 #' @export
 #' @exportMethod rasterToMatch

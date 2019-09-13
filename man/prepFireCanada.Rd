@@ -21,9 +21,9 @@ the predictive ecology team.}
 \item{...}{Additional arguments.}
 }
 \value{
-A SpatialPolygonsDataFrame plus several downloaded files, including
-the .zip archive and the extracted files. Because it is running
-\code{prepInputs}, checksumming is occurring too.
+A \code{SpatialPolygonsDataFrame} plus several downloaded files, including
+the \file{.zip} archive and the extracted files.
+Because it is running \code{prepInputs}, checksumming is occurring too.
 }
 \description{
 Downloads data from CWFIS Datamart at \url{http://cwfis.cfs.nrcan.gc.ca/datamart}.

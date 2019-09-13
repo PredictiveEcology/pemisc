@@ -12,12 +12,12 @@ pkgDepsGraph(pkgs = c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools",
 \item{pkgs}{A character vector of package names. Default is
 \code{c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core", "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")}}
 
-\item{plot.it}{Logical. If \code{TRUE}, it will plot the igraph}
+\item{plot.it}{Logical. If \code{TRUE}, it will plot the \code{igraph}.}
 }
 \value{
 A list of 2: \code{dt} a data.table of the dependencies, and \code{dtGraph}
-an igraph object that can be plotted with \code{plot()}
+an \code{igraph} object that can be plotted with \code{plot()}
 }
 \description{
-Uses \code{igraph} and \code{reproducible::pkgDep}.
+Uses \pkg{igraph} and \code{reproducible::pkgDep}.
 }

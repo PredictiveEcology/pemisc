@@ -21,7 +21,7 @@ if (getRversion() >= "3.1.0") {
 
 #' Clean Permanent Sampling Plot Data from Alberta.
 #'
-#' @note Will not remove treeNumber = 9999
+#' @note Will not remove \code{treeNumber == 9999}
 #'
 #' @param treeDataRaw individual tree data from Alberta PSP
 #' @param plotHeaderDataRaw plot level data inc. location
@@ -139,7 +139,7 @@ dataPurification_ABMaturePSP <- function(treeDataRaw, plotHeaderDataRaw) {
 #' Clean Permanent Sampling Plot Data from BC
 #'
 #' @param treeDataRaw individual tree data from BC PSP
-#' @param plotHeaderDataRaw plot level data inc. location
+#' @param plotHeaderDataRaw plot level data, including location
 #'
 #' @export
 #' @importFrom data.table set setkey
@@ -354,13 +354,13 @@ dataPurification_SKPSP <- function(SADataRaw,
 
 #' Clean Temporary Sampling Plot Data from SK Mistik forest management
 #'
-#' @param compiledPlotData plot-level data from SK TSP Mistic
-#' @param compiledTreeData tree-level data from SK TSP Mistic
+#' @param compiledPlotData plot-level data from SK TSP Mistik
+#' @param compiledTreeData tree-level data from SK TSP Mistik
 #'
 #' @export
 #' @importFrom data.table set setkey
-#' @rdname dataPurification_SKTSP_Mistic
-dataPurification_SKTSP_Mistic <- function(compiledPlotData, compiledTreeData) {
+#' @rdname dataPurification_SKTSP_Mistik
+dataPurification_SKTSP_Mistik <- function(compiledPlotData, compiledTreeData) {
   options(scipen = 999) # avoid scientific notation
 
   headData <- compiledPlotData[, .(ID_FOR, CRZ_ZONE, CRZNORTH, CRZ_EAST, PLOTNUM, YEAR, PSIZE, P_AGECLS)]

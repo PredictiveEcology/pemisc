@@ -9,7 +9,7 @@
 \alias{biomassCalculation,character,numeric,missing,numeric,missing-method}
 \alias{biomassCalculation,character,numeric,missing,missing,character-method}
 \alias{biomassCalculation,character,numeric,missing,missing,missing-method}
-\title{Calculate aboveground biomass for Canadian tree species}
+\title{Calculate above ground biomass for Canadian tree species}
 \usage{
 biomassCalculation(species, DBH, includeHeight, height, equationSource)
 
@@ -38,23 +38,21 @@ biomassCalculation(species, DBH, includeHeight, height, equationSource)
   DBH)
 }
 \arguments{
-\item{species}{Character string. The species name.}
+\item{species}{Character string giving the species name.}
 
 \item{DBH}{Numeric. The tree's diameter at breast height (DBH, cm).}
 
 \item{includeHeight}{Logical. Whether the biomass is calculated based on DBH and height.
-If TURE, height must be provided.
-Default \code{FALSE}}
+If \code{TRUE}, height must be provided. Default \code{FALSE}.}
 
 \item{height}{Numeric. The tree's height (m).}
 
 \item{equationSource}{Character. Determine the sources of equations.
-Currently, this function has two
-options, i.e., "Lambert2005" and "Ung2008".
-Default \code{Lambert2005}}
+Currently, this function has two options, i.e., \code{"Lambert2005"} and \code{"Ung2008"}.
+Default, \code{"Lambert2005"}.}
 }
 \value{
-Biomass (kg) and missedSpecies list that was not calculated.
+Biomass (kg) and \code{missedSpecies} list that was not calculated.
 }
 \description{
 Based on DBH or DBH and Height.

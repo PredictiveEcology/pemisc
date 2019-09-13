@@ -123,22 +123,21 @@ makeClusterRandom <- function(..., iseed = NULL) {
 
 #' Find sources for arguments in arbitrary function(s)
 #'
-#' Search among local objects (which will often be arguments passed
-#' into a function) as well as dot objects to match the
-#' formals needed by \code{fn}. If \code{localFormalArgs} is named,
-#' then it will match the formal (name of localFormaArgs) with the
-#' local object, e.g., localFormalArgs = c(x = "obj") will find
-#' the object in the local environment called "obj", and this will
-#' be found because it matches the \code{x} argument in \code{fn}.
+#' Search among local objects (which will often be arguments passed into a function) as well as
+#' dot objects to match the formals needed by \code{fn}.
+#' If \code{localFormalArgs} is named, then it will match the formal
+#' (name of \code{localFormalArgs}) with the local object,
+#' e.g., \code{localFormalArgs = c(x = "obj")} will find the object in the local environment called
+#' \code{"obj"}, and this will be found because it matches the \code{x} argument in \code{fn}.
 #'
 #' @param fn Function name(?)
 #' @param localFormalArgs A (named) character vector or arguments to
 #' @param envir The environment in which to (???)
 #' @param dots TODO: need description
 #'
-#' @return List of named objects. The names are the formals in fn, and
-#' the objects are the values for those formals. This can easily
-#' be passed to do.call(fn, args1)
+#' @return List of named objects. The names are the formals in \code{fn}, and
+#' the objects are the values for those formals.
+#' This can easily be passed to \code{do.call(fn, args1)}
 #'
 #' @export
 #' @importFrom utils getFromNamespace

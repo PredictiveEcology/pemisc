@@ -2,14 +2,14 @@
 % Please edit documentation in R/helpers.R
 \name{writeEventInfo}
 \alias{writeEventInfo}
-\title{Write sim event info to file}
+\title{Write simulation event info to file}
 \usage{
 writeEventInfo(sim, file = "events.txt", append = FALSE)
 }
 \arguments{
 \item{sim}{A \code{simList} object.}
 
-\item{file}{Character specifying the filename (default \code{"events.txt"}).}
+\item{file}{Character specifying the filename (default \file{"events.txt"}).}
 
 \item{append}{Logical indicating whether to append to the file (default \code{FALSE}).}
 }

@@ -9,7 +9,7 @@ dataPurification_BCPSP(treeDataRaw, plotHeaderDataRaw)
 \arguments{
 \item{treeDataRaw}{individual tree data from BC PSP}
 
-\item{plotHeaderDataRaw}{plot level data inc. location}
+\item{plotHeaderDataRaw}{plot level data, including location}
 }
 \description{
 Clean Permanent Sampling Plot Data from BC
