@@ -11,8 +11,9 @@ Numeric of class "object_size", so it can be reported in any units with format,
 e.g., \code{format(availableMemory(), unit = "GB")}.
 }
 \description{
-This reports the 'available' memory from a system \code{free} call.
-If \code{free} is not installed on the system (e.g., non-Linux), returns \code{NULL}.
+This reports the 'available' memory from a system \code{free} call on Linux,
+or a system \code{vm_stat} call on macOS.
+If neither is installed on the system (e.g., Windows), returns \code{NULL}.
 }
 \seealso{
 \code{man free} for description of available memory estimation.
