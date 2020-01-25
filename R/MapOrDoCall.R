@@ -94,19 +94,7 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #'
 #' @importFrom parallel clusterSetRNGStream makeForkCluster
 #' @importFrom reproducible checkPath
-#' @export
 #' @rdname makeClusterRandom
-makeForkClusterRandom <- function(..., iseed = NULL) {
-  makeClusterRandom(..., type = "FORK", iseed = iseed)
-}
-
-#' @rdname makeForkClusterRandom
-#' @export
-makeSockClusterRandom <- function(..., iseed = NULL) {
-  makeClusterRandom(..., type = "SOCK", iseed = iseed)
-}
-
-#' @rdname makeForkClusterRandom
 #' @importFrom parallel makeCluster clusterEvalQ clusterExport stopCluster
 #' @param libraries A character vector of libraries to load in the SOCK cluster. This
 #'   is ignored if a "FORK" cluster
@@ -155,6 +143,17 @@ makeClusterRandom <- function(..., type = "SOCK", iseed = NULL, libraries = NULL
 
 }
 
+#' @export
+#' @rdname makeClusterRandom
+makeForkClusterRandom <- function(..., iseed = NULL) {
+  makeClusterRandom(..., type = "FORK", iseed = iseed)
+}
+
+#' @rdname makeClusterRandom
+#' @export
+makeSockClusterRandom <- function(..., iseed = NULL) {
+  makeClusterRandom(..., type = "SOCK", iseed = iseed)
+}
 
 #' Find sources for arguments in arbitrary function(s)
 #'
