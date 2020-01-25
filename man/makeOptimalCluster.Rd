@@ -4,8 +4,12 @@
 \alias{makeOptimalCluster}
 \title{Create a parallel Fork cluster, if useful}
 \usage{
-makeOptimalCluster(useParallel = getOption("pemisc.useParallel", FALSE),
-  MBper = 500, maxNumClusters = parallel::detectCores(), ...)
+makeOptimalCluster(
+  useParallel = getOption("pemisc.useParallel", FALSE),
+  MBper = 500,
+  maxNumClusters = parallel::detectCores(),
+  ...
+)
 }
 \arguments{
 \item{useParallel}{Logical or numeric. If \code{FALSE}, returns NULL. If

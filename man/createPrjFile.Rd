@@ -4,8 +4,10 @@
 \alias{createPrjFile}
 \title{Create a \code{.prj} file}
 \usage{
-createPrjFile(shpFile,
-  urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/")
+createPrjFile(
+  shpFile,
+  urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"
+)
 }
 \arguments{
 \item{shpFile}{The filename of a shapefile to add \code{.prj}}

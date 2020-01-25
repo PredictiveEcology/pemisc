@@ -2,17 +2,45 @@
 % Please edit documentation in R/MapOrDoCall.R
 \name{makeForkClusterRandom}
 \alias{makeForkClusterRandom}
+<<<<<<< HEAD:man/makeClusterRandom.Rd
+=======
+\alias{makeSockClusterRandom}
+>>>>>>> aee5c06... redoc:man/makeForkClusterRandom.Rd
 \alias{makeClusterRandom}
 \title{\code{makeForkCluster} with random seed set}
 \usage{
 makeForkClusterRandom(..., iseed = NULL)
 
+<<<<<<< HEAD:man/makeClusterRandom.Rd
 makeClusterRandom(..., iseed = NULL)
+=======
+makeSockClusterRandom(..., iseed = NULL)
+
+makeClusterRandom(
+  ...,
+  type = "SOCK",
+  iseed = NULL,
+  libraries = NULL,
+  objects = NULL,
+  envir = parent.frame()
+)
+>>>>>>> aee5c06... redoc:man/makeForkClusterRandom.Rd
 }
 \arguments{
-\item{...}{passed to \code{makeForkCluster}, e.g.,}
+\item{...}{passed to \code{makeCluster}, e.g.,}
 
 \item{iseed}{passed to \code{clusterSetRNGStream}}
+
+\item{type}{One of the supported types: see \sQuote{Details}.}
+
+\item{libraries}{A character vector of libraries to load in the SOCK cluster. This
+is ignored if a "FORK" cluster}
+
+\item{objects}{a character string of objects that are required inside the SOCK cluster.
+Ignored if type != "SOCK"}
+
+\item{envir}{Required if \code{objects} is passed. The environment where
+\code{objects} are found.}
 }
 \description{
 This will set different random seeds on the clusters (not the default)
