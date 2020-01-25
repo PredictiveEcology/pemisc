@@ -4,8 +4,13 @@
 \alias{overlayStacks}
 \title{Overlay layers within raster stacks}
 \usage{
-overlayStacks(highQualityStack, lowQualityStack, speciesList = NULL,
-  outputFilenameSuffix = "overlay", destinationPath)
+overlayStacks(
+  highQualityStack,
+  lowQualityStack,
+  speciesList = NULL,
+  outputFilenameSuffix = "overlay",
+  destinationPath
+)
 }
 \arguments{
 \item{highQualityStack}{TODO: description needed}

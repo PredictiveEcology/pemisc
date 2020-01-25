@@ -4,8 +4,7 @@
 \alias{vegTypeMapGenerator}
 \title{Generate vegetation type map}
 \usage{
-vegTypeMapGenerator(species, cohortdata, pixelGroupMap,
-  vegLeadingProportion)
+vegTypeMapGenerator(species, cohortdata, pixelGroupMap, vegLeadingProportion)
 }
 \arguments{
 \item{species}{A \code{data.table} of stuff}

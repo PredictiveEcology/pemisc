@@ -4,8 +4,16 @@
 \alias{loadkNNSpeciesLayers}
 \title{Function to load kNN species layers from online data repository}
 \usage{
-loadkNNSpeciesLayers(dPath, rasterToMatch, studyArea, speciesList = NULL,
-  thresh = 1, url, cachePath, ...)
+loadkNNSpeciesLayers(
+  dPath,
+  rasterToMatch,
+  studyArea,
+  speciesList = NULL,
+  thresh = 1,
+  url,
+  cachePath,
+  ...
+)
 }
 \arguments{
 \item{dPath}{path to the data directory}

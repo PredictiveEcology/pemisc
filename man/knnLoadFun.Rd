@@ -4,8 +4,7 @@
 \alias{knnLoadFun}
 \title{Load kNN species data}
 \usage{
-knnLoadFun(speciesListIndex, spp, suffix, url, dPath, studyArea,
-  rasterToMatch)
+knnLoadFun(speciesListIndex, spp, suffix, url, dPath, studyArea, rasterToMatch)
 }
 \arguments{
 \item{speciesListIndex}{TODO: description needed}
