@@ -4,8 +4,12 @@
 \alias{prepFireCanada}
 \title{Download the National Burn Area Composite (Fires) in Canada}
 \usage{
-prepFireCanada(year, type = c("NBAC", "Polygon", "Point"),
-  urlBase = "http://cwfis.cfs.nrcan.gc.ca/downloads/nbac/", ...)
+prepFireCanada(
+  year,
+  type = c("NBAC", "Polygon", "Point"),
+  urlBase = "http://cwfis.cfs.nrcan.gc.ca/downloads/nbac/",
+  ...
+)
 }
 \arguments{
 \item{year}{Numeric, length 1. Which year, from 1986 to 2018 (currently)

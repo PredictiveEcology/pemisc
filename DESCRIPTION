@@ -45,9 +45,8 @@ License: GPL-3
 VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
-<<<<<<< HEAD
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Collate: 
     'memory.R'
     'MapOrDoCall.R'
@@ -58,6 +57,3 @@ Collate:
     'packages.R'
     'prepFireData.R'
     'psp_clean.R'
-=======
-RoxygenNote: 7.0.2
->>>>>>> aee5c06... redoc

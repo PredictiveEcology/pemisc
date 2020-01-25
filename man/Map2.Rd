@@ -15,6 +15,8 @@ Map2(f, ..., cl = NULL)
 }
 \description{
 This will send to \code{Map} or \code{clusterMap}, depending on whether \code{cl} is provided.
+Because they use different argument names for the main function
+to call, leave that argument unnamed.
 }
 \examples{
 

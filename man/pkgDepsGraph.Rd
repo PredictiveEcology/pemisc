@@ -4,9 +4,11 @@
 \alias{pkgDepsGraph}
 \title{Build the pkg dependency graph}
 \usage{
-pkgDepsGraph(pkgs = c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools",
-  "SpaDES.core", "SpaDES.addins", "SpaDES.shiny", "reproducible",
-  "quickPlot"), plot.it = TRUE)
+pkgDepsGraph(
+  pkgs = c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core",
+    "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot"),
+  plot.it = TRUE
+)
 }
 \arguments{
 \item{pkgs}{A character vector of package names. Default is

@@ -4,8 +4,7 @@
 \alias{dataPurification_SKPSP}
 \title{Clean Permanent Sampling Plot Data from SK}
 \usage{
-dataPurification_SKPSP(SADataRaw, plotHeaderRaw, measureHeaderRaw,
-  treeDataRaw)
+dataPurification_SKPSP(SADataRaw, plotHeaderRaw, measureHeaderRaw, treeDataRaw)
 }
 \arguments{
 \item{SADataRaw}{tree level data from SK PSP with age information}
