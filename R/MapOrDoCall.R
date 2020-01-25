@@ -57,7 +57,6 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
   cl <- NULL
   if (is.null(maxNumClusters)) maxNumClusters <- parallel::detectCores()
 
-  if (!identical("windows", .Platform$OS.type)) {
     numClus <- if (isTRUE(useParallel)) {
       numClus <- optimalClusterNum(MBper, maxNumClusters = maxNumClusters)
       if (numClus <= 1) {
@@ -68,10 +67,20 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
       min(useParallel, maxNumClusters)
     }
 
+    dots <- list(...)
     if (!is.null(numClus)) {
-      cl <- makeForkClusterRandom(numClus, ...)
+      type <- if (is.null(list(...)$type)) {
+        if (!identical("windows", .Platform$OS.type)) {
+          "FORK"
+        } else {
+          "SOCK"
+        }
+      } else {
+        dots$type
+      }
+      dots$type <- NULL
+      cl <- do.call(makeClusterRandom, append(list(numClus, type = type), dots))
     }
-  }
   return(cl)
 }
 
@@ -81,7 +90,7 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #' with \code{makeForkCluster}.
 #' It also defaults to creating a logfile with message of where it is.
 #'
-#' @param ... passed to \code{makeForkCluster}, e.g.,
+#' @param ... passed to \code{makeCluster}, e.g.,
 #' @param iseed passed to \code{clusterSetRNGStream}
 #'
 #' @importFrom parallel clusterSetRNGStream makeForkCluster
@@ -89,19 +98,64 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #' @export
 #' @rdname makeForkClusterRandom
 makeForkClusterRandom <- function(..., iseed = NULL) {
+  makeClusterRandom(..., type = "FORK", iseed = iseed)
+}
+
+#' @rdname makeForkClusterRandom
+#' @export
+makeSockClusterRandom <- function(..., iseed = NULL) {
+  makeClusterRandom(..., type = "SOCK", iseed = iseed)
+}
+
+#' @rdname makeForkClusterRandom
+#' @importFrom parallel makeCluster clusterEvalQ clusterExport stopCluster
+#' @param libraries A character vector of libraries to load in the SOCK cluster. This
+#'   is ignored if a "FORK" cluster
+#' @param objects a character string of objects that are required inside the SOCK cluster.
+#'   Ignored if type != "SOCK"
+#' @param envir Required if \code{objects} is passed. The environment where
+#'   \code{objects} are found.
+#' @inheritParams parallel::makeCluster
+#' @export
+makeClusterRandom <- function(..., type = "SOCK", iseed = NULL, libraries = NULL,
+                              objects = NULL, envir = parent.frame()) {
+  madeItToEnd <- FALSE
   dots <- list(...)
   if (!("outfile" %in% names(dots))) {
     dots$outfile <- file.path("outputs", ".log.txt")
   }
   checkPath(dirname(dots$outfile), create = TRUE)
+  dots$type <- type
   for (i in 1:4)
     cat(file = dots$outfile, "------------------------------------------------------------")
-  cl <- do.call(makeForkCluster, args = dots)
+  cl <- do.call(makeCluster, args = dots)
+  on.exit({
+    if (isFALSE(madeItToEnd)) {
+      stopCluster(cl)
+    }
+  })
   message("  Starting a cluster with ", length(cl), " threads")
   message("    Log file is ", dots$outfile, ". To prevent log file, pass outfile = ''")
   clusterSetRNGStream(cl, iseed = iseed)
+
+  env <- environment()
+  if (identical(dots$type, "SOCK")) {
+    if (!is.null(libraries)) {
+      clusterExport(cl, varlist = list("libraries"), envir = env)
+      clusterEvalQ(cl = cl, {
+        lapply(libraries, require, character.only = TRUE)
+      })
+    }
+    if (!is.null(objects)) {
+      clusterExport(cl, varlist = objects, envir = envir)
+    }
+
+  }
+  madeItToEnd <- TRUE
   cl
+
 }
+
 
 #' Find sources for arguments in arbitrary function(s)
 #'
@@ -237,6 +291,8 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
 #' \code{Map} and \code{parallel::clusterMap} together
 #'
 #' This will send to Map or clusterMap, depending on whether cl is provided.
+#' Because they use different argument names for the main function
+#' to call, leave that argument unnamed.
 #'
 #' @param ... passed to \code{Map} or \code{clusterMap}
 #' @param cl A cluster object, passed to \code{clusterMap}
