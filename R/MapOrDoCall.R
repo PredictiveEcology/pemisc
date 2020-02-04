@@ -8,7 +8,6 @@
 #' @export
 #' @rdname optimalClusterNum
 optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::detectCores()) {
-  #if (Sys.info()["sysname"] == "Linux") {
     detectedNumCores <- parallel::detectCores()
     shouldUseCluster <- (maxNumClusters > 0)
 
@@ -19,17 +18,13 @@ optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::de
       if (!is.null(availMem)) {
         numClusters <- floor(min(detectedNumCores, availMem / memRequiredMB))
       } else {
-        message("Not able to estimate available memory. Returning 1 cluster")
+        message("Unable to estimate available memory. Returning 1 cluster.")
         numClusters <- 1
       }
       numClusters <- min(maxNumClusters, numClusters, detectedNumCores)
     } else {
       numClusters <- 1
     }
-  #} else {
-  #  message("This function returns 1 cluster on Windows and MacOS.")
-  #  numClusters <- 1
-  #}
   return(numClusters)
 }
 

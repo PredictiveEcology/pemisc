@@ -1,8 +1,8 @@
 #' Report the estimated amount of available memory in the OS
 #'
-#' This reports the 'available' memory from a system \code{free} call on Linux,
-#' or a system \code{vm_stat} call on macOS.
-#' If neither is installed on the system (e.g., Windows), returns \code{NULL}.
+#' This reports the 'available' memory from a system call: \code{free} on Linux,
+#' \code{vm_stat} on macOS, or \code{wmic} on Windows.
+#' If neither is installed on the system, returns \code{NULL}.
 #'
 #' @return Numeric of class "object_size", so it can be reported in any units with format,
 #' e.g., \code{format(availableMemory(), unit = "GB")}.
@@ -12,12 +12,14 @@
 availableMemory <- function() {
   if (identical(.Platform$OS.type, "windows")) {
     wmic <- Sys.which("wmic")
-    aa <- try(system(paste0(wmic, ' OS get FreePhysicalMemory'), intern = TRUE))
-    suppressWarnings(availMem <- if (!is(aa, "try-error")) {
-      aa <- gsub(" |(\r)", "", aa);
-      na.omit(as.numeric(aa)) * 1e3 # in KB!
-    } else {
-      NULL
+    aa <- try(system(paste0(wmic, " OS get FreePhysicalMemory"), intern = TRUE))
+    suppressWarnings({
+      availMem <- if (!is(aa, "try-error")) {
+        aa <- gsub(" |(\r)", "", aa);
+        na.omit(as.numeric(aa)) * 1e3 # in KB!
+      } else {
+        NULL
+      }
     })
   } else {
     free <- Sys.which("free")      ## Linux only
