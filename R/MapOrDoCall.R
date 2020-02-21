@@ -268,11 +268,13 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
 #' @seealso \code{identifyVectorArgs}
 MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
   if (length(multiple)) {
+    browser(expr = exists("._MapOrDoCall_1"))
     obj <- do.call(Cache, args = append(multiple, list(Map2, fn,
                                                        MoreArgs = single,
                                                        cl = cl,
                                                        useCache = useCache)))
   } else {
+    browser(expr = exists("._MapOrDoCall_2"))
     if (!missing(useCache))
       single[["useCache"]] <- useCache
     obj <- do.call(Cache, args = append(list(fn), single))
