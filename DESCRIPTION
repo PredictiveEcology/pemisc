@@ -41,6 +41,8 @@ Suggests:
     roxygen2,
     rmarkdown,
     testthat
+Remotes:
+    achubaty/amc@development
 Encoding: UTF-8
 Language: en-CA
 License: GPL-3
