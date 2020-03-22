@@ -54,6 +54,7 @@ RoxygenNote: 7.1.0
 Collate: 
     'memory.R'
     'MapOrDoCall.R'
+    'messageDF.R'
     'biomassCalculation.R'
     'gis.R'
     'helpers.R'
