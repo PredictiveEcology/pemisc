@@ -101,6 +101,7 @@ setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
 #' @author Tati Micheletti
 #' @export
 #' @importFrom amc rescale
+#' @importFrom raster stack
 normalizeStack <- function(x) {
   normalized <- lapply(names(x), function(layer) {
     lay <- rescale(x[[layer]])
@@ -108,5 +109,5 @@ normalizeStack <- function(x) {
     return(lay)
   })
   names(normalized) <- names(x)
-  return(normalized)
+  return(raster::stack(normalized))
 }
