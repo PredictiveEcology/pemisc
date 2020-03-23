@@ -19,7 +19,7 @@ Authors@R: c(
 Depends:
     R (>= 3.5)
 Imports:
-    amc,
+    amc (>= 0.1.6.9000),
     assertthat,
     backports,
     data.table,
