@@ -6,7 +6,7 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2020-03-07
+Date: 2020-05-26
 Version: 0.0.2.9000
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
@@ -37,9 +37,13 @@ Imports:
     tools,
     utils
 Suggests:
+    details,
+    git2r,
+    here,
     knitr,
     roxygen2,
     rmarkdown,
+    sessioninfo,
     testthat
 Remotes:
     achubaty/amc@development
@@ -62,3 +66,4 @@ Collate:
     'packages.R'
     'prepFireData.R'
     'psp_clean.R'
+    'reproducibilityReceipt.R'
