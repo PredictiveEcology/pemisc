@@ -11,19 +11,20 @@ termsInData <- function(model, data) {
   terms <- strsplit(gsub(" ", "", as.character(model)), split = "[[:punct:]]+")[[2]][-1] # remove response
   terms <- unique(terms)
   terms <- terms[terms %in% colnames(data)]
-
 }
 
-
-#' Use message to print a clean square data structure
+#' Use message to print a clean, rectangular data structure
 #'
-#' Sends to \code{message}, but in a structured way so that a data.frame-like can
+#' Sends to \code{message}, but in a structured way so that a \code{data.frame}-like can
 #' be cleanly sent to messaging.
 #'
 #' @param df A data.frame, data.table, matrix
 #' @param round An optional numeric to pass to \code{round}
 #' @param colour An optional colour to use from \code{crayon}
+#'
 #' @export
+#' @importFrom data.table as.data.table is.data.table set
+#' @importFrom utils capture.output
 messageDF <- function(df, round, colour = NULL) {
   if (is.matrix(df))
     df <- as.data.frame(df)
