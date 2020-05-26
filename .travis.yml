@@ -8,7 +8,7 @@ env:
 matrix:
   include:
   - os: linux
-    dist: xenial
+    dist: bionic
     r: oldrel
     addons:
       apt:
@@ -30,7 +30,7 @@ matrix:
       - rgdal
       - rgeos
   - os: linux
-    dist: xenial
+    dist: bionic
     r: release
     addons:
       apt:
@@ -63,7 +63,7 @@ matrix:
     r_github_packages:
       - jimhester/lintr
   - os: linux
-    dist: xenial
+    dist: bionic
     addons:
       apt:
         sources:
