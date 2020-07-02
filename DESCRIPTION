@@ -6,7 +6,7 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2020-05-26
+Date: 2020-07-02
 Version: 0.0.2.9000
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
@@ -28,6 +28,7 @@ Imports:
     methods,
     magrittr,
     parallel,
+    peutils,
     raster,
     RCurl,
     reproducible,
@@ -46,7 +47,8 @@ Suggests:
     sessioninfo,
     testthat
 Remotes:
-    achubaty/amc@development
+    achubaty/amc@development,
+    PredictiveEcology/peutils@development
 Encoding: UTF-8
 Language: en-CA
 License: GPL-3
@@ -54,7 +56,7 @@ VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Collate: 
     'memory.R'
     'MapOrDoCall.R'

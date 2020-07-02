@@ -1,11 +1,10 @@
-sudo: required
 language: r
 cache: packages
 cran: https://cran.rstudio.com/
 env:
   global:
     - CRAN_REPO=https://cran.rstudio.com
-matrix:
+jobs:
   include:
   - os: linux
     dist: bionic

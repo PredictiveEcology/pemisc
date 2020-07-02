@@ -2,7 +2,7 @@
 % Please edit documentation in R/messageDF.R
 \name{messageDF}
 \alias{messageDF}
-\title{Use message to print a clean square data structure}
+\title{Use message to print a clean, rectangular data structure}
 \usage{
 messageDF(df, round, colour = NULL)
 }
@@ -14,6 +14,6 @@ messageDF(df, round, colour = NULL)
 \item{colour}{An optional colour to use from \code{crayon}}
 }
 \description{
-Sends to \code{message}, but in a structured way so that a data.frame-like can
+Sends to \code{message}, but in a structured way so that a \code{data.frame}-like can
 be cleanly sent to messaging.
 }
