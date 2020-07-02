@@ -7,7 +7,7 @@ URL:
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
 Date: 2020-07-02
-Version: 0.0.2.9000
+Version: 0.0.2.9001
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
            role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
@@ -64,6 +64,7 @@ Collate:
     'biomassCalculation.R'
     'gis.R'
     'helpers.R'
+    'numActiveThreads.R'
     'pemisc-package.R'
     'packages.R'
     'prepFireData.R'
