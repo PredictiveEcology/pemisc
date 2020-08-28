@@ -10,39 +10,13 @@
 #' @importFrom tools file_path_sans_ext
 #' @importFrom utils download.file
 createPrjFile <- function(shpFile,
-                          urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/") {
+                          urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/") {  #nolint
   basenameWithoutExt <- file_path_sans_ext(shpFile)
   basenameWithoutExt <- basenameWithoutExt[-length(basenameWithoutExt)]
   prjFile <- paste0(basenameWithoutExt, ".prj")
   if (!file.exists(prjFile)) {
     download.file(urlForProj, destfile = prjFile)
   }
-}
-
-#' Do an arbitrary set of operations on a polygon
-#'
-#' @param poly A polygon object, or a character string identifying the shapefile
-#'             path to load, and clean.
-#' @param fn   A function identifying the type of cleaning to do.
-#' @param type If fn is not known, an character string can be specified to
-#'             identify which \code{fn} to use.
-#'             This MUST be a known type for this function.
-#' @param ...  Passed to \code{fn}
-#'
-#' @export
-#' @importFrom stats na.omit
-polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
-  if (is.null(fn)) {
-    if (is.null(type)) {
-      stop("Either fn or type must be specified")
-    } else {
-      if (length(na.omit(pmatch(c("LandWeb", "tolko", "LP", "testing"), type))))
-        fn <- .cleanLandWebStudyArea
-      else
-        stop("Unknown type")
-    }
-  }
-  poly <- fn(poly, ...)
 }
 
 #' Faster version of \code{\link[raster]{factorValues}}
@@ -52,10 +26,11 @@ polygonClean <- function(poly, fn = NULL, type = NULL, ...) {
 #'
 #' @inheritParams raster::factorValues
 #'
-#' @importFrom raster levels
 #' @param na.rm Logical. If \code{TRUE}, then the NAs will be removed, returning a possibly
 #'              shorter vector
 #' @export
+#' @importFrom raster levels
+#' @importFrom stats na.omit
 factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
   levs <- raster::levels(x)[[1]];
   if (isTRUE(na.rm))
@@ -83,7 +58,7 @@ setGeneric(
     standardGeneric("rasterToMatch")
 })
 
-#' @param studyArea A SpatialPolygon* object that will be sent to \code{postProcess}.
+#' @param studyArea A \code{SpatialPolygon*} object that will be sent to \code{postProcess}.
 #'
 #' @export
 #' @exportMethod rasterToMatch
@@ -116,3 +91,23 @@ setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
             rtm[is.na(rasterToMatch[])] <- NA
             rtm
 })
+
+#' Normalize each layer of a \code{RasterStack}
+#'
+#' Rescales the values of of each \code{RasterLayer} between \code{[0,1]}.
+#'
+#' @param x A \code{RasterStack} object.
+#'
+#' @author Tati Micheletti
+#' @export
+#' @importFrom amc rescale
+#' @importFrom raster stack
+normalizeStack <- function(x) {
+  normalized <- lapply(names(x), function(layer) {
+    lay <- rescale(x[[layer]])
+    names(lay) <- layer
+    return(lay)
+  })
+  names(normalized) <- names(x)
+  return(raster::stack(normalized))
+}

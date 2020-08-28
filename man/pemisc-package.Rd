@@ -2,8 +2,9 @@
 % Please edit documentation in R/pemisc-package.R
 \name{pemisc-package}
 \alias{pemisc-package}
+\alias{pemisc}
 \title{\code{pemisc} package}
 \description{
 Miscellaneous utilities developed by the Predictive Ecology Group
-(\url{http://predictiveecology.org}).
+(\url{https://predictiveecology.org}).
 }

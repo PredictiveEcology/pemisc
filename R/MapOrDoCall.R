@@ -7,30 +7,24 @@
 #'
 #' @export
 #' @rdname optimalClusterNum
-optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = 1) {
-  if (Sys.info()["sysname"] == "Linux") {
+optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::detectCores()) {
     detectedNumCores <- parallel::detectCores()
     shouldUseCluster <- (maxNumClusters > 0)
 
     if (shouldUseCluster) {
       # try to scale to available RAM
-      try(aa <- system("free -lm", intern = TRUE))
-      if (!is(aa, "try-error")) {
-        bb <- strsplit(aa[2], split = " ") # 'Mem:' row
-        availMem <- as.numeric(bb[[1]][nzchar(bb[[1]])][7]) # 'available' column
+      availMem <- availableMemory() / 1e6
+      #try(aa <- system("free -lm", intern = TRUE))
+      if (!is.null(availMem)) {
         numClusters <- floor(min(detectedNumCores, availMem / memRequiredMB))
       } else {
-        message("The OS function, 'free' is not available. Returning 1 cluster")
+        message("Unable to estimate available memory. Returning 1 cluster.")
         numClusters <- 1
       }
       numClusters <- min(maxNumClusters, numClusters, detectedNumCores)
     } else {
       numClusters <- 1
     }
-  } else {
-    message("This function returns 1 cluster on Windows and MacOS.")
-    numClusters <- 1
-  }
   return(numClusters)
 }
 
@@ -52,7 +46,7 @@ optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = 1) {
 #' @export
 #' @rdname makeOptimalCluster
 makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FALSE),
-                               MBper = 5e2,
+                               MBper = 5e2, #nolint
                                maxNumClusters = parallel::detectCores(), ...) {
   cl <- NULL
   if (is.null(maxNumClusters)) maxNumClusters <- parallel::detectCores()
@@ -95,19 +89,7 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #'
 #' @importFrom parallel clusterSetRNGStream makeForkCluster
 #' @importFrom reproducible checkPath
-#' @export
-#' @rdname makeForkClusterRandom
-makeForkClusterRandom <- function(..., iseed = NULL) {
-  makeClusterRandom(..., type = "FORK", iseed = iseed)
-}
-
-#' @rdname makeForkClusterRandom
-#' @export
-makeSockClusterRandom <- function(..., iseed = NULL) {
-  makeClusterRandom(..., type = "SOCK", iseed = iseed)
-}
-
-#' @rdname makeForkClusterRandom
+#' @rdname makeClusterRandom
 #' @importFrom parallel makeCluster clusterEvalQ clusterExport stopCluster
 #' @param libraries A character vector of libraries to load in the SOCK cluster. This
 #'   is ignored if a "FORK" cluster
@@ -156,25 +138,35 @@ makeClusterRandom <- function(..., type = "SOCK", iseed = NULL, libraries = NULL
 
 }
 
+#' @export
+#' @rdname makeClusterRandom
+makeForkClusterRandom <- function(..., iseed = NULL) {
+  makeClusterRandom(..., type = "FORK", iseed = iseed)
+}
+
+#' @rdname makeClusterRandom
+#' @export
+makeSockClusterRandom <- function(..., iseed = NULL) {
+  makeClusterRandom(..., type = "SOCK", iseed = iseed)
+}
 
 #' Find sources for arguments in arbitrary function(s)
 #'
-#' Search among local objects (which will often be arguments passed
-#' into a function) as well as dot objects to match the
-#' formals needed by \code{fn}. If \code{localFormalArgs} is named,
-#' then it will match the formal (name of localFormaArgs) with the
-#' local object, e.g., localFormalArgs = c(x = "obj") will find
-#' the object in the local environment called "obj", and this will
-#' be found because it matches the \code{x} argument in \code{fn}.
+#' Search among local objects (which will often be arguments passed into a function) as well as
+#' dot objects to match the formals needed by \code{fn}.
+#' If \code{localFormalArgs} is named, then it will match the formal
+#' (name of \code{localFormalArgs}) with the local object,
+#' e.g., \code{localFormalArgs = c(x = "obj")} will find the object in the local environment called
+#' \code{"obj"}, and this will be found because it matches the \code{x} argument in \code{fn}.
 #'
 #' @param fn Function name(?)
 #' @param localFormalArgs A (named) character vector or arguments to
 #' @param envir The environment in which to (???)
 #' @param dots TODO: need description
 #'
-#' @return List of named objects. The names are the formals in fn, and
-#' the objects are the values for those formals. This can easily
-#' be passed to do.call(fn, args1)
+#' @return List of named objects. The names are the formals in \code{fn}, and
+#' the objects are the values for those formals.
+#' This can easily be passed to \code{do.call(fn, args1)}
 #'
 #' @export
 #' @importFrom utils getFromNamespace
@@ -276,24 +268,27 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
 #' @seealso \code{identifyVectorArgs}
 MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
   if (length(multiple)) {
-    obj <- do.call(Cache, args = append(multiple, list(Map2, fn,
-                                                       MoreArgs = single,
-                                                       cl = cl,
-                                                       useCache = useCache)))
+    browser(expr = exists("._MapOrDoCall_1"))
+    obj <- do.call(Cache, args = append(multiple, alist(Map2, fn,
+                                                        MoreArgs = single,
+                                                        cl = cl,
+                                                        useCache = useCache)))
   } else {
+    browser(expr = exists("._MapOrDoCall_2"))
     if (!missing(useCache))
       single[["useCache"]] <- useCache
-    obj <- do.call(Cache, args = append(list(fn), single))
+    obj <- do.call(Cache, args = append(alist(fn), single))
   }
   obj
 }
 
 #' \code{Map} and \code{parallel::clusterMap} together
 #'
-#' This will send to Map or clusterMap, depending on whether cl is provided.
+#' This will send to \code{Map} or \code{clusterMap}, depending on whether \code{cl} is provided.
 #' Because they use different argument names for the main function
 #' to call, leave that argument unnamed.
 #'
+#' @param f passed as \code{f} to \code{Map} or \code{fun} to \code{clusterMap}
 #' @param ... passed to \code{Map} or \code{clusterMap}
 #' @param cl A cluster object, passed to \code{clusterMap}
 #'
@@ -301,39 +296,61 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
 #' @importFrom parallel clusterMap
 #' @importFrom utils getFromNamespace
 #' @rdname Map2
-Map2 <- function(..., cl = NULL) { #nolint
-  fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
-  formsMap <- fnicd(mapply, ...)
-  formsClusterMap <- fnicd(clusterMap, ...)
+#' @examples
+#'
+#' \dontrun{
+#' a <- 1:5
+#' Map2(a, f = function(x) x)
+#'
+#' }
+Map2 <- function(f, ..., cl = NULL) { #nolint
+  #fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
+  #formsMap <- fnicd(mapply, ...)
+  #formsClusterMap <- fnicd(clusterMap, ...)
+  argList <- list(...)
+  if (any(c("fun", "FUN") %in% names(argList)))
+    stop("Please use f, not fun or FUN, to supply the function.")
+  #argList <- rlang::quos(...)
   if (is.null(cl)) {
-    argList <- list(...)
-    wrongFun1 <- "fun" %in% names(argList)
-    if (wrongFun1) {
-      fun <- argList$fun
-    }
-    wrongFun2 <- "FUN" %in% names(argList)
-    if (wrongFun2) {
-      fun <- argList$FUN
-    }
-    argList[setdiff(formsMap, formsClusterMap)] <- NULL
-    if (wrongFun1 || wrongFun2) {
-      argList$f <- fun
-    }
-    do.call(Map, args = argList)
+    #browser()
+    #argList <- list(...)
+    # wrongFun1 <- "fun" %in% names(argList)
+    # if (wrongFun1) {
+    #   fun <- argList$fun
+    # }
+    # wrongFun2 <- "FUN" %in% names(argList)
+    # if (wrongFun2) {
+    #   fun <- argList$FUN
+    #   argList$FUN <- NULL
+    # }
+    # argList[setdiff(formsMap, formsClusterMap)] <- NULL
+    # if (wrongFun1 || wrongFun2) {
+    #   argList$f <- fun
+    #   argList$fun <- NULL
+    # }
+    # eval_tidy(eval_tidy(quos(Map(!!!argList)))[[1]])
+    Map(f = f, ...)
+    #Map(!!!(argList))
+    #do.call(Map, args = argList)
   } else {
-    argList <- list(...)
-    wrongFun1 <- "f" %in% names(argList)
-    if (wrongFun1) {
-      fun <- argList$f
-    }
-    wrongFun2 <- "FUN" %in% names(argList)
-    if (wrongFun2) {
-      fun <- argList$FUN
-    }
-    argList[setdiff(formsClusterMap, formsMap)] <- NULL
-    if (wrongFun1 || wrongFun2) {
-      argList$fun <- fun
-    }
-    do.call(clusterMap, append(list(cl = cl), argList))
+    #argList <- list(...)
+    # wrongFun1 <- "f" %in% names(argList)
+    # if (wrongFun1) {
+    #   fun <- argList$f
+    #   argList$fun <- NULL
+    # }
+    # wrongFun2 <- "FUN" %in% names(argList)
+    # if (wrongFun2) {
+    #   fun <- argList$FUN
+    #   argList$FUN <- NULL
+    # }
+    # argList[setdiff(formsClusterMap, formsMap)] <- NULL
+    # if (wrongFun1 || wrongFun2) {
+    #   argList$fun <- fun
+    # }
+    # argList$cl <- quo(cl)
+    clusterMap(cl = cl, fun = f, ...)
+    #eval_tidy(eval_tidy(quos(clusterMap(!!!argList)))[[1]])
+    #do.call(clusterMap, append(list(cl = cl), argList))
   }
 }

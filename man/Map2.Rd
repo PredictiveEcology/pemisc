@@ -4,13 +4,25 @@
 \alias{Map2}
 \title{\code{Map} and \code{parallel::clusterMap} together}
 \usage{
-Map2(..., cl = NULL)
+Map2(f, ..., cl = NULL)
 }
 \arguments{
+\item{f}{passed as \code{f} to \code{Map} or \code{fun} to \code{clusterMap}}
+
 \item{...}{passed to \code{Map} or \code{clusterMap}}
 
 \item{cl}{A cluster object, passed to \code{clusterMap}}
 }
 \description{
-This will send to Map or clusterMap, depending on whether cl is provided.
+This will send to \code{Map} or \code{clusterMap}, depending on whether \code{cl} is provided.
+Because they use different argument names for the main function
+to call, leave that argument unnamed.
+}
+\examples{
+
+\dontrun{
+a <- 1:5
+Map2(a, f = function(x) x)
+
+}
 }

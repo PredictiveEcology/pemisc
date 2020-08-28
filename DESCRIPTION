@@ -6,45 +6,54 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2018-11-20
-Version: 0.0.1
+Date: 2020-08-28
+Version: 0.0.3
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
-    role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
+           role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
     person("Alex M", "Chubaty", email = "alex.chubaty@gmail.com",
-    role = c("aut"), comment = c(ORCID = "0000-0001-7146-8135")),
+           role = c("aut"), comment = c(ORCID = "0000-0001-7146-8135")),
     person("Her Majesty the Queen in Right of Canada, as represented by the Minister of Natural Resources Canada",
-    role = "cph")
+           role = "cph")
     )
 Depends:
-    R (>= 3.3.0)
+    R (>= 3.6)
 Imports:
+    amc (>= 0.1.6.9000),
+    assertthat,
     backports,
     data.table,
     fasterize,
-    gdalUtils,
-    grDevices,
-    magrittr,
+    igraph,
     methods,
+    magrittr,
     parallel,
-    quickPlot,
+    peutils,
     raster,
+    RCurl,
     reproducible,
-    SpaDES.tools,
+    sp,
+    SpaDES.core,
     stats,
     tools,
     utils
 Suggests:
+    details,
+    git2r,
+    here,
     knitr,
     roxygen2,
     rmarkdown,
+    sessioninfo,
     testthat
 Remotes:
-    PredictiveEcology/reproducible@development
+    achubaty/amc@development,
+    PredictiveEcology/peutils@development
 Encoding: UTF-8
 Language: en-CA
 License: GPL-3
 VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
-RoxygenNote: 7.0.2
+LazyData: true
+RoxygenNote: 7.1.1
