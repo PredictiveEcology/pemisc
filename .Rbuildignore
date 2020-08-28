@@ -1,9 +1,7 @@
 ^docs$
 ^_pkgdown\.yml$
-^appveyor\.yml$
-^appveyor_cache\.txt$
 ^\.lintr$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\.travis\.yml$
 ^LICENSE$
+^\.github$
