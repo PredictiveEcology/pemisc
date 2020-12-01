@@ -93,11 +93,11 @@ makeIps <- function(machines,
   if (proc == "cores"){
     availableResource <- "availableCores"
     if (sum(machines$availableCores) < NP)
-      stop("Not enough cores")
+      warning("Not enough cores")
   } else {
     availableResource <- "availableRAM"
     if (sum(machines$availableRAM) < NP)
-      stop("Not enough RAM")
+    warning("Not enough RAM")
   }
 
   if (proc == "RAM"){
