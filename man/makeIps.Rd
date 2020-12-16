@@ -7,7 +7,7 @@
 \title{Create IP addresses for network cluster}
 \usage{
 makeIpsForNetworkCluster(
-  ipStart = "10.20.0.",
+  ipStart = "10.20.0",
   ipEnd = c(68, 97, 189, 213, 220, 58, 106, 184, 217),
   availableCores = c(50, 50, 50, 50, 50, 50, 23, 23, 23),
   availableRAM = c(950, 500, 500, 500, 500, 500, 245, 245, 245),
@@ -28,10 +28,9 @@ optimalClusterNumGeneralized(
 )
 }
 \arguments{
-\item{ipStart}{Boreal Cloud network address that is identical across machines
-(i.e., the first, second, and third triplets of the IP address)}
+\item{ipStart}{Network address prefix (i.e., the first, second, and third triplets of the IP address)}
 
-\item{ipEnd}{the part of IP addresses unique to each host (i.e., the final triplet of the IP address)}
+\item{ipEnd}{Host IP address identifier (i.e., the final triplet of the IP address)}
 
 \item{availableCores}{the number of available threads on each machine.}
 
@@ -65,5 +64,5 @@ A vector of IP addresses associated with each machine in the network cluster.
 DESCRIPTION NEEDED
 }
 \description{
-Create IP addresses for network cluster
+\code{makeIpsForNetworkCluster} is a simple wrapper around \code{makeIps}.
 }
