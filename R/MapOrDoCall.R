@@ -40,6 +40,10 @@ optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::de
 #' @param maxNumClusters Numeric or Integer. The theoretical upper limit
 #'        for number of clusters to create (e.g., because there are only
 #'        3 problems to solve, not \code{parallel::detectCores})
+#' @param assumeHyperThreads Logical. If \code{TRUE}, then it will more efficiently
+#'   divide the \code{maxNumClusters} by \code{useParallel}, so that there is a
+#'   lower number of cores used. This calculation may not be the ideal balance.
+#'   A message will indicate the change from \code{maxNumClusters}, if there is one.
 #' @param ... Passed to \code{makeForkClusterRandom}.
 #'            Only relevant for \code{iseed}.
 #'
@@ -47,7 +51,8 @@ optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::de
 #' @rdname makeOptimalCluster
 makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FALSE),
                                MBper = 5e2, #nolint
-                               maxNumClusters = parallel::detectCores(), ...) {
+                               maxNumClusters = parallel::detectCores(),
+                               assumeHyperThreads = FALSE, ...) {
   cl <- NULL
   if (is.null(maxNumClusters)) maxNumClusters <- parallel::detectCores()
 
@@ -59,6 +64,15 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
       numClus
     } else if (is.numeric(useParallel)) {
       min(useParallel, maxNumClusters)
+    }
+    if (assumeHyperThreads && useParallel > maxNumClusters) {
+      ceil <- ceiling(useParallel/maxNumClusters)
+      numClusNew <- ceiling(useParallel/ceil)
+      if (numClusNew != numClus) {
+        message("assumeHyperThreads is TRUE; lowering from ", numClus, " to ",
+                numClusNew, " for more efficient use of threads")
+        numClus <- numClusNew
+      }
     }
 
     dots <- list(...)
