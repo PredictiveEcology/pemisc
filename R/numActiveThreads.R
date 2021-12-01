@@ -25,11 +25,11 @@
 #'
 #' }
 numActiveThreads <- function(pattern = "--slave", minCPU = 50) {
-  if (!reproducible:::isWindows()) {
+  if (!identical(.Platform$OS.type, "windows")) {
     a0 <- system("ps -ef", intern = TRUE)[-1]
-    a4 <- grep(pattern, a0, value =TRUE)
+    a4 <- grep(pattern, a0, value = TRUE)
     a5 <- gsub("^.*[[:digit:]]* [[:digit:]]* ([[:digit:]]{1,3}) .*$", "\\1", a4)
-    sum(as.numeric(a5)>minCPU)
+    sum(as.numeric(a5) > minCPU)
   } else {
     message("Does not work on Windows")
   }
