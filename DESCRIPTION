@@ -6,18 +6,18 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2021-04-30
-Version: 0.0.3.9002
+Date: 2021-11-30
+Version: 0.0.3.9003
 Authors@R: c(
-    person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
+    person("Eliot J B", "McIntire", email = "eliot.mcintire@nrcan-rn-can.gc.ca",
            role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
-    person("Alex M", "Chubaty", email = "alex.chubaty@gmail.com",
+    person("Alex M", "Chubaty", email = "achubaty@for-cast.ca",
            role = c("aut"), comment = c(ORCID = "0000-0001-7146-8135")),
     person("Her Majesty the Queen in Right of Canada, as represented by the Minister of Natural Resources Canada",
            role = "cph")
     )
 Depends:
-    R (>= 3.6)
+    R (>= 4.0)
 Imports:
     amc (>= 0.1.6.9000),
     assertthat,
@@ -56,4 +56,4 @@ VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
