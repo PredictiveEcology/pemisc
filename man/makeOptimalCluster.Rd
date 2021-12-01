@@ -8,6 +8,7 @@ makeOptimalCluster(
   useParallel = getOption("pemisc.useParallel", FALSE),
   MBper = 500,
   maxNumClusters = parallel::detectCores(),
+  assumeHyperThreads = FALSE,
   ...
 )
 }
@@ -22,6 +23,11 @@ many cores, up to \code{maxNumClusters}}
 \item{maxNumClusters}{Numeric or Integer. The theoretical upper limit
 for number of clusters to create (e.g., because there are only
 3 problems to solve, not \code{parallel::detectCores})}
+
+\item{assumeHyperThreads}{Logical. If \code{TRUE}, then it will more efficiently
+divide the \code{maxNumClusters} by \code{useParallel}, so that there is a
+lower number of cores used. This calculation may not be the ideal balance.
+A message will indicate the change from \code{maxNumClusters}, if there is one.}
 
 \item{...}{Passed to \code{makeForkClusterRandom}.
 Only relevant for \code{iseed}.}
