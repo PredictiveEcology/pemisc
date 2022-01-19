@@ -13,7 +13,7 @@ Miscellaneous utilities developed by the Predictive Ecology Lab Group.
 ### Current release
 
 [![R build status](https://github.com/PredictiveEcology/pemisc/workflows/R-CMD-check/badge.svg?branch=master)](https://github.com/PredictiveEcology/pemisc/actions)
-[![Codecov test coverage](https://codecov.io/gh/PredictiveEcology/pemisc/branch/master/graph/badge.svg)](https://codecov.io/gh/PredictiveEcology/pemisc?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/PredictiveEcology/pemisc/branch/master/graph/badge.svg)](https://app.codecov.io/gh/PredictiveEcology/pemisc?branch=master)
 
 **Install from CRAN:**
 
@@ -32,7 +32,7 @@ install_github("PredictiveEcology/pemisc", dependencies = TRUE)
 ### Development version
 
 [![R build status](https://github.com/PredictiveEcology/pemisc/workflows/R-CMD-check/badge.svg?branch=development)](https://github.com/PredictiveEcology/pemisc/actions)
-[![Codecov test coverage](https://codecov.io/gh/PredictiveEcology/pemisc/branch/development/graph/badge.svg)](https://codecov.io/gh/PredictiveEcology/pemisc?branch=development)
+[![Codecov test coverage](https://codecov.io/gh/PredictiveEcology/pemisc/branch/development/graph/badge.svg)](https://app.codecov.io/gh/PredictiveEcology/pemisc?branch=development)
 
 **Install from GitHub:**
 
