@@ -3,7 +3,6 @@
 \name{makeIpsForNetworkCluster}
 \alias{makeIpsForNetworkCluster}
 \alias{makeIps}
-\alias{optimalClusterNumGeneralized}
 \title{Create IP addresses for network cluster}
 \usage{
 makeIpsForNetworkCluster(
@@ -19,13 +18,6 @@ makeIpsForNetworkCluster(
 )
 
 makeIps(machines, ipStart, proc, nProcess, sizeGbEachProcess)
-
-optimalClusterNumGeneralized(
-  memRequiredMB = 500,
-  maxNumClusters = parallel::detectCores(),
-  NumCoresAvailable = parallel::detectCores(),
-  availMem = pemisc::availableMemory()/1e+06
-)
 }
 \arguments{
 \item{ipStart}{Network address prefix (i.e., the first, second, and third triplets of the IP address)}
@@ -49,19 +41,9 @@ cluster computations}
 
 \item{machines}{\code{data.frame} of compute node information containing the following columns:
 \code{ipEnd}, \code{availableCores}, \code{availableRam}}
-
-\item{memRequiredMB}{NEEDED}
-
-\item{maxNumClusters}{DESCRIPTION NEEDED}
-
-\item{NumCoresAvailable}{DESCRIPTION NEEDED}
-
-\item{availMem}{DESCRIPTION NEEDED}
 }
 \value{
 A vector of IP addresses associated with each machine in the network cluster.
-
-DESCRIPTION NEEDED
 }
 \description{
 \code{makeIpsForNetworkCluster} is a simple wrapper around \code{makeIps}.
