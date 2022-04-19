@@ -1,4 +1,4 @@
-Known issues: https://github.com/PredictiveEcology/peutils/issues
+Known issues: <https://github.com/PredictiveEcology/pemisc/issues>
 
 version 0.0.1
 =============
