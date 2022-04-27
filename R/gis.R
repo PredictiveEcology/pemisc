@@ -32,11 +32,18 @@ createPrjFile <- function(shpFile,
 #' @importFrom raster levels
 #' @importFrom stats na.omit
 factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
-  levs <- raster::levels(x)[[1]];
+  if (is(x, "SpatRaster")) {
+    if (!requireNamespace("terra", quietly = TRUE)) stop("please install.packages('terra')")
+    levs <- terra::cats(x)[[1]]
+    idCol <- "id"
+  } else {
+    levs <- raster::levels(x)[[1]]
+    idCol <- "ID"
+  }
   if (isTRUE(na.rm))
     v <- na.omit(v)
-  a <- match(v, levs$ID);
-  levs[[att]][a]
+  a <- match(v, levs[[idCol]])
+  return(levs[[att]][a])
 }
 
 #' Extract or create a raster to match
