@@ -84,6 +84,7 @@ setMethod("rasterToMatch", signature = "Raster",
 #' @export
 #' @exportMethod rasterToMatch
 #' @importFrom fasterize fasterize
+#' @importFrom sf st_as_sf
 #' @rdname rasterToMatch
 setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
           definition = function(x, studyArea, rasterToMatch, ...) {
@@ -111,7 +112,7 @@ setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
 #' @importFrom raster stack
 normalizeStack <- function(x) {
   normalized <- lapply(names(x), function(layer) {
-    lay <- rescale(x[[layer]])
+    lay <- amc::rescale(x[[layer]])
     names(lay) <- layer
     return(lay)
   })

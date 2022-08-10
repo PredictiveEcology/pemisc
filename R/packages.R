@@ -9,7 +9,6 @@
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom graphics plot
-#' @importFrom igraph graph_from_data_frame
 #' @importFrom reproducible pkgDep
 #' @return
 #' A list of 2: \code{dt} a data.table of the dependencies, and \code{dtGraph}
@@ -19,18 +18,19 @@ pkgDepsGraph <- function(pkgs = c("LandR", "pemisc", "map", "SpaDES",
                                   "SpaDES.addins", "SpaDES.shiny",
                                   "reproducible", "quickPlot"),
                          plot.it = TRUE) {
-
-  dt <- lapply(pkgs, function(pkg) {
-    deps <- pkgs[pkgs %in% pkgDep(pkg)[[1]]]
-    if (NROW(deps))
-      data.table(pkg = pkg,
-                              depends = deps)
-  })
-  dt <- rbindlist(dt);
-  dtGraph <- graph_from_data_frame(dt);
-  if (isTRUE(plot.it))
-    plot(dtGraph)
-  return(list(dt = dt, dtGraph = dtGraph))
+  if (reproducible::.requireNamespace("igraph")) {
+    dt <- lapply(pkgs, function(pkg) {
+      deps <- pkgs[pkgs %in% pkgDep(pkg)[[1]]]
+      if (NROW(deps))
+        data.table(pkg = pkg,
+                                depends = deps)
+    })
+    dt <- rbindlist(dt);
+    dtGraph <- igraph::graph_from_data_frame(dt);
+    if (isTRUE(plot.it))
+      plot(dtGraph)
+    return(list(dt = dt, dtGraph = dtGraph))
+  }
 }
 
 #' Check whether a package is one installed from GitHub

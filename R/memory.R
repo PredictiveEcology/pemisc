@@ -8,7 +8,7 @@
 #' e.g., \code{format(availableMemory(), unit = "GB")}.
 #'
 #' @export
-#' @importFrom magrittr %>%
+#' @importFrom sf %>%
 #' @seealso \code{man free} for description of available memory estimation.
 availableMemory <- function() {
   if (identical(.Platform$OS.type, "windows")) {

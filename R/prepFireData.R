@@ -45,20 +45,23 @@ prepFireCanada <- function(year, type = c("NBAC", "Polygon", "Point"),
     #gsub(".*href=\\\"(.*\\.zip)", "\\1", lineWithFile)
     filename <- gsub(".*>(.*\\.zip)<.*", "\\1", lineWithFile)
     if (length(filename) > 0) {
-      out <- prepInputs(url = file.path(urlBase, filename), archive = filename,
-                 ...)
+      out <- prepInputs(url = file.path(urlBase, filename), archive = filename, ...)
     } else {
       message("There is no NBAC file for ", year)
       out <- NULL
     }
   } else if (identical(type, possTypes[3])) {
-    out <- prepInputs(url =
-    "http://cwfis.cfs.nrcan.gc.ca/downloads/nfdb/fire_pnt/current_version/NFDB_point.zip",
-    archive = "NFDB_point.zip",
-    ...)
+    out <- prepInputs(
+      url = "http://cwfis.cfs.nrcan.gc.ca/downloads/nfdb/fire_pnt/current_version/NFDB_point.zip",
+      archive = "NFDB_point.zip",
+      ...
+    )
   } else if (identical(type, possTypes[2])) {
-    out <- prepInputs(url = "http://cwfis.cfs.nrcan.gc.ca/downloads/nfdb/fire_poly/current_version/NFDB_poly.zip",
-                      archive = "NFDB_poly.zip", ...)
+    out <- prepInputs(
+      url = "http://cwfis.cfs.nrcan.gc.ca/downloads/nfdb/fire_poly/current_version/NFDB_poly.zip",
+      archive = "NFDB_poly.zip",
+      ...
+    )
   }
 
   return(out)

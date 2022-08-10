@@ -6,8 +6,8 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2022-04-27
-Version: 0.0.3.9005
+Date: 2022-08-10
+Version: 0.0.3.9006
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@nrcan-rn-can.gc.ca",
            role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
@@ -20,20 +20,15 @@ Depends:
     R (>= 4.0)
 Imports:
     amc (>= 0.1.6.9000),
-    assertthat,
-    backports,
     data.table,
     fasterize,
-    igraph,
     methods,
-    magrittr,
     parallel,
     peutils,
     raster,
     RCurl,
     reproducible,
-    sp,
-    SpaDES.core,
+    sf,
     stats,
     tools,
     utils
@@ -41,6 +36,7 @@ Suggests:
     details,
     git2r,
     here,
+    igraph,
     knitr,
     roxygen2,
     rmarkdown,
@@ -57,4 +53,4 @@ VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
