@@ -51,8 +51,6 @@ jobs:
             any::covr
             github::PredictiveEcology/Require@development
             github::PredictiveEcology/reproducible@development
-            github::PredictiveEcology/quickPlot@development
-            github::PredictiveEcology/SpaDES.tools@development
 
       - uses: r-lib/actions/check-r-package@v2
 
