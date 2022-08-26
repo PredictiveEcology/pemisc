@@ -54,3 +54,4 @@ BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
 LazyData: true
 RoxygenNote: 7.2.1
+Roxygen: list(markdown = TRUE)

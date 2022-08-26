@@ -2,7 +2,7 @@
 #'
 #' Insert git repository and R session info into Rmarkdown documents.
 #' Based on suggestions in a Twitter thread by Miles McBain
-#' (\url{https://twitter.com/MilesMcBain/status/1263272935197782016?s=20}).
+#' (<https://twitter.com/MilesMcBain/status/1263272935197782016?s=20>).
 #'
 #' @param title Header title for the inserted details section.
 #'

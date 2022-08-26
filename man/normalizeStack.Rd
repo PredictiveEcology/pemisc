@@ -10,7 +10,7 @@ normalizeStack(x)
 \item{x}{A \code{RasterStack} object.}
 }
 \description{
-Rescales the values of of each \code{RasterLayer} between \code{[0,1]}.
+Rescales the values of of each \code{RasterLayer} between \verb{[0,1]}.
 }
 \author{
 Tati Micheletti

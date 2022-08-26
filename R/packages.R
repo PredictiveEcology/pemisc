@@ -1,18 +1,18 @@
 #' Build the pkg dependency graph
 #'
-#' Uses \pkg{igraph} and \code{reproducible::pkgDep}.
+#' Uses \pkg{igraph} and `reproducible::pkgDep`.
 #'
 #' @param pkgs A character vector of package names. Default is
-#' \code{c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core", "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")}
+#' `c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core", "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")`
 #'
-#' @param plot.it Logical. If \code{TRUE}, it will plot the \code{igraph}.
+#' @param plot.it Logical. If `TRUE`, it will plot the `igraph`.
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom graphics plot
 #' @importFrom reproducible pkgDep
 #' @return
-#' A list of 2: \code{dt} a data.table of the dependencies, and \code{dtGraph}
-#' an \code{igraph} object that can be plotted with \code{plot()}
+#' A list of 2: `dt` a data.table of the dependencies, and `dtGraph`
+#' an `igraph` object that can be plotted with `plot()`
 pkgDepsGraph <- function(pkgs = c("LandR", "pemisc", "map", "SpaDES",
                                   "SpaDES.tools", "SpaDES.core",
                                   "SpaDES.addins", "SpaDES.shiny",
@@ -36,8 +36,8 @@ pkgDepsGraph <- function(pkgs = c("LandR", "pemisc", "map", "SpaDES",
 #' Check whether a package is one installed from GitHub
 #'
 #' Determines whether a string that may correspond to a package name
-#' (e.g., \code{repo/package@branch}), could be a package installed from GitHub.
-#' This is determined solely by the presence of a \code{/} in the string.
+#' (e.g., `repo/package@branch`), could be a package installed from GitHub.
+#' This is determined solely by the presence of a `/` in the string.
 #' See example below.
 #'
 #' @param x character vector of package names
@@ -53,7 +53,7 @@ isGitHubPkg <- Vectorize(function(x) {
   if (length(strsplit(x, "/")[[1]]) == 1) FALSE else TRUE
 })
 
-#' Get the package name from a GitHub \code{repo/package@branch} string
+#' Get the package name from a GitHub `repo/package@branch` string
 #'
 #' @param x character vector of package names
 #'

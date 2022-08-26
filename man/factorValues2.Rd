@@ -2,7 +2,7 @@
 % Please edit documentation in R/gis.R
 \name{factorValues2}
 \alias{factorValues2}
-\title{Faster version of \code{\link[raster]{factorValues}}}
+\title{Faster version of \code{\link[raster:factor]{raster::factorValues()}}}
 \usage{
 factorValues2(x, v, layer, att, append.names, na.rm = FALSE)
 }

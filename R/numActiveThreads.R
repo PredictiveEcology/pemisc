@@ -1,8 +1,8 @@
 #' Count number of active threads
 #'
-#' This uses \code{ps -ef} so only works on unix-alikes. It will search
+#' This uses `ps -ef` so only works on unix-alikes. It will search
 #' for the percent CPU use and select only those above 40
-#' @param pattern Character string that will be matched to the \code{ps} call
+#' @param pattern Character string that will be matched to the `ps` call
 #' @param minCPU A numeric indicating what percent is the minimum to be considered
 #'   "active"
 #' @return

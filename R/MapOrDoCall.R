@@ -1,20 +1,20 @@
 #' Find sources for arguments in arbitrary function(s)
 #'
 #' Search among local objects (which will often be arguments passed into a function) as well as
-#' dot objects to match the formals needed by \code{fn}.
-#' If \code{localFormalArgs} is named, then it will match the formal
-#' (name of \code{localFormalArgs}) with the local object,
-#' e.g., \code{localFormalArgs = c(x = "obj")} will find the object in the local environment called
-#' \code{"obj"}, and this will be found because it matches the \code{x} argument in \code{fn}.
+#' dot objects to match the formals needed by `fn`.
+#' If `localFormalArgs` is named, then it will match the formal
+#' (name of `localFormalArgs`) with the local object,
+#' e.g., `localFormalArgs = c(x = "obj")` will find the object in the local environment called
+#' `"obj"`, and this will be found because it matches the `x` argument in `fn`.
 #'
 #' @param fn Function name(?)
 #' @param localFormalArgs A (named) character vector or arguments to
 #' @param envir The environment in which to (???)
 #' @param dots TODO: need description
 #'
-#' @return List of named objects. The names are the formals in \code{fn}, and
+#' @return List of named objects. The names are the formals in `fn`, and
 #' the objects are the values for those formals.
-#' This can easily be passed to \code{do.call(fn, args1)}
+#' This can easily be passed to `do.call(fn, args1)`
 #'
 #' @export
 #' @importFrom utils getFromNamespace
@@ -52,24 +52,24 @@ getLocalArgsFor <- function(fn, localFormalArgs, envir, dots) {
 #' Identify the source for arguments passed to an arbitrary function
 #'
 #' When running arbitrary functions inside other functions, there is a common
-#' construct in R to use \code{...}. It does not work, however, in the general case
-#' to write \code{do.call(fn, list(...))} because not all \code{fn} themselves
-#' accept \code{...}. So this will fail if too many arguments are supplied to
-#' the \code{...}. In the general case, we want to write:
-#' \code{do.call(fn, list(onlyTheArgumentsThatAreNeeded))}. This function helps
-#' to find the \code{onlyTheArgumentsThatAreNeeded} by determining a) what is needed
-#' by the \code{fn} (which can be a list of many \code{fn}), and b) where to find
-#' values, either in an arbitrary environment or passed in via \code{dots}.
+#' construct in R to use `...`. It does not work, however, in the general case
+#' to write `do.call(fn, list(...))` because not all `fn` themselves
+#' accept `...`. So this will fail if too many arguments are supplied to
+#' the `...`. In the general case, we want to write:
+#' `do.call(fn, list(onlyTheArgumentsThatAreNeeded))`. This function helps
+#' to find the `onlyTheArgumentsThatAreNeeded` by determining a) what is needed
+#' by the `fn` (which can be a list of many `fn`), and b) where to find
+#' values, either in an arbitrary environment or passed in via `dots`.
 #'
-#' @param fn A function or list of functions from which to run \code{formalArgs}
-#' @param localFormalArgs A vector of possible objects, e.g., from \code{ls()}
-#' @param envir The environment to find the objects named in \code{localFormalArgs}
+#' @param fn A function or list of functions from which to run `formalArgs`
+#' @param localFormalArgs A vector of possible objects, e.g., from `ls()`
+#' @param envir The environment to find the objects named in `localFormalArgs`
 #' @param dots Generally list(...), which would be an alternative place to find
-#'             \code{localFormalArgs}
+#'             `localFormalArgs`
 #'
-#' @return A list of length 2, named \code{argsSingle} and \code{argsMulti}, which
+#' @return A list of length 2, named `argsSingle` and `argsMulti`, which
 #'         can be passed to e.g.,
-#'         \code{MapOrDoCall(fn, multiple = args1$argsMulti, single = args1$argsSingle)}
+#'         `MapOrDoCall(fn, multiple = args1$argsMulti, single = args1$argsSingle)`
 #'
 #' @export
 #' @rdname identifyVectorArgs
@@ -95,25 +95,25 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
   list(argsSingle = argsSingle, argsMulti = argsMulti)
 }
 
-#' \code{Map}/\code{lapply} all in one
+#' `Map`/`lapply` all in one
 #'
-#' Usually run after \code{identifyVectorArgs} which will separate the arguments
-#' into vectors of values for a call to \code{Map}, and arguments that have
-#' only one value (passed to \code{MoreArgs} in \code{Map}). If all are single
-#' length arguments, then it will pass to \code{lapply}. If a \code{cl} is provided
-#' and is non-\code{NULL}, then it will pass all arguments to \code{clusterMap} or
-#' \code{clusterApply}.
+#' Usually run after `identifyVectorArgs` which will separate the arguments
+#' into vectors of values for a call to `Map`, and arguments that have
+#' only one value (passed to `MoreArgs` in `Map`). If all are single
+#' length arguments, then it will pass to `lapply`. If a `cl` is provided
+#' and is non-`NULL`, then it will pass all arguments to `clusterMap` or
+#' `clusterApply`.
 #'
 #' @param multiple This a list the arguments that Map will cycle over.
-#' @param single Passed to \code{MoreArgs} in the \code{mapply} function.
-#' @param fn The function that will be run via \code{Map}/\code{clusterMap}.
+#' @param single Passed to `MoreArgs` in the `mapply` function.
+#' @param fn The function that will be run via `Map`/`clusterMap`.
 #' @param useCache Logical indicating whether to use the cache.
-#' @param cl A cluster object or \code{NULL}.
+#' @param cl A cluster object or `NULL`.
 #'
 #' @export
 #' @importFrom reproducible Cache
 #' @rdname MapOrDoCall
-#' @seealso \code{identifyVectorArgs}
+#' @seealso `identifyVectorArgs`
 MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
   if (length(multiple)) {
     browser(expr = exists("._MapOrDoCall_1"))
@@ -130,15 +130,15 @@ MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
   obj
 }
 
-#' \code{Map} and \code{parallel::clusterMap} together
+#' `Map` and `parallel::clusterMap` together
 #'
-#' This will send to \code{Map} or \code{clusterMap}, depending on whether \code{cl} is provided.
+#' This will send to `Map` or `clusterMap`, depending on whether `cl` is provided.
 #' Because they use different argument names for the main function
 #' to call, leave that argument unnamed.
 #'
-#' @param f passed as \code{f} to \code{Map} or \code{fun} to \code{clusterMap}
-#' @param ... passed to \code{Map} or \code{clusterMap}
-#' @param cl A cluster object, passed to \code{clusterMap}
+#' @param f passed as `f` to `Map` or `fun` to `clusterMap`
+#' @param ... passed to `Map` or `clusterMap`
+#' @param cl A cluster object, passed to `clusterMap`
 #'
 #' @export
 #' @importFrom parallel clusterMap

@@ -1,7 +1,7 @@
-#' \code{pemisc} package
+#' `pemisc` package
 #'
 #' Miscellaneous utilities developed by the Predictive Ecology Group
-#' (\url{https://predictiveecology.org}).
+#' (<https://predictiveecology.org>).
 #'
 #' @import methods
 #' @name pemisc-package

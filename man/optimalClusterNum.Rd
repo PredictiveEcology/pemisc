@@ -32,13 +32,13 @@ integer specifying the number of cores
 \description{
 Optimally determine the number of cores to use to set up a new cluster, based on:
 \enumerate{
-  \item the number of cores available (see note);
-  \item the amount of free memory available on the local machine;
-  \item the number of cores requested vs. the number available, such that if requesting
-   more cores than available, the number of cores used will be adjusted to be a multiple
-   of the number of cores needed, so jobs can be run in approximately-even-sized batches.
-   (E.g., if 16 cores available but need 50, the time taken to run 3 batches of 16 plus
-   a single batch of 2 -- i.e., 4 batches total -- is the same as running 4 batches of 13.)
+\item the number of cores available (see note);
+\item the amount of free memory available on the local machine;
+\item the number of cores requested vs. the number available, such that if requesting
+more cores than available, the number of cores used will be adjusted to be a multiple
+of the number of cores needed, so jobs can be run in approximately-even-sized batches.
+(E.g., if 16 cores available but need 50, the time taken to run 3 batches of 16 plus
+a single batch of 2 -- i.e., 4 batches total -- is the same as running 4 batches of 13.)
 }
 }
 \note{

@@ -1,10 +1,10 @@
-#' Create a \code{.prj} file
+#' Create a `.prj` file
 #'
-#' In cases where a shapefile is missing its associated \code{.prj} file.
+#' In cases where a shapefile is missing its associated `.prj` file.
 #'
-#' @param shpFile The filename of a shapefile to add \code{.prj}
+#' @param shpFile The filename of a shapefile to add `.prj`
 #' @param urlForProj The url from which to fetch the projection, e.g.,
-#'          \code{"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"}.
+#'          `"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"`.
 #'
 #' @export
 #' @importFrom tools file_path_sans_ext
@@ -19,14 +19,14 @@ createPrjFile <- function(shpFile,
   }
 }
 
-#' Faster version of \code{\link[raster]{factorValues}}
+#' Faster version of [raster::factorValues()]
 #'
 #' Note there is an option to remove the NAs, which will make it MUCH faster,
-#' if \code{TRUE}
+#' if `TRUE`
 #'
 #' @inheritParams raster::factorValues
 #'
-#' @param na.rm Logical. If \code{TRUE}, then the NAs will be removed, returning a possibly
+#' @param na.rm Logical. If `TRUE`, then the NAs will be removed, returning a possibly
 #'              shorter vector
 #' @export
 #' @importFrom raster levels
@@ -49,12 +49,12 @@ factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
 #' Extract or create a raster to match
 #'
 #' This extracts or creates a new raster layer, whose intention is to be used as
-#' the \code{rasterToMatch} argument in further \code{prepInputs} calls.
+#' the `rasterToMatch` argument in further `prepInputs` calls.
 #'
 #' @param x A Raster Layer with correct resolution and origin.
 #' @param ... Additional arguments
 #'
-#' @return A \code{RasterLayer} object.
+#' @return A `RasterLayer` object.
 #'
 #' @export
 #' @exportMethod rasterToMatch
@@ -65,7 +65,7 @@ setGeneric(
     standardGeneric("rasterToMatch")
 })
 
-#' @param studyArea A \code{SpatialPolygon*} object that will be sent to \code{postProcess}.
+#' @param studyArea A `SpatialPolygon*` object that will be sent to `postProcess`.
 #'
 #' @export
 #' @exportMethod rasterToMatch
@@ -79,7 +79,7 @@ setMethod("rasterToMatch", signature = "Raster",
             postProcess(rtm, studyArea = studyArea, ...)
 })
 
-#' @param rasterToMatch The raster to match in a \code{fasterize} call.
+#' @param rasterToMatch The raster to match in a `fasterize` call.
 #'
 #' @export
 #' @exportMethod rasterToMatch
@@ -100,11 +100,11 @@ setMethod("rasterToMatch", signature = "SpatialPolygonsDataFrame",
             rtm
 })
 
-#' Normalize each layer of a \code{RasterStack}
+#' Normalize each layer of a `RasterStack`
 #'
-#' Rescales the values of of each \code{RasterLayer} between \code{[0,1]}.
+#' Rescales the values of of each `RasterLayer` between `[0,1]`.
 #'
-#' @param x A \code{RasterStack} object.
+#' @param x A `RasterStack` object.
 #'
 #' @author Tati Micheletti
 #' @export

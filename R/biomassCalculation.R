@@ -11,15 +11,15 @@ if (getRversion() >= "3.1.0") {
 #' @param DBH  Numeric. The tree's diameter at breast height (DBH, cm).
 #'
 #' @param includeHeight  Logical. Whether the biomass is calculated based on DBH and height.
-#'        If \code{TRUE}, height must be provided. Default \code{FALSE}.
+#'        If `TRUE`, height must be provided. Default `FALSE`.
 #'
 #' @param height  Numeric. The tree's height (m).
 #'
 #' @param equationSource  Character. Determine the sources of equations.
-#'        Currently, this function has two options, i.e., \code{"Lambert2005"} and \code{"Ung2008"}.
-#'        Default, \code{"Lambert2005"}.
+#'        Currently, this function has two options, i.e., `"Lambert2005"` and `"Ung2008"`.
+#'        Default, `"Lambert2005"`.
 #'
-#' @return Biomass (kg) and \code{missedSpecies} list that was not calculated.
+#' @return Biomass (kg) and `missedSpecies` list that was not calculated.
 #'
 #'
 #' @author Yong Luo

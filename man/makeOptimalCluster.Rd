@@ -18,7 +18,7 @@ makeOptimalCluster(
 many cores, up to \code{maxNumClusters}}
 
 \item{MBper}{Numeric. Passed to \code{memRequiredMB} in
-\code{\link{optimalClusterNum}}}
+\code{\link[=optimalClusterNum]{optimalClusterNum()}}}
 
 \item{maxNumClusters}{Numeric or Integer. The theoretical upper limit
 for number of clusters to create (e.g., because there are only

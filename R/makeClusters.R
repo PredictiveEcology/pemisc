@@ -8,18 +8,18 @@
 
 #' Create IP addresses for network cluster
 #'
-#' \code{makeIpsForNetworkCluster} is a simple wrapper around \code{makeIps}.
+#' `makeIpsForNetworkCluster` is a simple wrapper around `makeIps`.
 #'
 #' @param ipStart Network address prefix (i.e., the first, second, and third triplets of the IP address)
 #' @param ipEnd Host IP address identifier (i.e., the final triplet of the IP address)
 #' @param availableCores the number of available threads on each machine.
 #' @param availableRAM the available RAM on each machine in GB
 #' @param nProcess the number of processes
-#' @param proc one of \code{"cores"} or \code{"ram"}, describing the limiting factor of the
+#' @param proc one of `"cores"` or `"ram"`, describing the limiting factor of the
 #'             cluster computations
 #' @param internalProcesses DESCRIPTION NEEDED
 #' @param sizeGbEachProcess the size in GB of each process
-#' @param localHostEndIp the address in \code{ipEnd} corresponding to local host
+#' @param localHostEndIp the address in `ipEnd` corresponding to local host
 #'
 #' @return A vector of IP addresses associated with each machine in the network cluster.
 #'
@@ -57,8 +57,8 @@ makeIpsForNetworkCluster <- function(ipStart = "10.20.0",
   return(IPs)
 }
 
-#' @param machines \code{data.frame} of compute node information containing the following columns:
-#'                 \code{ipEnd}, \code{availableCores}, \code{availableRam}
+#' @param machines `data.frame` of compute node information containing the following columns:
+#'                 `ipEnd`, `availableCores`, `availableRam`
 #' @export
 makeIps <- function(machines,
                     ipStart,
@@ -171,20 +171,20 @@ optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::de
 #'
 #' Given the size of a problem, it may not be useful to create a cluster.
 #' This will make a Fork cluster (so Linux only)
-#' @param useParallel Logical or numeric. If \code{FALSE}, returns NULL. If
-#'        \code{numeric}, then will return a cluster object with this
-#'        many cores, up to \code{maxNumClusters}
-#' @param MBper Numeric. Passed to \code{memRequiredMB} in
-#'              \code{\link{optimalClusterNum}}
+#' @param useParallel Logical or numeric. If `FALSE`, returns NULL. If
+#'        `numeric`, then will return a cluster object with this
+#'        many cores, up to `maxNumClusters`
+#' @param MBper Numeric. Passed to `memRequiredMB` in
+#'              [optimalClusterNum()]
 #' @param maxNumClusters Numeric or Integer. The theoretical upper limit
 #'        for number of clusters to create (e.g., because there are only
-#'        3 problems to solve, not \code{parallel::detectCores})
-#' @param assumeHyperThreads Logical. If \code{TRUE}, then it will more efficiently
-#'   divide the \code{maxNumClusters} by \code{useParallel}, so that there is a
+#'        3 problems to solve, not `parallel::detectCores`)
+#' @param assumeHyperThreads Logical. If `TRUE`, then it will more efficiently
+#'   divide the `maxNumClusters` by `useParallel`, so that there is a
 #'   lower number of cores used. This calculation may not be the ideal balance.
-#'   A message will indicate the change from \code{maxNumClusters}, if there is one.
-#' @param ... Passed to \code{makeForkClusterRandom}.
-#'            Only relevant for \code{iseed}.
+#'   A message will indicate the change from `maxNumClusters`, if there is one.
+#' @param ... Passed to `makeForkClusterRandom`.
+#'            Only relevant for `iseed`.
 #'
 #' @export
 #' @rdname makeOptimalCluster
@@ -231,14 +231,14 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
   return(cl)
 }
 
-#' \code{makeForkCluster} with random seed set
+#' `makeForkCluster` with random seed set
 #'
 #' This will set different random seeds on the clusters (not the default)
-#' with \code{makeForkCluster}.
+#' with `makeForkCluster`.
 #' It also defaults to creating a logfile with message of where it is.
 #'
-#' @param ... passed to \code{makeCluster}, e.g.,
-#' @param iseed passed to \code{clusterSetRNGStream}
+#' @param ... passed to `makeCluster`, e.g.,
+#' @param iseed passed to `clusterSetRNGStream`
 #'
 #' @importFrom parallel clusterSetRNGStream makeForkCluster
 #' @importFrom reproducible checkPath
@@ -248,8 +248,8 @@ makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FAL
 #'   is ignored if a "FORK" cluster
 #' @param objects a character string of objects that are required inside the SOCK cluster.
 #'   Ignored if type != "SOCK"
-#' @param envir Required if \code{objects} is passed. The environment where
-#'   \code{objects} are found.
+#' @param envir Required if `objects` is passed. The environment where
+#'   `objects` are found.
 #' @inheritParams parallel::makeCluster
 #' @export
 makeClusterRandom <- function(..., type = "SOCK", iseed = NULL, libraries = NULL,
