@@ -37,9 +37,15 @@ reproducibilityReceipt <- function(title = "Reproducibility receipt") {
         sessinfo <- utils::sessionInfo()
       }
 
+      .spatialPkgs <- paste("raster", "rgdal", "sf", "sp", "terra", sep = "|")
+      if (any(grepl(.spatialPkgs, sessinfo))) {
+        spatialLibs <- sf::sf_extSoftVersion()
+      }
+
       timestamp <- Sys.time()
 
-      list(`Git repository` = gitinfo, `R session info` = sessinfo, `Timestamp` = timestamp)
+      list(`Git repository` = gitinfo, `External spatial libraries` = spatialLibs,
+           `R session info` = sessinfo, `Timestamp` = timestamp)
     }, summary = title)
   } else {
     stop("Suggested packages 'details', 'git2r', and 'sessioninfo' are required.")
