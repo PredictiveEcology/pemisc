@@ -4,13 +4,9 @@
 #' Based on suggestions in a Twitter thread by Miles McBain
 #' (<https://twitter.com/MilesMcBain/status/1263272935197782016?s=20>).
 #'
-#' @param title Header title for the inserted details section.
+#' Add the following to your Rmd files:
 #'
-#' @export
-#' @examples
-#' \dontrun{
-#' ## Add the following to your Rmd files:
-#'
+#' \verb{
 #' -----
 #'
 #' ```{r details, echo=FALSE}
@@ -18,6 +14,9 @@
 #' ```
 #' }
 #'
+#' @param title Header title for the inserted details section.
+#'
+#' @export
 reproducibilityReceipt <- function(title = "Reproducibility receipt") {
   if (requireNamespace("details", quietly = TRUE)) {
     details::details({
