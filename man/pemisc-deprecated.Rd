@@ -6,6 +6,9 @@
 \usage{
 reproducibilityReceipt(title)
 }
+\arguments{
+\item{title}{Header title for the inserted details section.}
+}
 \description{
 Deprecated functionality
 }

@@ -1,5 +1,7 @@
 #' Deprecated functionality
 #'
+#' @param title Header title for the inserted details section.
+#'
 #' @export
 #' @rdname pemisc-deprecated
 reproducibilityReceipt <- function(title) {
