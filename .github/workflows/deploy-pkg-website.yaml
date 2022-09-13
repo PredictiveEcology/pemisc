@@ -26,8 +26,10 @@ jobs:
         with:
           extra-packages: |
             any::pkgdown
+            local::.
             PredictiveEcology/Require@development
             PredictiveEcology/reproducible@development
+          needs: website
 
       - name: Deploy package
         run: |
