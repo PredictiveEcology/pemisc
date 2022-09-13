@@ -6,34 +6,29 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2020-08-28
-Version: 0.0.3
+Date: 2022-09-12
+Version: 0.0.4
 Authors@R: c(
-    person("Eliot J B", "McIntire", email = "eliot.mcintire@canada.ca",
+    person("Eliot J B", "McIntire", email = "eliot.mcintire@nrcan-rncan.gc.ca",
            role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
-    person("Alex M", "Chubaty", email = "alex.chubaty@gmail.com",
+    person("Alex M", "Chubaty", email = "achubaty@for-cast.ca",
            role = c("aut"), comment = c(ORCID = "0000-0001-7146-8135")),
     person("Her Majesty the Queen in Right of Canada, as represented by the Minister of Natural Resources Canada",
            role = "cph")
     )
 Depends:
-    R (>= 3.6)
+    R (>= 4.0)
 Imports:
     amc (>= 0.1.6.9000),
-    assertthat,
-    backports,
     data.table,
     fasterize,
-    igraph,
     methods,
-    magrittr,
     parallel,
     peutils,
     raster,
     RCurl,
     reproducible,
-    sp,
-    SpaDES.core,
+    sf,
     stats,
     tools,
     utils
@@ -41,10 +36,12 @@ Suggests:
     details,
     git2r,
     here,
+    igraph,
     knitr,
     roxygen2,
     rmarkdown,
     sessioninfo,
+    terra,
     testthat
 Remotes:
     achubaty/amc@development,
@@ -56,4 +53,5 @@ VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
+Roxygen: list(markdown = TRUE)

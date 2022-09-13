@@ -17,7 +17,7 @@ rasterToMatch(x, ...)
 
 \item{...}{Additional arguments}
 
-\item{studyArea}{A \code{SpatialPolygon*} object that will be sent to \code{postProcess}.}
+\item{studyArea}{A \verb{SpatialPolygon*} object that will be sent to \code{postProcess}.}
 
 \item{rasterToMatch}{The raster to match in a \code{fasterize} call.}
 }

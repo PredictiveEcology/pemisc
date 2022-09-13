@@ -16,5 +16,5 @@ This reports the 'available' memory from a system call: \code{free} on Linux,
 If neither is installed on the system, returns \code{NULL}.
 }
 \seealso{
-\code{man free} for description of available memory estimation.
+\verb{man free} for description of available memory estimation.
 }

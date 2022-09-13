@@ -1,7 +1,8 @@
 ^docs$
-^_pkgdown\.yml$
-^\.lintr$
+^man-roxygen$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^LICENSE$
 ^\.github$
+^\.lintr$
+^_pkgdown\.yml$
+^LICENSE$

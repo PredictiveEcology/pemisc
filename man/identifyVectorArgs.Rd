@@ -18,8 +18,8 @@ identifyVectorArgs(fn, localFormalArgs, envir, dots)
 }
 \value{
 A list of length 2, named \code{argsSingle} and \code{argsMulti}, which
-        can be passed to e.g.,
-        \code{MapOrDoCall(fn, multiple = args1$argsMulti, single = args1$argsSingle)}
+can be passed to e.g.,
+\code{MapOrDoCall(fn, multiple = args1$argsMulti, single = args1$argsSingle)}
 }
 \description{
 When running arbitrary functions inside other functions, there is a common

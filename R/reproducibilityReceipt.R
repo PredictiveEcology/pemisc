@@ -2,7 +2,7 @@
 #'
 #' Insert git repository and R session info into Rmarkdown documents.
 #' Based on suggestions in a Twitter thread by Miles McBain
-#' (\url{https://twitter.com/MilesMcBain/status/1263272935197782016?s=20}).
+#' (<https://twitter.com/MilesMcBain/status/1263272935197782016?s=20>).
 #'
 #' @param title Header title for the inserted details section.
 #'
@@ -37,9 +37,15 @@ reproducibilityReceipt <- function(title = "Reproducibility receipt") {
         sessinfo <- utils::sessionInfo()
       }
 
+      .spatialPkgs <- paste("raster", "rgdal", "sf", "sp", "terra", sep = "|")
+      if (any(grepl(.spatialPkgs, sessinfo))) {
+        spatialLibs <- sf::sf_extSoftVersion()
+      }
+
       timestamp <- Sys.time()
 
-      list(`Git repository` = gitinfo, `R session info` = sessinfo, `Timestamp` = timestamp)
+      list(`Git repository` = gitinfo, `External spatial libraries` = spatialLibs,
+           `R session info` = sessinfo, `Timestamp` = timestamp)
     }, summary = title)
   } else {
     stop("Suggested packages 'details', 'git2r', and 'sessioninfo' are required.")

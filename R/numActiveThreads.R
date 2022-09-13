@@ -1,8 +1,8 @@
 #' Count number of active threads
 #'
-#' This uses \code{ps -ef} so only works on unix-alikes. It will search
+#' This uses `ps -ef` so only works on unix-alikes. It will search
 #' for the percent CPU use and select only those above 40
-#' @param pattern Character string that will be matched to the \code{ps} call
+#' @param pattern Character string that will be matched to the `ps` call
 #' @param minCPU A numeric indicating what percent is the minimum to be considered
 #'   "active"
 #' @return
@@ -25,11 +25,11 @@
 #'
 #' }
 numActiveThreads <- function(pattern = "--slave", minCPU = 50) {
-  if (!reproducible:::isWindows()) {
+  if (!identical(.Platform$OS.type, "windows")) {
     a0 <- system("ps -ef", intern = TRUE)[-1]
-    a4 <- grep(pattern, a0, value =TRUE)
+    a4 <- grep(pattern, a0, value = TRUE)
     a5 <- gsub("^.*[[:digit:]]* [[:digit:]]* ([[:digit:]]{1,3}) .*$", "\\1", a4)
-    sum(as.numeric(a5)>minCPU)
+    sum(as.numeric(a5) > minCPU)
   } else {
     message("Does not work on Windows")
   }
