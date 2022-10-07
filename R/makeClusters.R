@@ -256,7 +256,7 @@ makeClusterRandom <- function(..., type = "SOCK", iseed = NULL, libraries = NULL
                               objects = NULL, envir = parent.frame()) {
   madeItToEnd <- FALSE
   dots <- list(...)
-  if (!("outfile" %in% names(dots))) {
+  if (!("outfile" %in% names(dots)) || is.null(dots$outfile)) {
     dots$outfile <- file.path("outputs", paste0("log_", format(Sys.time(), "%Y-%m-%d_%H%M%S"), ".txt"))
   }
   checkPath(dirname(dots$outfile), create = TRUE)
