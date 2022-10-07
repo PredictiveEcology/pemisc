@@ -114,18 +114,34 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
 #' @importFrom reproducible Cache
 #' @rdname MapOrDoCall
 #' @seealso `identifyVectorArgs`
-MapOrDoCall <- function(fn, multiple, single, useCache, cl = NULL) { #nolint
+MapOrDoCall <- function(fn, multiple, single, useCache = FALSE, cl = NULL) { #nolint
   if (length(multiple)) {
     browser(expr = exists("._MapOrDoCall_1"))
-    obj <- do.call(Cache, args = append(multiple, alist(Map2, fn,
-                                                        MoreArgs = single,
-                                                        cl = cl,
-                                                        useCache = useCache)))
+
+    ## TODO: Cache not handling passthrough (i.e., useCache = FALSE) in some cases
+    ## 2022-10-04: changed to make conditional on `useCache`
+    # obj <- do.call(Cache, args = append(multiple, alist(Map2, fn,
+    #                                                     MoreArgs = single,
+    #                                                     cl = cl,
+    #                                                     useCache = useCache)))
+    if (isTRUE(useCache)) {
+      obj <- do.call(Cache, args = append(multiple, alist(Map2, fn, MoreArgs = single, cl = cl)))
+    } else {
+      obj <- do.call(Map2, args = append(multiple, alist(fn, MoreArgs = single, cl = cl)))
+    }
   } else {
     browser(expr = exists("._MapOrDoCall_2"))
-    if (!missing(useCache))
+
+    ## TODO: Cache not handling passthrough (i.e., useCache = FALSE) in some cases
+    ## 2022-10-04: changed to make conditional on `useCache`
+    # single[["useCache"]] <- useCache
+    # obj <- do.call(Cache, args = append(alist(fn), single))
+    if (isTRUE(useCache)) {
       single[["useCache"]] <- useCache
-    obj <- do.call(Cache, args = append(alist(fn), single))
+      obj <- do.call(Cache, args = append(alist(fn), single))
+    } else {
+      obj <- do.call(Cache, args = append(alist(fn), single))
+    }
   }
   obj
 }
