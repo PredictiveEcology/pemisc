@@ -158,63 +158,21 @@ MapOrDoCall <- function(fn, multiple, single, useCache = FALSE, cl = NULL) { #no
 #'
 #' @export
 #' @importFrom parallel clusterMap
-#' @importFrom utils getFromNamespace
 #' @rdname Map2
 #' @examples
 #'
 #' \dontrun{
 #' a <- 1:5
 #' Map2(a, f = function(x) x)
-#'
 #' }
-Map2 <- function(f, ..., cl = NULL) { #nolint
-  #fnicd <- getFromNamespace(".formalsNotInCurrentDots", "reproducible")
-  #formsMap <- fnicd(mapply, ...)
-  #formsClusterMap <- fnicd(clusterMap, ...)
+Map2 <- function(f, ..., cl = NULL) {
   argList <- list(...)
   if (any(c("fun", "FUN") %in% names(argList)))
     stop("Please use f, not fun or FUN, to supply the function.")
-  #argList <- rlang::quos(...)
+
   if (is.null(cl)) {
-    #browser()
-    #argList <- list(...)
-    # wrongFun1 <- "fun" %in% names(argList)
-    # if (wrongFun1) {
-    #   fun <- argList$fun
-    # }
-    # wrongFun2 <- "FUN" %in% names(argList)
-    # if (wrongFun2) {
-    #   fun <- argList$FUN
-    #   argList$FUN <- NULL
-    # }
-    # argList[setdiff(formsMap, formsClusterMap)] <- NULL
-    # if (wrongFun1 || wrongFun2) {
-    #   argList$f <- fun
-    #   argList$fun <- NULL
-    # }
-    # eval_tidy(eval_tidy(quos(Map(!!!argList)))[[1]])
     Map(f = f, ...)
-    #Map(!!!(argList))
-    #do.call(Map, args = argList)
   } else {
-    #argList <- list(...)
-    # wrongFun1 <- "f" %in% names(argList)
-    # if (wrongFun1) {
-    #   fun <- argList$f
-    #   argList$fun <- NULL
-    # }
-    # wrongFun2 <- "FUN" %in% names(argList)
-    # if (wrongFun2) {
-    #   fun <- argList$FUN
-    #   argList$FUN <- NULL
-    # }
-    # argList[setdiff(formsClusterMap, formsMap)] <- NULL
-    # if (wrongFun1 || wrongFun2) {
-    #   argList$fun <- fun
-    # }
-    # argList$cl <- quo(cl)
     clusterMap(cl = cl, fun = f, ...)
-    #eval_tidy(eval_tidy(quos(clusterMap(!!!argList)))[[1]])
-    #do.call(clusterMap, append(list(cl = cl), argList))
   }
 }

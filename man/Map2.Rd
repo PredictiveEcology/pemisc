@@ -23,6 +23,5 @@ to call, leave that argument unnamed.
 \dontrun{
 a <- 1:5
 Map2(a, f = function(x) x)
-
 }
 }
