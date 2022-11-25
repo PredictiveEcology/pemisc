@@ -1,6 +1,6 @@
 #' Build the pkg dependency graph
 #'
-#' Uses \pkg{igraph} and `reproducible::pkgDep`.
+#' Uses \pkg{igraph} and `Require::pkgDep`.
 #'
 #' @param pkgs A character vector of package names. Default is
 #' `c("LandR", "pemisc", "map", "SpaDES", "SpaDES.tools", "SpaDES.core", "SpaDES.addins", "SpaDES.shiny", "reproducible", "quickPlot")`
@@ -9,7 +9,7 @@
 #'
 #' @importFrom data.table data.table rbindlist
 #' @importFrom graphics plot
-#' @importFrom reproducible pkgDep
+#' @importFrom Require pkgDep
 #' @return
 #' A list of 2: `dt` a data.table of the dependencies, and `dtGraph`
 #' an `igraph` object that can be plotted with `plot()`
@@ -22,8 +22,7 @@ pkgDepsGraph <- function(pkgs = c("LandR", "pemisc", "map", "SpaDES",
     dt <- lapply(pkgs, function(pkg) {
       deps <- pkgs[pkgs %in% pkgDep(pkg)[[1]]]
       if (NROW(deps))
-        data.table(pkg = pkg,
-                                depends = deps)
+        data.table(pkg = pkg, depends = deps)
     })
     dt <- rbindlist(dt);
     dtGraph <- igraph::graph_from_data_frame(dt);

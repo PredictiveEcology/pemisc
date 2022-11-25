@@ -21,5 +21,5 @@ A list of 2: \code{dt} a data.table of the dependencies, and \code{dtGraph}
 an \code{igraph} object that can be plotted with \code{plot()}
 }
 \description{
-Uses \pkg{igraph} and \code{reproducible::pkgDep}.
+Uses \pkg{igraph} and \code{Require::pkgDep}.
 }

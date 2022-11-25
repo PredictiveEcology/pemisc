@@ -7,7 +7,7 @@ URL:
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
 Date: 2022-10-07
-Version: 0.0.4.9003
+Version: 0.0.4.9004
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@nrcan-rncan.gc.ca",
            role = c("aut", "cre"), comment=c(ORCID = "0000-0002-6914-8316")),
@@ -28,6 +28,7 @@ Imports:
     raster,
     RCurl,
     reproducible,
+    Require,
     sf,
     stats,
     tools,
@@ -48,5 +49,5 @@ License: GPL-3
 VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Roxygen: list(markdown = TRUE)
