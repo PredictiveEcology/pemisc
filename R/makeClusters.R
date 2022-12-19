@@ -156,7 +156,8 @@ optimalClusterNumGeneralized <- function(memRequiredMB = 500,
 
 #' @export
 #' @rdname optimalClusterNum
-optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallelly::availableCores(constraints = "connections")) {
+optimalClusterNum <- function(memRequiredMB = 500,
+                              maxNumClusters = parallelly::availableCores(constraints = "connections")) {
   optimalClusterNumGeneralized(memRequiredMB = memRequiredMB, maxNumClusters = maxNumClusters)
 }
 
