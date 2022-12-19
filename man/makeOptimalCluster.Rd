@@ -2,12 +2,12 @@
 % Please edit documentation in R/makeClusters.R
 \name{makeOptimalCluster}
 \alias{makeOptimalCluster}
-\title{Create a parallel Fork cluster, if useful}
+\title{Create a parallel fork cluster}
 \usage{
 makeOptimalCluster(
   useParallel = getOption("pemisc.useParallel", FALSE),
   MBper = 500,
-  maxNumClusters = parallel::detectCores(),
+  maxNumClusters = parallelly::availableCores(constraints = "connections"),
   assumeHyperThreads = FALSE,
   ...
 )
@@ -21,8 +21,7 @@ many cores, up to \code{maxNumClusters}}
 \code{\link[=optimalClusterNum]{optimalClusterNum()}}}
 
 \item{maxNumClusters}{Numeric or Integer. The theoretical upper limit
-for number of clusters to create (e.g., because there are only
-3 problems to solve, not \code{parallel::detectCores})}
+for number of nodes to use with the cluster.}
 
 \item{assumeHyperThreads}{Logical. If \code{TRUE}, then it will more efficiently
 divide the \code{maxNumClusters} by \code{useParallel}, so that there is a
@@ -34,5 +33,5 @@ Only relevant for \code{iseed}.}
 }
 \description{
 Given the size of a problem, it may not be useful to create a cluster.
-This will make a Fork cluster (so Linux only)
+This will make a fork cluster (so Linux only).
 }

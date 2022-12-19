@@ -1,11 +1,3 @@
-#' Maximum number of cores that R can actually use
-#'
-#' @template nconnections
-#'
-#' @keywords internal
-#'
-.NCONNECTIONS <- 120L
-
 #' Create IP addresses for network cluster
 #'
 #' `makeIpsForNetworkCluster` is a simple wrapper around `makeIps`.
@@ -137,12 +129,13 @@ makeIps <- function(machines,
 #' @return integer specifying the number of cores
 #'
 #' @export
+#' @importFrom parallelly availableConnections availableCores
 #' @rdname optimalClusterNum
 optimalClusterNumGeneralized <- function(memRequiredMB = 500,
-                                         maxNumClusters = parallel::detectCores(),
-                                         NumCoresAvailable = parallel::detectCores(),
+                                         maxNumClusters = parallelly::availableCores(constraints = "connections"),
+                                         NumCoresAvailable = parallelly::availableCores(constraints = "connections"),
                                          availMem = pemisc::availableMemory() / 1e+06) {
-  NumCoresAvailable <- min(NumCoresAvailable, .NCONNECTIONS)
+  NumCoresAvailable <- min(NumCoresAvailable, parallelly::availableConnections())
 
   if (maxNumClusters > 0) {
     if (is.null(availMem)) {
@@ -163,26 +156,30 @@ optimalClusterNumGeneralized <- function(memRequiredMB = 500,
 
 #' @export
 #' @rdname optimalClusterNum
-optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::detectCores()) {
+optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallelly::availableCores(constraints = "connections")) {
   optimalClusterNumGeneralized(memRequiredMB = memRequiredMB, maxNumClusters = maxNumClusters)
 }
 
-#' Create a parallel Fork cluster, if useful
+#' Create a parallel fork cluster
 #'
 #' Given the size of a problem, it may not be useful to create a cluster.
-#' This will make a Fork cluster (so Linux only)
+#' This will make a fork cluster (so Linux only).
+#'
 #' @param useParallel Logical or numeric. If `FALSE`, returns NULL. If
 #'        `numeric`, then will return a cluster object with this
 #'        many cores, up to `maxNumClusters`
+#'
 #' @param MBper Numeric. Passed to `memRequiredMB` in
 #'              [optimalClusterNum()]
+#'
 #' @param maxNumClusters Numeric or Integer. The theoretical upper limit
-#'        for number of clusters to create (e.g., because there are only
-#'        3 problems to solve, not `parallel::detectCores`)
+#'        for number of nodes to use with the cluster.
+#'
 #' @param assumeHyperThreads Logical. If `TRUE`, then it will more efficiently
 #'   divide the `maxNumClusters` by `useParallel`, so that there is a
 #'   lower number of cores used. This calculation may not be the ideal balance.
 #'   A message will indicate the change from `maxNumClusters`, if there is one.
+#'
 #' @param ... Passed to `makeForkClusterRandom`.
 #'            Only relevant for `iseed`.
 #'
@@ -190,10 +187,11 @@ optimalClusterNum <- function(memRequiredMB = 500, maxNumClusters = parallel::de
 #' @rdname makeOptimalCluster
 makeOptimalCluster <- function(useParallel = getOption("pemisc.useParallel", FALSE),
                                MBper = 5e2, #nolint
-                               maxNumClusters = parallel::detectCores(),
+                               maxNumClusters = parallelly::availableCores(constraints = "connections"),
                                assumeHyperThreads = FALSE, ...) {
   cl <- NULL
-  if (is.null(maxNumClusters)) maxNumClusters <- parallel::detectCores()
+  if (is.null(maxNumClusters))
+    maxNumClusters <- parallelly::availableCores(constraints = "connections")
 
   numClus <- if (isTRUE(useParallel)) {
     numClus <- optimalClusterNum(MBper, maxNumClusters = maxNumClusters)

@@ -24,6 +24,7 @@ Imports:
     fasterize,
     methods,
     parallel,
+    parallelly,
     peutils,
     raster,
     RCurl,
@@ -49,5 +50,5 @@ License: GPL-3
 VignetteBuilder: knitr, rmarkdown
 BugReports: https://github.com/PredictiveEcology/pemisc/issues
 ByteCompile: yes
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)

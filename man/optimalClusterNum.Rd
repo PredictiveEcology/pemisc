@@ -7,14 +7,14 @@
 \usage{
 optimalClusterNumGeneralized(
   memRequiredMB = 500,
-  maxNumClusters = parallel::detectCores(),
-  NumCoresAvailable = parallel::detectCores(),
+  maxNumClusters = parallelly::availableCores(constraints = "connections"),
+  NumCoresAvailable = parallelly::availableCores(constraints = "connections"),
   availMem = pemisc::availableMemory()/1e+06
 )
 
 optimalClusterNum(
   memRequiredMB = 500,
-  maxNumClusters = parallel::detectCores()
+  maxNumClusters = parallelly::availableCores(constraints = "connections")
 )
 }
 \arguments{
