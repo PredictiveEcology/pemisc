@@ -134,13 +134,11 @@ MapOrDoCall <- function(fn, multiple, single, useCache = FALSE, cl = NULL) { #no
 
     ## TODO: Cache not handling passthrough (i.e., useCache = FALSE) in some cases
     ## 2022-10-04: changed to make conditional on `useCache`
-    # single[["useCache"]] <- useCache
-    # obj <- do.call(Cache, args = append(alist(fn), single))
     if (isTRUE(useCache)) {
       single[["useCache"]] <- useCache
-      obj <- do.call(Cache, args = append(alist(fn), single))
+      obj <- Cache(do.call, what = fn, args = single)
     } else {
-      obj <- do.call(Cache, args = append(alist(fn), single))
+      obj <- Cache(do.call, what = fn, args = single)
     }
   }
   obj
