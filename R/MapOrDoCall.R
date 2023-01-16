@@ -125,7 +125,7 @@ MapOrDoCall <- function(fn, multiple, single, useCache = FALSE, cl = NULL) { #no
     #                                                     cl = cl,
     #                                                     useCache = useCache)))
     if (isTRUE(useCache)) {
-      obj <- do.call(Cache, args = append(multiple, alist(Map2, fn, MoreArgs = single, cl = cl)))
+      obj <- Cache(do.call, args = append(multiple, alist(Map2, fn, MoreArgs = single, cl = cl)))
     } else {
       obj <- do.call(Map2, args = append(multiple, alist(fn, MoreArgs = single, cl = cl)))
     }
