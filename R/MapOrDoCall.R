@@ -121,9 +121,9 @@ MapOrDoCall <- function(fn, multiple, single, useCache = FALSE, cl = NULL) { #no
     ## TODO: Cache not handling passthrough (i.e., useCache = FALSE) in some cases
     ## 2022-10-04: changed to make conditional on `useCache`
     if (isTRUE(useCache)) {
-      obj <- Cache(do.call, Map2, args = append(multiple, alist(fn, MoreArgs = single, cl = cl)))
+      obj <- Cache(do.call, Map2, args = append(multiple, list(fn, MoreArgs = single, cl = cl)))
     } else {
-      obj <- do.call(Map2, args = append(multiple, alist(fn, MoreArgs = single, cl = cl)))
+      obj <- do.call(Map2, args = append(multiple, list(fn, MoreArgs = single, cl = cl)))
     }
   } else {
     if (exists("._MapOrDoCall_2")) browser()
