@@ -116,7 +116,7 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
 #' @seealso `identifyVectorArgs`
 MapOrDoCall <- function(fn, multiple, single, useCache = FALSE, cl = NULL) { #nolint
   if (length(multiple)) {
-    browser(expr = exists("._MapOrDoCall_1"))
+    if (exists("._MapOrDoCall_1")) browser()
 
     ## TODO: Cache not handling passthrough (i.e., useCache = FALSE) in some cases
     ## 2022-10-04: changed to make conditional on `useCache`
@@ -126,7 +126,7 @@ MapOrDoCall <- function(fn, multiple, single, useCache = FALSE, cl = NULL) { #no
       obj <- do.call(Map2, args = append(multiple, alist(fn, MoreArgs = single, cl = cl)))
     }
   } else {
-    browser(expr = exists("._MapOrDoCall_2"))
+    if (exists("._MapOrDoCall_2")) browser()
 
     ## TODO: Cache not handling passthrough (i.e., useCache = FALSE) in some cases
     ## 2022-10-04: changed to make conditional on `useCache`
