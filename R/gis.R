@@ -35,11 +35,10 @@ factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
   if (is(x, "SpatRaster")) {
     if (!requireNamespace("terra", quietly = TRUE)) stop("please install.packages('terra')")
     levs <- terra::cats(x)[[1]]
-    idCol <- "id"
   } else {
     levs <- raster::levels(x)[[1]]
-    idCol <- "ID"
   }
+  idCol <- grep("id", ignore.case = TRUE, value = TRUE, colnames(levs))
   if (isTRUE(na.rm))
     v <- na.omit(v)
   a <- match(v, levs[[idCol]])
