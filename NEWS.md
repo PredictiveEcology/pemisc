@@ -1,5 +1,10 @@
 Known issues: <https://github.com/PredictiveEcology/pemisc/issues>
 
+
+version 0.0.5
+=============
+* minor bugfix in `factorValues2` for `SpatRaster` class.
+
 version 0.0.1
 =============
 
