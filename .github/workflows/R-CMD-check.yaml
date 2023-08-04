@@ -7,7 +7,7 @@ on:
       - LandWeb
   pull_request:
     branches:
-      -main
+      - main
       - master
       - development
 
