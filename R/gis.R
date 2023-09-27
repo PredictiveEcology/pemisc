@@ -39,6 +39,9 @@ factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
     levs <- raster::levels(x)[[1]]
   }
   idCol <- grep("id", ignore.case = TRUE, value = TRUE, colnames(levs))
+  if (length(idCol) == 0) {
+    idCol <- grep("value", ignore.case = TRUE, value = TRUE, colnames(levs))
+  }
   if (isTRUE(na.rm))
     v <- na.omit(v)
   a <- match(v, levs[[idCol]])
