@@ -1,7 +1,7 @@
 getOrUpdatePkg <- function(p, minVer = "0") {
+  repo <- c("predictiveecology.r-universe.dev", getOption("repos"))
   p <- lapply(p, function(pp) {
     if (!isFALSE(try(packageVersion(pp) < minVer, silent = TRUE) )) {
-      repo <- c("predictiveecology.r-universe.dev", getOption("repos"))
       pp
     } else {
       NULL
