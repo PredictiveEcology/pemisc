@@ -1,7 +1,8 @@
 getOrUpdatePkg <- function(p, minVer = "0") {
   repo <- c("predictiveecology.r-universe.dev", getOption("repos"))
-  p <- lapply(p, function(pp) {
-    if (!isFALSE(try(packageVersion(pp) < minVer, silent = TRUE) )) {
+  if (length(p) != length(minVer)) stop("minVer must be as long as p")
+  p <- Map(pp = p, mv = minVer, function(pp, mv) {
+    if (!isFALSE(try(packageVersion(pp) < mv, silent = TRUE) )) {
       pp
     } else {
       NULL
