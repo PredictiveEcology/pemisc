@@ -19,7 +19,6 @@ Because they use different argument names for the main function
 to call, leave that argument unnamed.
 }
 \examples{
-
 \dontrun{
 a <- 1:5
 Map2(a, f = function(x) x)

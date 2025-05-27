@@ -83,7 +83,8 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
       TRUE
     } else {
       FALSE
-    }}))
+    }
+  }))
   if (sum(lengthOne)) {
     argsSingle <- allArgs[lengthOne]
     argsMulti <- allArgs[!lengthOne]
@@ -154,19 +155,19 @@ MapOrDoCall <- function(fn, multiple, single, useCache = FALSE, cl = NULL) { #no
 #' @importFrom parallel clusterMap
 #' @rdname Map2
 #' @examples
-#'
 #' \dontrun{
 #' a <- 1:5
 #' Map2(a, f = function(x) x)
 #' }
 Map2 <- function(f, ..., cl = NULL) {
   argList <- list(...)
-  if (any(c("fun", "FUN") %in% names(argList)))
+  if (any(c("fun", "FUN") %in% names(argList))) {
     stop("Please use f, not fun or FUN, to supply the function.")
+  }
 
   if (is.null(cl)) {
     Map(f = f, ...)
   } else {
-    clusterMap(cl = cl, fun = f, ...)
+    clusterMap(cl = cl, fun = f, .scheduling = "dynamic", ...)
   }
 }
