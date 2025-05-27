@@ -22,7 +22,9 @@ makeSockClusterRandom(..., iseed = NULL)
 \arguments{
 \item{...}{passed to \code{makeCluster}, e.g.,}
 
-\item{type}{One of the supported types: see \sQuote{Details}.}
+\item{type}{One of the supported types: see \sQuote{Details}. For
+    \code{registerClusterType}, a name for the newly-registered type of
+    cluster.}
 
 \item{iseed}{passed to \code{clusterSetRNGStream}}
 
