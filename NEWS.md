@@ -1,7 +1,8 @@
 # pemisc v0.0.5
 
-* drop support for R 4.0 and 4.1 due to changes in dependency packages.
-* minor bugfix in `factorValues2` for `SpatRaster` class.
+* drop support for R 4.0 and 4.1 due to changes in dependency packages;
+* minor bugfix in `factorValues2` for `SpatRaster` class;
+* new function `getOrUpdatePkg()`;
 
 #pemisc version v0.0.1
 
