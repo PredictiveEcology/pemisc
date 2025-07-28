@@ -1,6 +1,6 @@
 # pemisc v0.0.5
 
-* drop support for R 4.0 and 4.1 due to changes in dependency packages;
+* drop support for R < 4.3 due to changes in dependency packages;
 * minor bugfix in `factorValues2` for `SpatRaster` class;
 * new function `getOrUpdatePkg()`;
 * use load balanced `clusterMap()` call in `MapOrDoCall()`;

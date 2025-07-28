@@ -6,7 +6,7 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2025-05-27
+Date: 2025-07-28
 Version: 0.0.4.9013
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@nrcan-rncan.gc.ca",
@@ -17,7 +17,7 @@ Authors@R: c(
            role = "cph")
     )
 Depends:
-    R (>= 4.2)
+    R (>= 4.3)
 Imports:
     amc (>= 0.1.6.9000),
     data.table,
@@ -43,7 +43,9 @@ Suggests:
     testthat
 Remotes:
     achubaty/amc@development,
-    PredictiveEcology/peutils@development
+    PredictiveEcology/peutils@development,
+    PredictiveEcology/reproducible@development,
+    PredictiveEcology/Require@development
 Encoding: UTF-8
 Language: en-CA
 License: GPL-3

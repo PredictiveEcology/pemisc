@@ -39,8 +39,6 @@ jobs:
           extra-packages: |
             any::pkgdown
             local::.
-            PredictiveEcology/Require@development
-            PredictiveEcology/reproducible@development
           needs: website
 
       - name: Build site

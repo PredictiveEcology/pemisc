@@ -14,7 +14,6 @@ name: test-coverage
 
 jobs:
   test-coverage:
-    if: "!contains(github.event.commits[0].message, '[skip-ci]')"
     runs-on: macOS-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -35,8 +34,6 @@ jobs:
         with:
           extra-packages: |
             any::covr
-            github::PredictiveEcology/Require@development
-            github::PredictiveEcology/reproducible@development
 
       - name: Test coverage
         run: covr::codecov()
