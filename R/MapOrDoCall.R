@@ -79,7 +79,7 @@ identifyVectorArgs <- function(fn, localFormalArgs, envir, dots) {
   # These types don't correctly work with "length", so omit them from search
   specialTypes <- c("environment", "sf", "Spatial", "Raster")
   lengthOne <- unlist(lapply(allArgs, is.null)) | unlist(lapply(allArgs, function(x) {
-    if (any(unlist(lapply(specialTypes, is, obj = x))) | length(x) == 1) {
+    if (any(unlist(lapply(specialTypes, is, object = x))) | length(x) == 1) {
       TRUE
     } else {
       FALSE
