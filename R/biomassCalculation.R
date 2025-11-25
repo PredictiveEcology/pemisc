@@ -107,7 +107,7 @@ setMethod(
                           branches1 * DBH ^ branches2]
 
         } else if (individualSpecies == "basswood") {
-          wood1 = 0.0562
+          wood1 <- 0.0562
           wood2 <- 2.4102
           bark1 <- 0.0302
           bark2 <- 2.0976
@@ -115,6 +115,20 @@ setMethod(
           branches2 <- 2.2382
           foliage1 <- 0.0288
           foliage2 <- 1.6378
+          tempdatatable[species == individualSpecies,
+                        biomass := wood1 * DBH ^ wood2 +
+                          bark1 * DBH ^ bark2 +
+                          foliage1 * DBH ^ foliage2 +
+                          branches1 * DBH ^ branches2]
+        } else if (individualSpecies == "beech") {
+          wood1 <- 0.1478
+          wood2 <- 2.2986
+          bark1 <- 0.0120
+          bark2 <- 2.2388
+          branches1 <- 0.0370
+          branches2 <- 2.3680
+          foliage1 <- 0.0376
+          foliage2 <- 1.6164
           tempdatatable[species == individualSpecies,
                         biomass := wood1 * DBH ^ wood2 +
                           bark1 * DBH ^ bark2 +
