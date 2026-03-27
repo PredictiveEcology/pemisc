@@ -6,7 +6,7 @@ Description: Miscellaneous utilities developed by the Predictive Ecology Group
 URL: 
     http://pemisc.predictiveecology.org,
     https://github.com/PredictiveEcology/pemisc
-Date: 2025-07-28
+Date: 2026-03-26
 Version: 0.0.4.9015
 Authors@R: c(
     person("Eliot J B", "McIntire", email = "eliot.mcintire@nrcan-rncan.gc.ca",
@@ -22,6 +22,7 @@ Imports:
     amc (>= 0.1.6.9000),
     data.table,
     fasterize,
+    magrittr,
     methods,
     parallel,
     parallelly,
