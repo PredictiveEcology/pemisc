@@ -1,60 +1,26 @@
-on:
-  push:
-    branches:
-      - main
-      - master
-      - development
-      - LandWeb
-  pull_request:
-    branches:
-      - main
-      - master
-      - development
+## Thin caller -- the matrix, system dependencies, caching, Drive staging
+## and the check itself all live in PredictiveEcology/actions. This file only
+## says which package to check and what it needs on top of the org defaults.
+##
+## No concurrency block here: the reusable workflow has one, and its
+## cancel-in-progress is scoped to pull requests so a push to a default
+## branch still runs to completion.
 
 name: R-CMD-check
 
+on:
+  push:
+    branches: [main, master, development, LandWeb]
+  pull_request:
+    branches: [main, master, development, LandWeb]
+
 jobs:
   R-CMD-check:
-    runs-on: ${{ matrix.config.os }}
-
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - {os: macOS-latest,    r: 'release'}
-          - {os: windows-latest,  r: 'devel'}
-          - {os: windows-latest,  r: 'release'}   ## currently 4.5
-          - {os: windows-latest,  r: 'oldrel-1'}  ## currently 4.4
-          - {os: windows-latest,  r: 'oldrel-2'}  ## currently 4.3
-          - {os: ubuntu-latest,   r: 'devel'}
-          - {os: ubuntu-latest,   r: 'release'}  ## currently 4.5
-          - {os: ubuntu-latest,   r: 'oldrel-1'} ## currently 4.4
-          - {os: ubuntu-latest,   r: 'oldrel-2'} ## currently 4.3
-
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: r-lib/actions/setup-pandoc@v2
-
-      - uses: PredictiveEcology/actions/install-spatial-deps@v0.2
-
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          Ncpus: 2
-          r-version: ${{ matrix.config.r }}
-          use-public-rspm: false
-
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: |
-            any::rcmdcheck
-
-      - uses: r-lib/actions/check-r-package@v2
-        with:
-          upload-snapshots: true
+    uses: PredictiveEcology/actions/.github/workflows/R-CMD-check.yaml@main
+    with:
+      extra-packages: |
+        PredictiveEcology/Require@development
+        PredictiveEcology/reproducible@development
+      ## Legs beyond the org default 8, preserved from this repo's matrix.
+      extra-config: |
+        [{"config": {"os": "ubuntu-latest", "nosuggests": false, "r": "oldrel-2"}}, {"config": {"os": "windows-latest", "nosuggests": false, "r": "oldrel-2"}}]
