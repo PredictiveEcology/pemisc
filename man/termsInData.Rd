@@ -15,4 +15,9 @@ termsInData(model, data)
 \description{
 Similar to \code{terms}, but this is used on a quoted model and
 will only return unique matches in a \code{data}.
+
+\strong{Deprecated.} It splits the deparsed model text on punctuation and drops the
+first token as the response, so with a transformed response such as \code{log(age)} it
+drops \code{log} and returns the response variable among the terms. Use \code{\link[=all.vars]{all.vars()}} on
+the model's formula instead.
 }
