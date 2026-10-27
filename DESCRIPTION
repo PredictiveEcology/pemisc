@@ -17,7 +17,7 @@ Authors@R: c(
            role = "cph")
     )
 Depends:
-    R (>= 4.3)
+    R (>= 4.4)
 Imports:
     amc (>= 0.1.6.9000),
     data.table,
