@@ -3,11 +3,21 @@
 #' Similar to `terms`, but this is used on a quoted model and
 #' will only return unique matches in a `data`.
 #'
+#' **Deprecated.** It splits the deparsed model text on punctuation and drops the
+#' first token as the response, so with a transformed response such as `log(age)` it
+#' drops `log` and returns the response variable among the terms. Use [all.vars()] on
+#' the model's formula instead.
+#'
 #' @param model A quoted model statement
 #' @param data A data.frame-like object with column names in which to match terms in
 #'   `model`
 #' @export
 termsInData <- function(model, data) {
+  .Deprecated(msg = paste(
+    "termsInData() is deprecated: it drops the first token of the model text as the response,",
+    "which is wrong for a transformed response such as log(age).",
+    "Use all.vars() on the model's formula instead."
+  ))
   terms <- strsplit(gsub(" ", "", as.character(model)), split = "[[:punct:]]+")[[2]][-1] # remove response
   terms <- unique(terms)
   terms <- terms[terms %in% colnames(data)]
