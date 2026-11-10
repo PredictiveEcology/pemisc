@@ -10,10 +10,15 @@ createPrjFile(
 )
 }
 \arguments{
-\item{shpFile}{The filename of a shapefile to add \code{.prj}}
+\item{shpFile}{The filename of a shapefile to add \code{.prj}, or the files of one or more
+shapefiles (e.g. \code{c("x.shp", "x.dbf")}).}
 
 \item{urlForProj}{The url from which to fetch the projection, e.g.,
 \code{"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"}.}
+}
+\value{
+The \code{.prj} file of each shapefile, invisibly. Only those that did not exist are
+downloaded.
 }
 \description{
 In cases where a shapefile is missing its associated \code{.prj} file.
