@@ -8,7 +8,7 @@
 #' e.g., `format(availableMemory(), unit = "GB")`.
 #'
 #' @export
-#' @importFrom sf %>%
+#' @importFrom magrittr %>%
 #' @seealso `man free` for description of available memory estimation.
 availableMemory <- function() {
   if (identical(.Platform$OS.type, "windows")) {
@@ -16,14 +16,14 @@ availableMemory <- function() {
     aa <- try(system(paste0(wmic, " OS get FreePhysicalMemory"), intern = TRUE))
     suppressWarnings({
       availMem <- if (!is(aa, "try-error")) {
-        aa <- gsub(" |(\r)", "", aa);
+        aa <- gsub(" |(\r)", "", aa)
         na.omit(as.numeric(aa)) * 1e3 # in KB!
       } else {
         NULL
       }
     })
   } else {
-    free <- Sys.which("free")      ## Linux only
+    free <- Sys.which("free") ## Linux only
     vmstat <- Sys.which("vm_stat") ## macOS
 
     if (nzchar(free)) {
@@ -41,10 +41,8 @@ availableMemory <- function() {
           strsplit(., split = " bytes)") %>%
           `[[`(., 1) %>%
           as.numeric()
-        bb <- strsplit(aa[2], split = " ")[[1]] %>%
-          unique()
-        pagesFree <- bb[which(!(bb %in% c("Pages", "free:", "")))] %>%
-          as.numeric()
+        bb <- strsplit(aa[2], split = " ")[[1]] %>% unique()
+        pagesFree <- bb[which(!(bb %in% c("Pages", "free:", "")))] %>% as.numeric()
         pagesFree * pageSize ## in bytes
       }
     } else {
@@ -55,8 +53,10 @@ availableMemory <- function() {
   if (!is.null(availMem)) {
     class(availMem) <- "object_size"
   } else {
-    warning("unable to determine available memory.",
-            "'wmic' (Windows), 'free' or 'vm_stat' must be available on your system.")
+    warning(
+      "unable to determine available memory.",
+      "'wmic' (Windows), 'free' or 'vm_stat' must be available on your system."
+    )
   }
   return(availMem)
 }

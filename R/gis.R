@@ -2,21 +2,24 @@
 #'
 #' In cases where a shapefile is missing its associated `.prj` file.
 #'
-#' @param shpFile The filename of a shapefile to add `.prj`
+#' @param shpFile The filename of a shapefile to add `.prj`, or the files of one or more
+#'          shapefiles (e.g. `c("x.shp", "x.dbf")`).
 #' @param urlForProj The url from which to fetch the projection, e.g.,
 #'          `"http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/"`.
+#'
+#' @return The `.prj` file of each shapefile, invisibly. Only those that did not exist are
+#'   downloaded.
 #'
 #' @export
 #' @importFrom tools file_path_sans_ext
 #' @importFrom utils download.file
 createPrjFile <- function(shpFile,
                           urlForProj = "http://spatialreference.org/ref/epsg/nad83-utm-zone-11n/prj/") {  #nolint
-  basenameWithoutExt <- file_path_sans_ext(shpFile)
-  basenameWithoutExt <- basenameWithoutExt[-length(basenameWithoutExt)]
-  prjFile <- paste0(basenameWithoutExt, ".prj")
-  if (!file.exists(prjFile)) {
-    download.file(urlForProj, destfile = prjFile)
+  prjFile <- paste0(unique(file_path_sans_ext(shpFile)), ".prj")
+  for (f in prjFile[!file.exists(prjFile)]) {
+    download.file(urlForProj, destfile = f)
   }
+  invisible(prjFile)
 }
 
 #' Faster version of [raster::factorValues()]
@@ -35,10 +38,12 @@ factorValues2 <- function(x, v, layer, att, append.names, na.rm = FALSE) {
   if (is(x, "SpatRaster")) {
     if (!requireNamespace("terra", quietly = TRUE)) stop("please install.packages('terra')")
     levs <- terra::cats(x)[[1]]
-    idCol <- "id"
   } else {
     levs <- raster::levels(x)[[1]]
-    idCol <- "ID"
+  }
+  idCol <- grep("id", ignore.case = TRUE, value = TRUE, colnames(levs))
+  if (length(idCol) == 0) {
+    idCol <- grep("value", ignore.case = TRUE, value = TRUE, colnames(levs))
   }
   if (isTRUE(na.rm))
     v <- na.omit(v)

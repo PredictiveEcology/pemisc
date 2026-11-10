@@ -4,7 +4,7 @@
 \alias{MapOrDoCall}
 \title{\code{Map}/\code{lapply} all in one}
 \usage{
-MapOrDoCall(fn, multiple, single, useCache, cl = NULL)
+MapOrDoCall(fn, multiple, single, useCache = FALSE, cl = NULL)
 }
 \arguments{
 \item{fn}{The function that will be run via \code{Map}/\code{clusterMap}.}
